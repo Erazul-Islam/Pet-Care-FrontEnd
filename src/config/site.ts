@@ -1,7 +1,7 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "Assignment 6",
+  name: "PET & CARE",
   description: "Make beautiful websites regardless of your design experience.",
   navItems: [
     {

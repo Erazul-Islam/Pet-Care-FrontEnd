@@ -19,6 +19,7 @@ const SignupUser = () => {
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const userData = {
       ...data,
+      role:"USER"
     };
 
 
