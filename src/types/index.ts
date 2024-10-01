@@ -27,6 +27,18 @@ export interface IUser {
   __v?: number;
 }
 
+export type TPost = {
+  userName: string,
+  userId: string,
+  userProfilePhoto: string,
+  userEmail: string,
+  caption: string,
+  description: string,
+  photo: string,
+  category: string,
+  comments : TComment[]
+}
+
 // export interface TUser {
 //   _id: string,
 //   name: string,

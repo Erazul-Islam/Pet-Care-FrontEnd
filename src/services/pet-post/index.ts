@@ -3,26 +3,13 @@
 
 "use server"
 
-import { revalidateTag } from "next/cache"
-
 import axiosInstance from "@/src/lib/axiosInstance"
+import { TPost } from "@/src/types"
 
 
 
-export const createPetPost = async (formData:FormData) : Promise <any> => {
-    try {
-        const {data} = await axiosInstance.post("/pet/pet-post",formData, {
-            headers : {
-                "Content-type" : "multipart/form-data"
-            }
-        })
+export const createPetPost = async (data : TPost) => {
+    const response = await axiosInstance.post('/pet/pet-post',data)
 
-        revalidateTag("post")
-
-        return data
-
-    }catch (error) {
-        console.log(error)
-        throw new Error ("Failed to create post")
-    }
+    return response.data
 }

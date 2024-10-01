@@ -1,94 +1,84 @@
 /* eslint-disable prettier/prettier */
 "use client"
 
-import React from 'react';
-import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Textarea, useDisclosure } from '@nextui-org/react';
-import ReactMarkdown from "react-markdown"
-import { Controller, FieldValues, FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import React, { useState } from 'react';
 
 import { useCreatePost } from '@/src/hooks/post.hook';
 import { useUser } from '@/src/context/user.provider';
+import { TPost } from '@/src/types';
 
 const PetMarkDownEditor = () => {
-    const { user } = useUser();
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const { mutate, isPending } = useCreatePost();
-    const methods = useForm();
-    const { handleSubmit, control, register, reset } = methods;
+    const { userEmail, userName, userId, userProfilePhoto } = useUser(); // Get user data from your context or hook
+    const { mutate: createPost } = useCreatePost();
 
-    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-        // Create a new FormData object
-        const postData = new FormData();
+    const [caption, setCaption] = useState('');
+    const [description, setDescription] = useState('');
+    const [photo, setPhoto] = useState('');
+    const [category, setCategory] = useState('TIP');
 
-        // Append data to FormData
-        postData.append('userEmail', user?.email || '');
-        postData.append('caption', data.caption);
-        postData.append('description', data.description);
-        postData.append('photo', "fdasdf"); // Add your photo handling logic here
+    const handlePost = () => {
+        const payload: TPost = {
+            userEmail,
+            userName,
+            userId,
+            userProfilePhoto,
+            caption,
+            description,
+            photo,
+            category,
+            comments: [],
+        };
 
-        console.log(postData);
-
-        // Call mutate with the FormData object
-        mutate(postData);
-        reset();
+        createPost(payload);
+        // Reset fields after submission
+        setCaption('');
+        setDescription('');
+        setPhoto('');
+        setCategory('TIP');
     };
+
 
     return (
         <>
-            <Button onPress={onOpen} color='success'>Share</Button>
-            <Modal
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                placement="top-center"
-            >
-                <FormProvider {...methods}>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <ModalContent>
-                            {(onClose) => (
-                                <>
-                                    <ModalHeader className="flex flex-col gap-1">Share your story or tips</ModalHeader>
-                                    <ModalBody>
-                                        {/* Caption Input */}
-                                        <Input
-                                            {...register('caption', { required: 'Caption is required' })}
-                                            name='caption'
-                                            label="Caption"
-                                            placeholder="Please enter a caption"
-                                            variant="bordered"
-                                        />
-                                        {/* Description Textarea with Controller */}
-                                        <Controller
-                                            control={control}
-                                            name="description"
-                                            rules={{ required: 'Description is required' }}
-                                            render={({ field: { onChange, value } }) => (
-                                                <>
-                                                    <Textarea
-                                                        value={value || ''}
-                                                        onChange={(e) => onChange(e.target.value)}
-                                                        placeholder="Write your description here..."
-                                                        label="Description"
-                                                        variant="bordered"
-                                                    />
-                                                    <ReactMarkdown>{value || ''}</ReactMarkdown>
-                                                </>
-                                            )}
-                                        />
-                                    </ModalBody>
-                                    <ModalFooter>
-                                        <Button color="danger" variant="flat" onPress={onClose}>
-                                            Close
-                                        </Button>
-                                        <Button type="submit" color="primary" isLoading={isPending}>
-                                            {isPending ? 'Posting...' : 'Post'}
-                                        </Button>
-                                    </ModalFooter>
-                                </>
-                            )}
-                        </ModalContent>
-                    </form>
-                </FormProvider>
-            </Modal>
+            <div className="max-w-2xl mx-auto p-4 bg-white shadow-md rounded-lg">
+                <div className="flex items-start space-x-3">
+                    <div className="flex-1">
+                        <textarea
+                            placeholder="What's on your mind?"
+                            className="w-full h-24 p-2 border border-gray-300 rounded-lg resize-none"
+                            value={caption}
+                            onChange={(e) => setCaption(e.target.value)}
+                        />
+                        <textarea
+                            placeholder="Add a description..."
+                            className="w-full h-24 p-2 border border-gray-300 rounded-lg resize-none mt-2"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Add a photo URL..."
+                            className="w-full p-2 border border-gray-300 rounded-lg mt-2"
+                            value={photo}
+                            onChange={(e) => setPhoto(e.target.value)}
+                        />
+                        <select
+                            className="w-full p-2 border border-gray-300 rounded-lg mt-2"
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}
+                        >
+                            <option value="TIP">TIP</option>
+                            <option value="Story">Story</option>
+                        </select>
+                        <button
+                            onClick={handlePost}
+                            className="bg-blue-500 text-white rounded-lg py-2 px-4 mt-4 hover:bg-blue-600"
+                        >
+                            Post
+                        </button>
+                    </div>
+                </div>
+            </div>
         </>
     );
 };

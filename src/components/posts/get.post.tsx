@@ -1,3 +1,4 @@
+/* eslint-disable padding-line-between-statements */
 /* eslint-disable prettier/prettier */
 "use client"
 
@@ -8,6 +9,7 @@ import { Avatar, } from '@nextui-org/react';
 import { useGetPost } from '@/src/hooks/get.post.hook';
 import { useAddComment, useDeleteComment, useEditComment } from '@/src/hooks/comment.hook';
 import { useUser } from '@/src/context/user.provider';
+import { useFollowUser, useUnfollowUser } from '@/src/hooks/follow.hook';
 
 
 const GetPost = () => {
@@ -15,12 +17,13 @@ const GetPost = () => {
     const { data: posts, isSuccess, refetch } = useGetPost();
 
     const { user } = useUser()
-    console.log(user)
 
 
     const addComment = useAddComment();
     const editComment = useEditComment()
     const deleteComment = useDeleteComment()
+    const { mutate: follow } = useFollowUser()
+    const { mutate: unfollow } = useUnfollowUser()
 
     const [commentText, setCommentText] = useState<{ [key: string]: string }>({});
     const [modalVisible, setModalVisible] = useState(false);
@@ -34,6 +37,7 @@ const GetPost = () => {
         if (!text) {
             toast.error("Comment cannot be empty");
             refetch()
+
             return;
         }
 
@@ -71,6 +75,30 @@ const GetPost = () => {
         }
     };
 
+    const handleFollow = async (postId: string) => {
+        const targetUserId = posts?.data.find(post => post._id === postId)?.userId; // Assuming you have userId in post
+        if (targetUserId) {
+            try {
+                await follow(targetUserId);
+                refetch(); // Refresh posts to get updated follow status
+            } catch (err) {
+                toast.error("Error following user");
+            }
+        }
+    };
+
+    const handleUnfollow = async (postId: string) => {
+        const targetUserId = posts?.data.find(post => post._id === postId)?.userId; // Assuming you have userId in post
+        if (targetUserId) {
+            try {
+                await unfollow(targetUserId);
+                refetch(); // Refresh posts to get updated follow status
+            } catch (err) {
+                toast.error("Error unfollowing user");
+            }
+        }
+    };
+
     return (
         <div>
             <section className="flex flex-col items-center space-y-4">
@@ -93,7 +121,7 @@ const GetPost = () => {
                                         <p className="text-xs text-gray-500">{new Date(post.createdAt).toLocaleString()}</p>
                                     </div>
                                 </div>
-                                <button className="bg-blue-500 text-white px-4 py-1 rounded-full text-sm">Follow</button>
+                                <button  className="bg-blue-500 text-white px-4 py-1 rounded-full text-sm" onClick={() => handleFollow(post._id)}>Follow</button>
                             </div>
 
                             {/* Post Content */}
