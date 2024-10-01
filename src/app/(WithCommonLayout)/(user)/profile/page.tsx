@@ -6,17 +6,27 @@
 import { useUser } from '@/src/context/user.provider'
 import React from 'react';
 
+import { Spinner } from '@nextui-org/react';
+import PetMarkDownEditor from './_components/pet-post';
+
 const UserProfile = () => {
 
 
-    const {user} = useUser()
+    const { user, isLoading } = useUser()
 
     return (
-        <div>
-            <p>{user?.name}</p>
-            <p>{user?.email}</p>
-            <p>{user?.mobileNumber}</p>
-            <img className=' h-16 rounded-md' src={user?.profilePhoto} alt="" />
+        <div className="p-4">
+            {isLoading ? (
+                <Spinner size="lg" />
+            ) : (
+                <>
+                    <h2 className="text-xl font-bold">{user?.name}</h2>
+                    <p>Email: {user?.email}</p>
+                    <p>Mobile: {user?.mobileNumber}</p>
+                    <img className='w-52' src={user?.profilePhoto} alt={user?.name} />
+                    <PetMarkDownEditor />
+                </>
+            )}
         </div>
     );
 };

@@ -15,7 +15,7 @@ export interface IInput {
   disabled?: boolean;
 }
 export interface IUser {
-  _id: string;
+  // _id: string;
   name: string;
   role: string;
   email: string;
@@ -27,14 +27,22 @@ export interface IUser {
   __v?: number;
 }
 
-export interface TUser {
-  _id: string,
-  name: string,
-  email: string,
-  password: string,
-  mobileNumber: string,
-  profilePhoto: string,
-  address: string,
+// export interface TUser {
+//   _id: string,
+//   name: string,
+//   email: string,
+//   password: string,
+//   mobileNumber: string,
+//   profilePhoto: string,
+//   address: string,
+//   role: 'ADMIN' | 'USER'
+// };
 
-  role: 'ADMIN' | 'USER'
-};
+export type TComment = {
+  userId : string,
+  userName : string
+  userProfilePhoto : string,
+  text : string,
+  createdAt : Date,
+  updatedAt : Date
+}

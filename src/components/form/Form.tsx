@@ -31,11 +31,11 @@ export default function TSForm({
 
   const methods = useForm(formConfig);
 
-  const SubmitHandler = methods.handleSubmit;
+  // const SubmitHandler = methods.handleSubmit;
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={SubmitHandler(onSubmit)}> {children} </form>
+      <form onSubmit={methods.handleSubmit(onSubmit)}> {children} </form>
     </FormProvider>
   );
 }

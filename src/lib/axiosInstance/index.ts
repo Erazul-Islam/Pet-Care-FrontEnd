@@ -16,6 +16,10 @@ axiosInstance.interceptors.request.use(
       config.headers.Authorization = accessToken;
     }
 
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`; // Add 'Bearer ' prefix
+    }
+
     return config;
   },
   function (error) {
