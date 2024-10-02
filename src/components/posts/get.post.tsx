@@ -25,8 +25,6 @@ const GetPost = () => {
     const { mutate: follow } = useFollowUser()
     const { mutate: unfollow } = useUnfollowUser()
 
-    console.log(follow)
-
     const [commentText, setCommentText] = useState<{ [key: string]: string }>({});
     const [modalVisible, setModalVisible] = useState(false);
     const [currentCommentId, setCurrentCommentId] = useState<string | null>(null);
