@@ -25,6 +25,8 @@ const GetPost = () => {
     const { mutate: follow } = useFollowUser()
     const { mutate: unfollow } = useUnfollowUser()
 
+    console.log(follow)
+
     const [commentText, setCommentText] = useState<{ [key: string]: string }>({});
     const [modalVisible, setModalVisible] = useState(false);
     const [currentCommentId, setCurrentCommentId] = useState<string | null>(null);
@@ -75,18 +77,10 @@ const GetPost = () => {
         }
     };
 
-    const handleFollow = async (postId: string) => {
-        const targetUserId = posts?.data.find(post => post._id === postId)?.userId; // Assuming you have userId in post
-        if (targetUserId) {
-            try {
-                await follow(targetUserId);
-                refetch(); // Refresh posts to get updated follow status
-            } catch (err) {
-                toast.error("Error following user");
-            }
-        }
+    const handleFollow = (targetUserId: string) => {
+        follow(targetUserId);
     };
-
+    
     const handleUnfollow = async (postId: string) => {
         const targetUserId = posts?.data.find(post => post._id === postId)?.userId; // Assuming you have userId in post
         if (targetUserId) {
@@ -121,7 +115,7 @@ const GetPost = () => {
                                         <p className="text-xs text-gray-500">{new Date(post.createdAt).toLocaleString()}</p>
                                     </div>
                                 </div>
-                                <button  className="bg-blue-500 text-white px-4 py-1 rounded-full text-sm" onClick={() => handleFollow(post._id)}>Follow</button>
+                                <button className="bg-blue-500 text-white px-4 py-1 rounded-full text-sm" onClick={() => handleFollow(post._id)}>Follow</button>
                             </div>
 
                             {/* Post Content */}

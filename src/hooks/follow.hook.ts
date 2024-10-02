@@ -1,8 +1,8 @@
+/* eslint-disable prettier/prettier */
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 import { followUser, unfollowUser } from "../services/follow";
-
 /* eslint-disable prettier/prettier */
 export const useFollowUser = () => {
     return useMutation({

@@ -4,6 +4,7 @@ import axiosInstance from "@/src/lib/axiosInstance"
 
 export const followUser = async (targetUserId : string)  => {
     const response = await axiosInstance.post(`/auth/follow/${targetUserId}`)
+    console.log(response.data)
 
     return response.data
 }

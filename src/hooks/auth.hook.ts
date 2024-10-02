@@ -2,8 +2,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
+// import { toast } from "react-toastify";
 
 import { loginUser, registerUser } from "../services/AuthServices";
+import { changePasswordService } from "../services/change_password";
 
 export const useUserRegistration = () => {
     return useMutation<any, Error, FieldValues>({
@@ -30,3 +32,17 @@ export const useUserLogin = () => {
         },
     });
 };
+
+
+export const useChangePassword = () => {
+    return useMutation({
+        mutationFn: (payload: { oldPassword: string, newPassword: string }) => changePasswordService(payload),
+        onSuccess: () => {
+            toast.success('password changed successfully')
+        },
+        onError: (error:any) => {
+            toast.error("Does not work")
+            console.log(error.message)
+        }
+    })
+}
