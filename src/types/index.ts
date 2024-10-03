@@ -15,7 +15,7 @@ export interface IInput {
   disabled?: boolean;
 }
 export interface IUser {
-  // _id: string;
+  _id : string,
   name: string;
   role: string;
   email: string;

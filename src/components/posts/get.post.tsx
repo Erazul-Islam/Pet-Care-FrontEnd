@@ -12,6 +12,7 @@ import { useUser } from '@/src/context/user.provider';
 import { useFollowUser, useUnfollowUser } from '@/src/hooks/follow.hook';
 
 
+
 const GetPost = () => {
 
     const { data: posts, isSuccess, refetch } = useGetPost();
@@ -43,8 +44,8 @@ const GetPost = () => {
 
         try {
             await addComment.mutateAsync({ postId, text });
-            // Clear the comment input for the specific post
             setCommentText(prev => ({ ...prev, [postId]: '' }));
+            refetch()
         } catch (err) {
             // console.error("Error adding comment:", err);
             // Error toast is already handled in the hook
@@ -75,16 +76,22 @@ const GetPost = () => {
         }
     };
 
-    const handleFollow = (targetUserId: string) => {
+    const handleFollow = (postId: string) => {
+        const targetPostId = posts?.data.find(post => post._id === postId)
+        console.log(targetPostId)
+        const targetUserId = targetPostId?.userId;
+        console.log(targetUserId)
         follow(targetUserId);
     };
-    
+
+
+
     const handleUnfollow = async (postId: string) => {
-        const targetUserId = posts?.data.find(post => post._id === postId)?.userId; // Assuming you have userId in post
+        const targetUserId = posts?.data.find(post => post._id === postId)?.userId;
         if (targetUserId) {
             try {
                 await unfollow(targetUserId);
-                refetch(); // Refresh posts to get updated follow status
+                refetch()
             } catch (err) {
                 toast.error("Error unfollowing user");
             }

@@ -5,23 +5,49 @@
 "use client"
 
 import { useUser } from '@/src/context/user.provider'
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { Image, } from '@nextui-org/react';
+import { Button, Image, Spinner, } from '@nextui-org/react';
 import PetMarkDownEditor from './_components/pet-post';
-import { useGetPost } from '@/src/hooks/get.post.hook';
+import { useDeletePost, useGetPost } from '@/src/hooks/get.post.hook';
 
 
 const UserProfile = () => {
 
 
-    const { user } = useUser()
-    // console.log(user)
+    const { user, } = useUser()
 
-    const { data } = useGetPost()
-    // console.log(data)
+    const { data, refetch } = useGetPost()
 
     const filterData = data?.data?.filter((one) => one?.userEmail === user?.email)
+
+    const { mutate: deletePost, } = useDeletePost()
+    const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(false); // Loading state
+
+    useEffect(() => {
+        if (data?.data) {
+            const filteredPosts = data.data.filter((one) => one?.userEmail === user?.email);
+            setPosts(filteredPosts);
+        }
+    }, [data, user?.email]);
+
+    const handleDeletePost = (postId: string) => {
+        setLoading(true); // Set loading to true when starting delete
+        deletePost(postId, {
+            onSuccess: () => {
+                // Remove the post locally and refetch data
+                setPosts((prevPosts) => prevPosts.filter(post => post._id !== postId));
+                refetch(); // Optionally refetch to ensure you have the latest data
+            },
+            onError: (error) => {
+                console.error('Error deleting post:', error); // Handle error as needed
+            },
+            onSettled: () => {
+                setLoading(false); // Set loading to false after the request is settled
+            }
+        });
+    };
 
     return (
         <div className="p-4">
@@ -46,7 +72,7 @@ const UserProfile = () => {
                             key={one._id}
                             className="bg-white mt-6 shadow-md rounded-lg p-4 max-w-md w-full"
                         >
-                            {/* User Info and Follow Button */}
+
                             <div className="flex justify-between items-center mb-4">
                                 <div className="flex items-center space-x-3">
                                     <img
@@ -71,8 +97,15 @@ const UserProfile = () => {
                                     src={one.photo}
                                 />
                             )}
-
+                            <Button
+                                    color='warning'
+                                    disabled={loading}
+                                    onClick={() => handleDeletePost(one._id)}
+                                >
+                                    {loading ? <Spinner size="sm" /> : 'Delete'}
+                                </Button>
                         </div>
+
                     </div>)
                 }
             </div>

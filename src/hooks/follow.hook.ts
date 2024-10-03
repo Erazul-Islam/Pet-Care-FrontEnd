@@ -13,6 +13,8 @@ export const useFollowUser = () => {
         },
         onError: (error: any) => {
             toast.error(error.message);
+            console.log(error)
+            console.log(error.message)
         },
     });
 };

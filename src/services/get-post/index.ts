@@ -15,3 +15,9 @@ export const getAllPost = async () => {
         throw new Error("yaap")
     }
 }
+
+export const deletePost = async (postId : string) => {
+    const response = await axiosInstance.delete(`/pet/pet-post/${postId}`)
+
+    return response.data
+}

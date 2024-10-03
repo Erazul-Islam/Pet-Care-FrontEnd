@@ -2,16 +2,18 @@
 "use client"
 
 import React, { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { useCreatePost } from '@/src/hooks/post.hook';
 import { useUser } from '@/src/context/user.provider';
 import { TPost } from '@/src/types';
 
 
-const PetMarkDownEditor = () => {
-    const { userEmail, userName, userId, userProfilePhoto, }  = useUser() ; 
-    const { mutate: createPost, } = useCreatePost();
 
+const PetMarkDownEditor = () => {
+    const { userEmail, userName, userId, userProfilePhoto, } = useUser()
+    const { mutate: createPost, } = useCreatePost();
+    const queryClient = useQueryClient();
     const [caption, setCaption] = useState('');
     const [description, setDescription] = useState('');
     const [photo, setPhoto] = useState('');
@@ -30,11 +32,15 @@ const PetMarkDownEditor = () => {
             comments: [],
         };
 
-        createPost(payload);
-        setCaption('');
-        setDescription('');
-        setPhoto('');
-        setCategory('TIP');
+        createPost(payload, {
+            onSuccess: () => {
+                queryClient.invalidateQueries();
+                setCaption('');
+                setDescription('');
+                setPhoto('');
+                setCategory('TIP');
+            }
+        })
     };
 
 

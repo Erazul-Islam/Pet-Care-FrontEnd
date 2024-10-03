@@ -1,8 +1,10 @@
 /* eslint-disable prettier/prettier */
 
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { toast } from "sonner";
 
-import { getAllPost } from "../services/get-post";
+import { deletePost, getAllPost } from "../services/get-post";
+
 
 export const useGetPost = () => {
     return useQuery({
@@ -12,3 +14,15 @@ export const useGetPost = () => {
   };
   
 
+  export const useDeletePost = () => {
+    return useMutation({
+        mutationKey: ["DELETE_POST"],
+        mutationFn: async (postId: string) => await deletePost(postId),
+        onSuccess: () => {
+            toast.success("DELETED");
+        },
+        onError: (error: any) => {
+            toast.error(error.message);
+        },
+    });
+};
