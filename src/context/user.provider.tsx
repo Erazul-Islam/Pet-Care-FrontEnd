@@ -10,21 +10,21 @@ import {
   useState,
 } from "react";
 
-import { IUser } from "../types";
+import { TUser } from "../types";
 import { getCurrentUser } from "../services/AuthServices";
 
 
 const UserContext = createContext<IUserProviderValues | undefined>(undefined);
 
 interface IUserProviderValues {
-  user: IUser | null;
+  user: TUser | null;
   isLoading: boolean;
-  setUser: (user: IUser | null) => void;
+  setUser: (user: TUser | null) => void;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
 }
 
 const UserProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<IUser | null>(null);
+  const [user, setUser] = useState<TUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const handleUser = async () => {

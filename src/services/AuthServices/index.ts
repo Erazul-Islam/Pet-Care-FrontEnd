@@ -6,6 +6,7 @@ import { FieldValues } from "react-hook-form";
 import { jwtDecode } from "jwt-decode";
 
 import axiosInstance from "@/src/lib/axiosInstance";
+import { TUser } from "@/src/types";
 
 export const registerUser = async (userData: FieldValues) => {
     try {
@@ -21,6 +22,13 @@ export const registerUser = async (userData: FieldValues) => {
         throw new Error(error.response?.data?.message || "Registration failed");
     }
 };
+
+
+export const editUserInfo = async (payload: Partial<TUser>) => {
+    const response = await axiosInstance.put('/auth/me', payload)
+
+    return response.data
+}
 
 
 export const loginUser = async (userData: FieldValues) => {
@@ -39,24 +47,32 @@ export const loginUser = async (userData: FieldValues) => {
 
 export const logout = () => {
     cookies().delete("accessToken");
-  };
+};
 
-export const getCurrentUser = async ()  => {
+export const getCurrentUser = async () => {
     const accessToken = cookies().get("accessToken")?.value;
 
     let decodedToken = null;
 
     if (accessToken) {
         decodedToken = await jwtDecode(accessToken);
-        
+
         return {
             _id: decodedToken._id,
-            name: decodedToken.name,
             email: decodedToken.email,
-            mobileNumber: decodedToken.mobileNumber,
             role: decodedToken.role,
-            status: decodedToken.status,
+            name: decodedToken.name,
+            mobilenumber: decodedToken.mobileNumber,
+            address: decodedToken.address,
             profilePhoto: decodedToken.profilePhoto,
+            coverPhoto: decodedToken.coverPhoto,
+            intro: decodedToken.intro,
+            college: decodedToken.college,
+            university: decodedToken.university,
+            lives: decodedToken.lives,
+            from: decodedToken.from,
+            followrs: decodedToken.followers,
+            following: decodedToken.following
         };
     }
 

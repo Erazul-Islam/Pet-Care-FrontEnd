@@ -4,8 +4,9 @@ import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 // import { toast } from "react-toastify";
 
-import { loginUser, registerUser } from "../services/AuthServices";
+import { editUserInfo, loginUser, registerUser } from "../services/AuthServices";
 import { changePasswordService } from "../services/change_password";
+import { TUser } from "../types";
 
 export const useUserRegistration = () => {
     return useMutation<any, Error, FieldValues>({
@@ -33,6 +34,19 @@ export const useUserLogin = () => {
     });
 };
 
+export const useUserProfileUpdate = () => {
+    return useMutation<any, Error, Partial<TUser>>({
+        mutationKey: ["PROFILE_UPDATE"],
+        mutationFn: async (payload: Partial<TUser>) => await editUserInfo(payload),
+        onSuccess: () => {
+            toast.success("User info updated successful.");
+        },
+        onError: (error) => {
+            toast.error(error.message);
+        },
+    });
+};
+
 
 export const useChangePassword = () => {
     return useMutation({
@@ -40,9 +54,9 @@ export const useChangePassword = () => {
         onSuccess: () => {
             toast.success('password changed successfully')
         },
-        onError: (error:any) => {
+        onError: () => {
             toast.error("Does not work")
-            console.log(error.message)
+
         }
     })
 }

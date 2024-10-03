@@ -14,18 +14,51 @@ export interface IInput {
   name: string;
   disabled?: boolean;
 }
-export interface IUser {
-  _id : string,
-  name: string;
-  role: string;
-  email: string;
-  status: string;
-  mobileNumber: string;
-  profilePhoto: string;
-  createdAt?: string;
-  updatedAt?: string;
-  __v?: number;
-}
+// export interface IUser {
+//   _id : string,
+//   name: string;
+//   role: string;
+//   email: string;
+//   status: string;
+//   mobileNumber: string;
+//   profilePhoto: string;
+//   createdAt?: string;
+//   updatedAt?: string;
+//   __v?: number;
+// }
+
+export interface TUser {
+  _id: string,
+  name: string,
+  email: string,
+  password: string,
+  mobileNumber: string,
+  profilePhoto: string,
+  coverPhoto : string,
+  intro : string,
+  college : string,
+  university : string,
+  lives : string,
+  from : string
+  needsPasswordChange: boolean;
+  passwordChangedAt?: Date;
+  address: string,
+  createdAt: Date,
+  updatedAt: Date,
+  role: 'ADMIN' | 'USER',
+  followers: Array<{
+      id: string;
+      email: string;
+      username: string;
+      profilePhoto : string
+  }>;
+  following: Array<{
+      id: string;
+      email: string;
+      username: string;
+      profilePhoto : string
+  }>;
+};
 
 export type TPost = {
   userName: string,

@@ -7,9 +7,10 @@
 import { useUser } from '@/src/context/user.provider'
 import React, { useEffect, useState } from 'react';
 
-import { Button, Image, Spinner, } from '@nextui-org/react';
+import { Button, Spinner, } from '@nextui-org/react';
 import PetMarkDownEditor from './_components/pet-post';
 import { useDeletePost, useGetPost } from '@/src/hooks/get.post.hook';
+import Info from './_components/info';
 
 
 const UserProfile = () => {
@@ -23,46 +24,36 @@ const UserProfile = () => {
 
     const { mutate: deletePost, } = useDeletePost()
     const [posts, setPosts] = useState([]);
-    const [loading, setLoading] = useState(false); // Loading state
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (data?.data) {
             const filteredPosts = data.data.filter((one) => one?.userEmail === user?.email);
+
             setPosts(filteredPosts);
         }
     }, [data, user?.email]);
 
     const handleDeletePost = (postId: string) => {
-        setLoading(true); // Set loading to true when starting delete
+        setLoading(true);
         deletePost(postId, {
             onSuccess: () => {
-                // Remove the post locally and refetch data
                 setPosts((prevPosts) => prevPosts.filter(post => post._id !== postId));
-                refetch(); // Optionally refetch to ensure you have the latest data
+                refetch();
             },
-            onError: (error) => {
-                console.error('Error deleting post:', error); // Handle error as needed
+            onError: () => {
             },
             onSettled: () => {
-                setLoading(false); // Set loading to false after the request is settled
+                setLoading(false);
             }
         });
     };
 
     return (
         <div className="p-4">
-            <div className='lg:flex justify-between'>
-                <div className='flex gap-6'>
-                    <Image alt='name' className='rounded-full' height={200} src={user?.profilePhoto} width={200} />
-                    <div className=''>
-                        <h2 className="text-2xl mt-16 font-bold">{user?.name}</h2>
-                        <p>Email: {user?.email}</p>
-                        <div>
-                            <h1>21K followers</h1>
-                            <h2>36 following</h2>
-                        </div>
-                    </div>
-                </div>
+            <img alt="f" className='w-full h-[500px] sticky'  src={user?.coverPhoto}  />
+            <div className='lg:flex mt-6 justify-between'>
+                <Info />
                 <PetMarkDownEditor />
             </div>
             <div className='mt-4 lg:ml-[600px]'>
@@ -98,12 +89,12 @@ const UserProfile = () => {
                                 />
                             )}
                             <Button
-                                    color='warning'
-                                    disabled={loading}
-                                    onClick={() => handleDeletePost(one._id)}
-                                >
-                                    {loading ? <Spinner size="sm" /> : 'Delete'}
-                                </Button>
+                                color='warning'
+                                disabled={loading}
+                                onClick={() => handleDeletePost(one._id)}
+                            >
+                                {loading ? <Spinner size="sm" /> : 'Delete'}
+                            </Button>
                         </div>
 
                     </div>)

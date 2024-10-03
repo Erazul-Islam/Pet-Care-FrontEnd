@@ -1,14 +1,10 @@
-// import { getCurrentUser } from "../services/AuthServices";
-
+/* eslint-disable prettier/prettier */
 "use client"
 
 import GetPost from "../components/posts/get.post";
-
-// import GetPosts from "./(WithCommonLayout)/(user)/profile/_components/get-pet-post";
-/* eslint-disable prettier/prettier */
 export default function Home() {
 
   return <section>
-    <GetPost></GetPost>
+    <GetPost />
   </section>;
 }
