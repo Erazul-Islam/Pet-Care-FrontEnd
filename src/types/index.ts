@@ -14,18 +14,6 @@ export interface IInput {
   name: string;
   disabled?: boolean;
 }
-// export interface IUser {
-//   _id : string,
-//   name: string;
-//   role: string;
-//   email: string;
-//   status: string;
-//   mobileNumber: string;
-//   profilePhoto: string;
-//   createdAt?: string;
-//   updatedAt?: string;
-//   __v?: number;
-// }
 
 export interface TUser {
   _id: string,
@@ -66,6 +54,7 @@ export type TPost = {
   userProfilePhoto: string,
   userEmail: string,
   caption: string,
+  isPremium : boolean,
   description: string,
   photo: string,
   category: string,

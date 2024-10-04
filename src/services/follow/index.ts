@@ -1,18 +1,22 @@
 /* eslint-disable prettier/prettier */
 
-import axiosInstance from "@/src/lib/axiosInstance"
 import clientAxiosInstance from "@/src/lib/clientAxiosInstance"
 
 export const followUser = async (targetUserId : string)  => {
-    const response = await clientAxiosInstance.post(`/auth/follow/${targetUserId}`)
+    try {
+        const response = await clientAxiosInstance.post(`/auth/follow/${targetUserId}`);
 
-    console.log(response.data)
+        console.log(response.data);
 
-    return response.data
+        return response.data;
+    } catch (error: any) {
+
+        throw error.response?.data || new Error('An error occurred while following the user.');
+    }
 }
 
 export const unfollowUser = async (targetUserId: string): Promise<{ message: string }> => {
-    const response = await axiosInstance.delete(`/users/unfollow/${targetUserId}`);
+    const response = await clientAxiosInstance.post(`/auth/unfollow/${targetUserId}`);
     
     return response.data;
 };

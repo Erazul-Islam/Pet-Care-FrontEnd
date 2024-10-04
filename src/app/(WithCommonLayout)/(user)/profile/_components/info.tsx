@@ -1,10 +1,10 @@
 /* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from 'react';
-import { Button } from '@nextui-org/button';
+import { Button } from '@nextui-org/button'
+import { useQueryClient } from '@tanstack/react-query';
 
 import { useUser } from '@/src/context/user.provider';
 import { useUserProfileUpdate } from '@/src/hooks/auth.hook';
-import { useQueryClient } from '@tanstack/react-query';
 
 
 
@@ -55,7 +55,7 @@ const Info = () => {
 
     return (
         <div>
-            <div className="bg-white p-5 rounded-lg shadow-md">
+            <div className=" p-5 rounded-lg shadow-md">
                 <div className="flex gap-6">
                     <img
                         alt={user?.name}

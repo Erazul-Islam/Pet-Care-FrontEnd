@@ -80,6 +80,8 @@ const GetPost = () => {
         }
     };
 
+    console.log(user)
+
     const handleDeleteComment = async (postId: string, commentId: string) => {
         try {
             await deleteComment.mutateAsync({ postId, commentId });
@@ -89,24 +91,51 @@ const GetPost = () => {
         }
     };
 
+
+
     const handleFollow = (postId: string) => {
-        const targetPostId = posts?.data.find(post => post._id === postId)
-        const targetUserId = targetPostId?.userId;
+        const targetPost = posts?.data.find(post => post._id === postId);
+        if (!targetPost) {
+            toast.error("Post not found.");
+            return;
+        }
+
+        const targetUserId = targetPost.userId;
+        if (!targetUserId) {
+            toast.error("User ID not found for this post.");
+            return;
+        }
+
+
+
+        if (user?._id === targetUserId) {
+            toast.error("You cannot follow yourself.");
+            return;
+        }
+
         follow(targetUserId);
     };
 
 
 
     const handleUnfollow = async (postId: string) => {
-        const targetUserId = posts?.data.find(post => post._id === postId)?.userId;
-        if (targetUserId) {
-            try {
-                await unfollow(targetUserId);
-                refetch()
-            } catch (err) {
-                toast.error("Error unfollowing user");
-            }
+        const targetPost = posts?.data.find(post => post._id === postId);
+        if (!targetPost) {
+            toast.error("Post not found.");
+            return;
         }
+
+        const targetUserId = targetPost.userId;
+        if (!targetUserId) {
+            toast.error("User ID not found for this post.");
+            return;
+        }
+
+        if (user?._id === targetUserId) {
+            toast.error("You cannot unfollow yourself.");
+            return;
+        }
+        unfollow(targetUserId)
     };
 
     const handleToggle = async () => {
@@ -128,9 +157,9 @@ const GetPost = () => {
     return (
         <div>
             <section className="flex flex-col items-center ">
-                    <Feed/>
+                {/* <Feed /> */}
                 <button
-                    className={`bg-green-500 text-white px-4 py-2 rounded-md mb-4 flex items-center justify-center ${isFetching ? 'cursor-not-allowed opacity-50' : ''
+                    className={`bg-green-500 text-white mt-4 px-4 py-2 rounded-md mb-4 flex items-center justify-center ${isFetching ? 'cursor-not-allowed opacity-50' : ''
                         }`}
                     disabled={isFetching}
                     onClick={handleToggle}
@@ -141,9 +170,9 @@ const GetPost = () => {
                     {
                         isSuccess &&
                         sortedPosts?.map((post) => (
-                            <div  key={post._id}>
+                            <div key={post._id}>
                                 <div
-                                    className=" shadow-md rounded-lg p-4 max-w-md w-full"
+                                    className=" shadow-md mt-20 border border-purple-200 rounded-lg p-4 max-w-screen-md"
                                 >
                                     <div className="flex justify-between items-center mb-4">
                                         <div className="flex items-center space-x-3">
@@ -156,11 +185,16 @@ const GetPost = () => {
                                                 <h4 className="">{post.userName}</h4>
                                                 <p className="text-xs">{new Date(post.createdAt).toLocaleString()}</p>
                                                 <p className="text-xs">total upvotes {post?.totalUpvotes}</p>
+                                                <p className="text-xs">total downvote {post?.totalDownvotes}</p>
                                             </div>
                                         </div>
-                                        <button className="bg-blue-500 text-white px-4 py-1 rounded-full text-sm" onClick={() => handleFollow(post._id)}>Follow</button>
-                                        <button className="bg-blue-500 text-white px-4 py-1 rounded-full text-sm" onClick={() => handleUpvotePost(post._id)}>upvote</button>
-                                        <button className="bg-blue-500 text-white px-4 py-1 rounded-full text-sm" onClick={() => handleDownVotePost(post._id)}>downVote</button>
+                                        <div className=''>
+                                            
+                                            <button className="bg-teal-700  text-white px-4 py-1 rounded-md text-sm" onClick={() => handleFollow(post._id)}>Follow</button>
+                                            <button className="bg-teal-700  text-white px-4 py-1 rounded-md text-sm" onClick={() => handleUnfollow(post._id)}>UnFollow</button>
+                                            <button className="bg-purple-600 ml-3 text-white px-4 py-1 rounded-md text-sm" onClick={() => handleUpvotePost(post._id)}>upvote</button>
+                                            <button className="bg-red-400 ml-3 text-white px-4 py-1 rounded-md text-sm" onClick={() => handleDownVotePost(post._id)}>downVote</button>
+                                        </div>
                                     </div>
 
                                     {/* Post Content */}
@@ -173,7 +207,7 @@ const GetPost = () => {
                                     {post.photo && (
                                         <img
                                             alt={post.caption}
-                                            className="w-full h-60 object-cover rounded-lg mb-4"
+                                            className="w-full h-72 object-cover rounded-lg mb-4"
                                             src={post.photo}
                                         />
                                     )}
@@ -206,15 +240,12 @@ const GetPost = () => {
                                                     {user?._id != comment.userId ? '' : <button className="text-blue-500" onClick={() => openEditModal(post._id, comment._id, comment.text)}>
                                                         Edit
                                                     </button>}
-
-                                                    {user?.name != comment.userName ? '' : <button
+                                                    {user?._id != comment.userId ? '' : <button
                                                         className="text-red-500 ml-2"
                                                         onClick={() => handleDeleteComment(post._id, comment._id)}
                                                     >
                                                         Delete
                                                     </button>}
-
-
                                                 </div>
                                             </div>
                                         ))}

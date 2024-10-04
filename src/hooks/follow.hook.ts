@@ -1,14 +1,18 @@
 /* eslint-disable prettier/prettier */
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 import { followUser, unfollowUser } from "../services/follow";
 /* eslint-disable prettier/prettier */
 export const useFollowUser = () => {
+
+    const queryClient = useQueryClient();
+
     return useMutation({
         mutationKey: ["FOLLOW_USER"],
         mutationFn: async (targetUserId: string) => await followUser(targetUserId),
         onSuccess: () => {
+            queryClient.invalidateQueries();
             toast.success("Following");
         },
         onError: (error: any) => {
@@ -28,6 +32,7 @@ export const useUnfollowUser = () => {
         },
         onError: (error: any) => {
             toast.error(error.message);
+            console.log(error.message)
         },
     });
 };
