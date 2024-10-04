@@ -18,6 +18,7 @@ const PetMarkDownEditor = () => {
     const [description, setDescription] = useState('');
     const [photo, setPhoto] = useState('');
     const [category, setCategory] = useState('TIP');
+    const [isPremium,setPremium] = useState("YES")
 
     const handlePost = () => {
         const payload: TPost = {
@@ -29,6 +30,7 @@ const PetMarkDownEditor = () => {
             description,
             photo,
             category,
+            isPremium,
             comments: [],
         };
 
@@ -41,6 +43,7 @@ const PetMarkDownEditor = () => {
                 setDescription('');
                 setPhoto('');
                 setCategory('TIP');
+                setPremium("YES")
             }
         })
     };
@@ -79,6 +82,14 @@ const PetMarkDownEditor = () => {
                         >
                             <option value="TIP">TIP</option>
                             <option value="Story">Story</option>
+                        </select>
+                        <select
+                            className="w-full p-2 border border-gray-300 rounded-lg mt-2"
+                            value={isPremium}
+                            onChange={(e) => setPremium(e.target.value)}
+                        >
+                            <option value="YES">YES</option>
+                            <option value="NO">NO</option>
                         </select>
                         <button
                             className="bg-blue-500 text-white rounded-lg py-2 px-4 mt-4 hover:bg-blue-600"

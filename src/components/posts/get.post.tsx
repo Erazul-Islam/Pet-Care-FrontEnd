@@ -4,7 +4,7 @@
 
 import React, { useState } from 'react';
 import { toast } from 'sonner';
-import { Avatar, Spinner, } from '@nextui-org/react';
+import { Avatar, Button, Spinner, } from '@nextui-org/react';
 
 import { useGetPost } from '@/src/hooks/get.post.hook';
 import { useAddComment, useDeleteComment, useEditComment } from '@/src/hooks/comment.hook';
@@ -12,6 +12,9 @@ import { useUser } from '@/src/context/user.provider';
 import { useFollowUser, useUnfollowUser } from '@/src/hooks/follow.hook';
 import { useDownVotePost, useUpvotePost } from '@/src/hooks/post.hook';
 import Feed from '../Spinner';
+import Payment from './payment';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
 
 
 
@@ -21,6 +24,8 @@ const GetPost = () => {
     const { data: posts, isSuccess, refetch, isFetching } = useGetPost();
 
     const { user } = useUser()
+
+    const stripePromise = loadStripe('pk_test_51OEWQiI8i8m69lNjPL8a3QNQtS31dfaIR6lr00gHoVxSTvtZpjdNVv186ZG7pYGfTwqchyWoClqvbBLGmdzA4Oxr00lZCJmnc7');
 
 
     const addComment = useAddComment();
@@ -187,13 +192,17 @@ const GetPost = () => {
                                                 <p className="text-xs">total upvotes {post?.totalUpvotes}</p>
                                                 <p className="text-xs">total downvote {post?.totalDownvotes}</p>
                                             </div>
+                                            <div>
+                                                {post?.isPremium === "YES" ? <img alt="" className='w-12 h-12 ' src="https://i.ibb.co.com/jM3xrDW/premium-quality.png" /> : ""}
+
+                                            </div>
                                         </div>
                                         <div className=''>
-                                            
                                             <button className="bg-teal-700  text-white px-4 py-1 rounded-md text-sm" onClick={() => handleFollow(post._id)}>Follow</button>
-                                            <button className="bg-teal-700  text-white px-4 py-1 rounded-md text-sm" onClick={() => handleUnfollow(post._id)}>UnFollow</button>
+                                            <button className="bg-teal-700 ml-3 text-white px-4 py-1 rounded-md text-sm" onClick={() => handleUnfollow(post._id)}>UnFollow</button>
                                             <button className="bg-purple-600 ml-3 text-white px-4 py-1 rounded-md text-sm" onClick={() => handleUpvotePost(post._id)}>upvote</button>
                                             <button className="bg-red-400 ml-3 text-white px-4 py-1 rounded-md text-sm" onClick={() => handleDownVotePost(post._id)}>downVote</button>
+
                                         </div>
                                     </div>
 
@@ -207,10 +216,12 @@ const GetPost = () => {
                                     {post.photo && (
                                         <img
                                             alt={post.caption}
-                                            className="w-full h-72 object-cover rounded-lg mb-4"
+                                            className="w-full h-96 object-cover rounded-lg mb-4"
                                             src={post.photo}
                                         />
                                     )}
+
+                                    {post && post.isPremium === "YES" ? <Elements stripe={stripePromise}><Payment /></Elements> : null}
 
                                     {/* Comment Section */}
                                     <div className="mt-4">

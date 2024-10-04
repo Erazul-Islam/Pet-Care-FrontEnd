@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
 
-const PhotoModal = ({ isOpen, onClose, onSubmit }) => {
+const PhotoModal = ({ isOpen, onClose, onSubmit } : any) => {
     const [photoUrl, setPhotoUrl] = useState('');
 
     const handleSubmit = () => {

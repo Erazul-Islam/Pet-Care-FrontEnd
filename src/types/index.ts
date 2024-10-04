@@ -54,7 +54,7 @@ export type TPost = {
   userProfilePhoto: string,
   userEmail: string,
   caption: string,
-  isPremium : boolean,
+  isPremium : string,
   description: string,
   photo: string,
   category: string,
