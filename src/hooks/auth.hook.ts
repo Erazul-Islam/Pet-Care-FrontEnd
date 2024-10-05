@@ -41,7 +41,7 @@ export const useUserProfileUpdate = () => {
         mutationKey: ["PROFILE_UPDATE"],
         mutationFn: async (payload: Partial<TUser>) => await editUserInfo(payload),
         onSuccess: () => {
-            queryClient.invalidateQueries()
+            // queryClient.invalidateQueries(['USER_UPDATE'])
             toast.success("User info updated successful.");
         },
         onError: (error) => {

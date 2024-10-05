@@ -11,6 +11,7 @@ import { Button, Spinner, } from '@nextui-org/react';
 import PetMarkDownEditor from './_components/pet-post';
 import { useDeletePost, useGetPost } from '@/src/hooks/get.post.hook';
 import Info from './_components/info';
+import DOMPurify from 'dompurify';
 
 
 const UserProfile = () => {
@@ -50,9 +51,9 @@ const UserProfile = () => {
     };
 
     return (
-        <div className="p-4">
+        <div className="p-4 lg:ml-80 md:ml-40 lg:mr-80">
             <img alt="f" className='w-full h-[500px] sticky'  src={user?.coverPhoto}  />
-            <div className='lg:flex mt-6 justify-between'>
+            <div className='lg:flex mt-2 justify-between'>
                 <Info />
                 <PetMarkDownEditor />
             </div>
@@ -79,7 +80,7 @@ const UserProfile = () => {
                             </div>
                             <div className="mb-4">
                                 <h3 className="font-semibold text-emerald-800 text-lg">{one.caption}</h3>
-                                <p className="text-sm mt-3 text-gray-700">{one.description}</p>
+                                <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(one.description) }} className="text-sm mt-3 text-gray-700"></p>
                             </div>
                             {one.photo && (
                                 <img

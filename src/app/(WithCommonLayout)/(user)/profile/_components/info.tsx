@@ -1,17 +1,23 @@
 /* eslint-disable prettier/prettier */
+
+"use client"
+
 import React, { useEffect, useState } from 'react';
 import { Button } from '@nextui-org/button'
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useUser } from '@/src/context/user.provider';
 import { useUserProfileUpdate } from '@/src/hooks/auth.hook';
+import { useGetPost } from '@/src/hooks/get.post.hook';
 
 
 
 const Info = () => {
 
     const { user, } = useUser()
-    const { mutate: updateProfile } = useUserProfileUpdate()
+    console.log(user)
+    const {refetch} = useGetPost()
+    const { mutateAsync: updateProfile, } = useUserProfileUpdate()
     const [modalVisible, setModalVisible] = useState(false);
     const queryClient = useQueryClient()
 
@@ -22,22 +28,12 @@ const Info = () => {
         mobileNumber: user?.mobileNumber,
         from: user?.from,
         lives: user?.lives,
+        intro : user?.intro,
         university: user?.university,
         coverPhoto: user?.coverPhoto
     });
 
-    useEffect(() => {
-        setFormData({
-            name: user?.name,
-            address: user?.address,
-            college: user?.college,
-            mobileNumber: user?.mobileNumber,
-            from: user?.from,
-            lives: user?.lives,
-            university: user?.university,
-            coverPhoto: user?.coverPhoto,
-        });
-    }, [user]);
+    console.log(formData)
 
     const handleChange = (e: any) => {
         const { name, value } = e.target;
@@ -48,6 +44,7 @@ const Info = () => {
     const handleSubmit = async (e : any) => {
         e.preventDefault();
         updateProfile(formData)
+        refetch()
         queryClient.invalidateQueries()
         setModalVisible(false);
     };
@@ -162,8 +159,8 @@ const Info = () => {
                                 </div>
                                 <div className="flex justify-end mt-4">
                                     <button
-                                        type="button"
                                         className="bg-gray-400 text-white px-4 py-2 rounded mr-2"
+                                        type="button"
                                         onClick={() => setModalVisible(false)}
                                     >
                                         Cancel

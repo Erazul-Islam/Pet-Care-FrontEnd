@@ -1,6 +1,11 @@
+/* eslint-disable prettier/prettier */
+ import {motion} from "framer-motion"
+
+
+
 export default function BlogPage() {
   return (
-    <div>
+    <motion.div>
       <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-gray-100 dark:bg-gray-900">
         <h1 className="text-5xl font-extrabold text-center text-teal-600 mb-6">
           Get in Touch
@@ -72,7 +77,6 @@ export default function BlogPage() {
                 className="w-full p-3 border border-gray-300 rounded-lg dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
                 id="message"
                 placeholder="Your Message"
-                rows="4"
               />
             </div>
 
@@ -85,6 +89,6 @@ export default function BlogPage() {
           </form>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

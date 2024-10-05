@@ -1,20 +1,25 @@
+/* eslint-disable import/order */
 /* eslint-disable padding-line-between-statements */
 /* eslint-disable prettier/prettier */
 "use client"
 
 import React, { useState } from 'react';
 import { toast } from 'sonner';
-import { Avatar, Button, Spinner, } from '@nextui-org/react';
+import { Avatar, Spinner, } from '@nextui-org/react';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
 
+import Payment from './payment';
+import { motion, useReducedMotion } from 'framer-motion';
 import { useGetPost } from '@/src/hooks/get.post.hook';
 import { useAddComment, useDeleteComment, useEditComment } from '@/src/hooks/comment.hook';
 import { useUser } from '@/src/context/user.provider';
 import { useFollowUser, useUnfollowUser } from '@/src/hooks/follow.hook';
 import { useDownVotePost, useUpvotePost } from '@/src/hooks/post.hook';
+import DOMPurify from 'dompurify';
 import Feed from '../Spinner';
-import Payment from './payment';
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements } from '@stripe/react-stripe-js';
+import PetMarkDownEditor from '@/src/app/(WithCommonLayout)/(user)/profile/_components/pet-post';
+
 
 
 
@@ -26,6 +31,11 @@ const GetPost = () => {
     const { user } = useUser()
 
     const stripePromise = loadStripe('pk_test_51OEWQiI8i8m69lNjPL8a3QNQtS31dfaIR6lr00gHoVxSTvtZpjdNVv186ZG7pYGfTwqchyWoClqvbBLGmdzA4Oxr00lZCJmnc7');
+
+    const shouldReduceMotion = useReducedMotion();
+
+
+
 
 
     const addComment = useAddComment();
@@ -162,7 +172,6 @@ const GetPost = () => {
     return (
         <div>
             <section className="flex flex-col items-center ">
-                {/* <Feed /> */}
                 <button
                     className={`bg-green-500 text-white mt-4 px-4 py-2 rounded-md mb-4 flex items-center justify-center ${isFetching ? 'cursor-not-allowed opacity-50' : ''
                         }`}
@@ -171,7 +180,8 @@ const GetPost = () => {
                 >
                     {isFetching ? <Spinner /> : showOnlyUpvoted ? "Show All Posts" : "Show Only Upvoted Posts"}
                 </button>
-                <div className='grid grid-cols-1'>
+                <PetMarkDownEditor />
+                <motion.div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
                     {
                         isSuccess &&
                         sortedPosts?.map((post) => (
@@ -198,10 +208,10 @@ const GetPost = () => {
                                             </div>
                                         </div>
                                         <div className=''>
-                                            <button className="bg-teal-700  text-white px-4 py-1 rounded-md text-sm" onClick={() => handleFollow(post._id)}>Follow</button>
-                                            <button className="bg-teal-700 ml-3 text-white px-4 py-1 rounded-md text-sm" onClick={() => handleUnfollow(post._id)}>UnFollow</button>
-                                            <button className="bg-purple-600 ml-3 text-white px-4 py-1 rounded-md text-sm" onClick={() => handleUpvotePost(post._id)}>upvote</button>
-                                            <button className="bg-red-400 ml-3 text-white px-4 py-1 rounded-md text-sm" onClick={() => handleDownVotePost(post._id)}>downVote</button>
+                                            <motion.button className="bg-teal-700  text-white px-4 py-1 rounded-md text-sm" whileHover={{ scale: 1.2, backgroundColor: "blueviolet", transition: { duration: 0.3 } }} whileTap={{ scale: 0.95 }} onClick={() => handleFollow(post._id)}>Follow</motion.button>
+                                            <motion.button className="bg-teal-700 ml-3 text-white px-4 py-1 rounded-md text-sm" whileHover={{ scale: 1.2, transition: { duration: 0.3 } }} whileTap={{ scale: 0.95 }} onClick={() => handleUnfollow(post._id)}>UnFollow</motion.button>
+                                            <motion.button className="bg-purple-600 ml-3 text-white px-4 py-1 rounded-md text-sm" whileHover={{ scale: 1.2, transition: { duration: 0.3 } }} whileTap={{ scale: 0.95 }} onClick={() => handleUpvotePost(post._id)}>upvote</motion.button>
+                                            <motion.button className="bg-red-400 ml-3 text-white px-4 py-1 rounded-md text-sm" whileHover={{ scale: 1.2, transition: { duration: 0.3 } }} whileTap={{ scale: 0.95 }} onClick={() => handleDownVotePost(post._id)}>downVote</motion.button>
 
                                         </div>
                                     </div>
@@ -209,15 +219,18 @@ const GetPost = () => {
                                     {/* Post Content */}
                                     <div className="mb-4">
                                         <h3 className="font-semibold text-emerald-800 text-lg">{post.caption}</h3>
-                                        <p className="text-sm mt-3">{post.description}</p>
+                                        <div
+                                            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.description) }}
+                                            className="text-sm mt-3"
+                                        />
                                     </div>
 
                                     {/* Post Image */}
                                     {post.photo && (
-                                        <img
-                                            alt={post.caption}
-                                            className="w-full h-96 object-cover rounded-lg mb-4"
+                                        <motion.img alt={post.caption} className="w-full h-96 object-cover rounded-lg mb-4"
                                             src={post.photo}
+                                            transition={{ ease: "easeIn", duration: 1, type: 'spring', stiffness: 100 }}
+                                            // whileHover={{ scale: 1.1, }}
                                         />
                                     )}
 
@@ -264,7 +277,7 @@ const GetPost = () => {
                                 </div>
                             </div>
                         ))}
-                </div>
+                </motion.div>
                 {modalVisible && (
                     <div className="fixed inset-0 z-50 flex items-center justify-cente bg-opacity-50">
                         <div className=" rounded-lg shadow-lg p-6 w-11/12 max-w-md">

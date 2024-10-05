@@ -7,6 +7,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useCreatePost } from '@/src/hooks/post.hook';
 import { useUser } from '@/src/context/user.provider';
 import { TPost } from '@/src/types';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 
 
@@ -62,12 +64,7 @@ const PetMarkDownEditor = () => {
                             value={caption}
                             onChange={(e) => setCaption(e.target.value)}
                         />
-                        <textarea
-                            className="w-full h-24 p-2 border border-gray-300 rounded-lg resize-none mt-2"
-                            placeholder="Add a description..."
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                        />
+                        <ReactQuill className='mt-6 mb-6' placeholder='Description' theme="snow"  value={description} onChange={setDescription} />
                         <input
                             className="w-full p-2 border border-gray-300 rounded-lg mt-2"
                             placeholder="Add a photo URL..."
@@ -83,6 +80,7 @@ const PetMarkDownEditor = () => {
                             <option value="TIP">TIP</option>
                             <option value="Story">Story</option>
                         </select>
+                        <p className='text-xl mt-2 mb-2'>Do you want to make this post premium?</p>
                         <select
                             className="w-full p-2 border border-gray-300 rounded-lg mt-2"
                             value={isPremium}

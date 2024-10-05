@@ -1,5 +1,10 @@
 /* eslint-disable prettier/prettier */
+
+"use client"
+
 import React from "react";
+
+import { motion } from "framer-motion"
 
 const AboutUs = () => {
   return (
@@ -16,7 +21,7 @@ const AboutUs = () => {
       <div className=" md:ml-40 mb-12">
         <h2 className="text-4xl text-center font-bold mb-2">Our Mission</h2>
         <div className="md:flex">
-          <img src="https://i.ibb.co.com/ftd02nr/istockphoto-167154701-612x612.jpg" alt="" />
+          <motion.img whileHover={{ scale: 1.1, }} transition={{ ease: "easeIn", duration: 1, type: 'spring', stiffness: 100 }} src="https://i.ibb.co.com/ftd02nr/istockphoto-167154701-612x612.jpg" alt="" />
           <p className="md:mt-32 mt-12 text-lg max-w-3xl mx-auto">
             To provide a treasure trove of resources, support, <br /> and innovative
             solutions that empower <br /> pet owners to give their pets the love and care
@@ -33,7 +38,7 @@ const AboutUs = () => {
             owner to make <br /> informed choices for their furry companions and foster a
             loving pet community.
           </p>
-          <img className="mt-12 md:mt-0" src="https://i.ibb.co.com/6wB6H52/istockphoto-690772190-612x612.jpg" alt="" />
+          <motion.img whileHover={{ scale: 1.1, }} transition={{ ease: "easeIn", duration: 1, type: 'spring', stiffness: 100 }} className="mt-12 md:mt-0" src="https://i.ibb.co.com/6wB6H52/istockphoto-690772190-612x612.jpg" alt="" />
         </div>
       </div>
 
@@ -42,9 +47,11 @@ const AboutUs = () => {
       </h2>
       <div className="grid md:ml-40 ml-0 mr-32  grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         <div className="bg-white w-[450px] dark:bg-gray-800 shadow-lg rounded-lg p-6 hover:shadow-xl transition-shadow duration-300">
-          <img
+          <motion.img
+            whileHover={{ scale: 1.1, }}
+            transition={{ type: 'spring', stiffness: 100 }}
             alt="Jane Doe"
-            className="w-full h-96 object-cover rounded-t-lg mb-4"
+            className="w-full cursor-pointer h-96 object-cover rounded-t-lg mb-4"
             src="https://i.ibb.co.com/t2WzvdC/Fiverr.jpg"
           />
           <h3 className="text-xl font-semibold text-teal-600 dark:text-teal-300">
@@ -58,11 +65,14 @@ const AboutUs = () => {
           </p>
         </div>
 
-        <div className="bg-white w-[450px] dark:bg-gray-800 shadow-lg rounded-lg p-6 hover:shadow-xl transition-shadow duration-300">
-          <img
-            src="https://i.ibb.co.com/XjqZsWh/Taosif.jpgs"
+        <motion.div
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white w-[450px] dark:bg-gray-800 shadow-lg rounded-lg p-6 hover:shadow-xl transition-shadow duration-300">
+          <motion.img
+            whileHover={{ scale: 1.1, }}
+            transition={{ type: 'spring', stiffness: 100 }}
             alt="John Smith"
-            className="w-full h-96 object-cover rounded-t-lg mb-4"
+            className="w-full cursor-pointer h-96 object-cover rounded-t-lg mb-4"
+            src="https://i.ibb.co.com/XjqZsWh/Taosif.jpgs"
           />
           <h3 className="text-xl font-semibold text-teal-600 dark:text-teal-300">
             John Smith
@@ -75,12 +85,14 @@ const AboutUs = () => {
             creating a warm and inviting space for pet lovers to connect and
             support each other.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="bg-white w-[450px] md:mr-40 dark:bg-gray-800 shadow-lg rounded-lg p-6 hover:shadow-xl transition-shadow duration-300">
-          <img
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 2 }} className="bg-white w-[450px] md:mr-40 dark:bg-gray-800 shadow-lg rounded-lg p-6 hover:shadow-xl transition-shadow duration-300">
+          <motion.img
+            whileHover={{ scale: 1.1, }}
+            transition={{ type: 'spring', stiffness: 100 }}
             alt="Emily Johnson"
-            className="w-full h-96 object-cover rounded-t-lg mb-4"
+            className="w-full cursor-pointer h-96 object-cover rounded-t-lg mb-4"
             src="https://i.ibb.co.com/q0m4Tzh/IMG-20231217-WA0011.jpg"
           />
           <h3 className="text-xl font-semibold text-teal-600 dark:text-teal-300">
@@ -92,7 +104,7 @@ const AboutUs = () => {
             engaging content that educates and inspires pet owners to embrace
             their journey with their pets.
           </p>
-        </div>
+        </motion.div>
       </div>
       <div>
         <h1 className="text-center text-4xl mt-14 mb-12">We</h1>

@@ -15,6 +15,8 @@ import {
 
 import { } from "@nextui-org/navbar";
 
+import { motion } from "framer-motion"
+
 import { Button } from "@nextui-org/button";
 import { Kbd } from "@nextui-org/kbd";
 import { Link } from "@nextui-org/link";
@@ -29,7 +31,6 @@ import {
   GithubIcon,
   HeartFilledIcon,
   SearchIcon,
-  Logo,
 } from "@/src/components/icons";
 import { Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
 import { useUser } from "../context/user.provider";
@@ -43,7 +44,7 @@ export const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const {  setIsLoading: userLoading } = useUser();
+  const { setIsLoading: userLoading } = useUser();
 
   const handleLogout = () => {
     logout();
@@ -84,10 +85,10 @@ export const Navbar = () => {
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
-            <img  alt="" src="https://i.ibb.co.com/BKKK5Lq/Logo-2.png" />
+            <img alt="" src="https://i.ibb.co.com/BKKK5Lq/Logo-2.png" />
           </NextLink>
         </NavbarBrand>
-        <ul className="hidden lg:flex gap-4 justify-start ml-2">
+        < motion.ul  className="hidden lg:flex gap-4 justify-start ml-2">
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
               <NextLink
@@ -102,7 +103,7 @@ export const Navbar = () => {
               </NextLink>
             </NavbarItem>
           ))}
-        </ul>
+        </motion.ul>
       </NavbarContent>
 
       <NavbarContent
@@ -158,7 +159,7 @@ export const Navbar = () => {
             <DropdownItem key="system">System</DropdownItem>
             <DropdownItem key="configurations">Configurations</DropdownItem>
             <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-            <DropdownItem  key="logout" color="success">
+            <DropdownItem key="logout" color="success">
               {user ? <Button onClick={() => handleLogout()}>Log out</Button> : <Link href="/login"><Button>Log in</Button></Link>}
             </DropdownItem>
           </DropdownMenu>
