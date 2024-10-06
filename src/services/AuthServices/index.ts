@@ -28,6 +28,14 @@ export const editUserInfo = async (payload: Partial<TUser>) => {
     const response = await axiosInstance.put('/auth/me', payload)
 
     return response.data
+
+}
+
+
+export const userData = async() => {
+    const response = await axiosInstance.get('/auth/me') 
+
+    return response.data
 }
 
 

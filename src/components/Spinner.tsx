@@ -20,6 +20,7 @@ const Feed = () => {
     const [photo, setPhoto] = useState('');
     const [category, setCategory] = useState('TIP');
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isPremium,setisPremium] = useState("NO")
 
     const handlePost = () => {
         const payload: TPost = {
@@ -31,6 +32,7 @@ const Feed = () => {
             description,
             photo,
             category,
+            isPremium,
             comments: [],
         };
 
@@ -41,6 +43,7 @@ const Feed = () => {
                 setDescription('');
                 setPhoto('');
                 setCategory('TIP');
+                setisPremium(false)
             }
         });
     };

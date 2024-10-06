@@ -1,10 +1,10 @@
 /* eslint-disable prettier/prettier */
-import { QueryClient, useMutation, useQueryClient } from "@tanstack/react-query";
+import { QueryClient, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 // import { toast } from "react-toastify";
 
-import { editUserInfo, loginUser, registerUser } from "../services/AuthServices";
+import { editUserInfo, loginUser, registerUser, userData } from "../services/AuthServices";
 import { changePasswordService } from "../services/change_password";
 import { TUser } from "../types";
 
@@ -35,7 +35,6 @@ export const useUserLogin = () => {
 };
 
 export const useUserProfileUpdate = () => {
-    const queryClient = useQueryClient() 
 
     return useMutation<any, Error, Partial<TUser>>({
         mutationKey: ["PROFILE_UPDATE"],
@@ -47,6 +46,13 @@ export const useUserProfileUpdate = () => {
         onError: (error) => {
             toast.error(error.message);
         },
+    });
+};
+
+export const useGetUser = () => {
+    return useQuery({
+        queryKey: ["GET_USER"],
+        queryFn: async () => await userData(),
     });
 };
 

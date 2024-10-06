@@ -2,38 +2,35 @@
 
 "use client"
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@nextui-org/button'
-import { useQueryClient } from '@tanstack/react-query';
 
-import { useUser } from '@/src/context/user.provider';
-import { useUserProfileUpdate } from '@/src/hooks/auth.hook';
-import { useGetPost } from '@/src/hooks/get.post.hook';
+
+import { useGetUser, useUserProfileUpdate } from '@/src/hooks/auth.hook';
 
 
 
 const Info = () => {
 
-    const { user, } = useUser()
-    console.log(user)
-    const {refetch} = useGetPost()
+
+
+    const { data: userData, refetch } = useGetUser()
     const { mutateAsync: updateProfile, } = useUserProfileUpdate()
     const [modalVisible, setModalVisible] = useState(false);
-    const queryClient = useQueryClient()
+
 
     const [formData, setFormData] = useState({
-        name: user?.name,
-        address: user?.address,
-        college: user?.college,
-        mobileNumber: user?.mobileNumber,
-        from: user?.from,
-        lives: user?.lives,
-        intro : user?.intro,
-        university: user?.university,
-        coverPhoto: user?.coverPhoto
+        name: userData?.data.name,
+        address: userData?.data.address,
+        college: userData?.data.college,
+        mobileNumber: userData?.data.mobileNumber,
+        from: userData?.data.from,
+        lives: userData?.data.lives,
+        intro: userData?.data.intro,
+        profilePhoto: userData?.data.profilePhoto,
+        university: userData?.data.university,
+        coverPhoto: userData?.data.coverPhoto
     });
-
-    console.log(formData)
 
     const handleChange = (e: any) => {
         const { name, value } = e.target;
@@ -41,27 +38,30 @@ const Info = () => {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = async (e : any) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
-        updateProfile(formData)
-        refetch()
-        queryClient.invalidateQueries()
+        updateProfile(formData, {
+            onSuccess: () => {
+                refetch()
+                window.location.reload()
+            }
+        })
         setModalVisible(false);
+        refetch()
     };
-
 
     return (
         <div>
             <div className=" p-5 rounded-lg shadow-md">
                 <div className="flex gap-6">
                     <img
-                        alt={user?.name}
+                        alt={userData?.data?.name}
                         className="rounded-full w-40 h-40 object-cover border-2 border-gray-300"
-                        src={user?.profilePhoto}
+                        src={userData?.data?.profilePhoto}
                     />
                     <div className="flex flex-col justify-center">
-                        <h2 className="text-3xl font-bold">{user?.name}</h2>
-                        <p className="text-gray-600">{user?.email}</p>
+                        <h2 className="text-3xl font-bold">{userData?.data?.name}</h2>
+                        <p className="">{userData?.data?.email}</p>
                         <div className="flex items-center gap-2 mt-2">
                             <h1 className="font-semibold">21K followers</h1>
                             <span className="text-gray-400">•</span>
@@ -78,13 +78,13 @@ const Info = () => {
 
                 <div className="mt-6">
                     <h3 className="text-xl font-semibold">About</h3>
-                    <p className="mt-2">{user?.intro}</p>
-                    <p className="mt-1"><strong>Address:</strong> {user?.address}</p>
-                    <p className="mt-1"><strong>College:</strong> {user?.college}</p>
-                    <p className="mt-1"><strong>Mobile:</strong> {user?.mobileNumber}</p>
-                    <p className="mt-1"><strong>From:</strong> {user?.from}</p>
-                    <p className="mt-1"><strong>Lives in:</strong> {user?.lives}</p>
-                    <p className="mt-1"><strong>University:</strong> {user?.university}</p>
+                    <p className="mt-2">{userData?.data?.intro}</p>
+                    <p className="mt-1"><strong>Address:</strong> {userData?.data?.address}</p>
+                    <p className="mt-1"><strong>College:</strong> {userData?.data?.college}</p>
+                    <p className="mt-1"><strong>Mobile:</strong> {userData?.data?.mobileNumber}</p>
+                    <p className="mt-1"><strong>From:</strong> {userData?.data?.from}</p>
+                    <p className="mt-1"><strong>Lives in:</strong> {userData?.data?.lives}</p>
+                    <p className="mt-1"><strong>University:</strong> {userData?.data?.university}</p>
                 </div>
                 {modalVisible && (
                     <div className="fixed inset-0 flex items-center justify-center z-50">
@@ -94,65 +94,81 @@ const Info = () => {
                                 <div className="flex flex-col space-y-4">
                                     <input
                                         className="border p-2 rounded"
-                                        type="text"
                                         name="name"
                                         placeholder="Name"
+                                        type="text"
                                         value={formData.name}
                                         onChange={handleChange}
                                     />
                                     <input
                                         className="border p-2 rounded"
-                                        type="text"
                                         name="address"
                                         placeholder="Address"
+                                        type="text"
                                         value={formData.address}
                                         onChange={handleChange}
                                     />
                                     <input
                                         className="border p-2 rounded"
+                                        name="intro"
+                                        placeholder="Introduction"
                                         type="text"
+                                        value={formData.intro}
+                                        onChange={handleChange}
+                                    />
+                                    <input
+                                        className="border p-2 rounded"
                                         name="college"
                                         placeholder="College"
+                                        type="text"
                                         value={formData.college}
                                         onChange={handleChange}
                                     />
-                                    <input
+                                    {/* <input
                                         className="border p-2 rounded"
-                                        type="text"
                                         name="coverPhoto"
                                         placeholder="cover"
+                                        type="text"
                                         value={formData.coverPhoto}
+                                        onChange={handleChange}
+                                    /> */}
+                                    <input
+                                        className="border p-2 rounded"
+                                        name="profilePhoto"
+                                        placeholder="profile photo url"
+                                        type="text"
+                                        value={formData. profilePhoto}
                                         onChange={handleChange}
                                     />
                                     <input
                                         className="border p-2 rounded"
-                                        type="text"
                                         name="mobileNumber"
                                         placeholder="Mobile Number"
+                                        type="text"
                                         value={formData.mobileNumber}
                                         onChange={handleChange}
                                     />
                                     <input
                                         className="border p-2 rounded"
-                                        type="text"
                                         name="from"
                                         placeholder="From"
+                                        type="text"
                                         value={formData.from}
                                         onChange={handleChange}
                                     />
                                     <input
                                         className="border p-2 rounded"
-                                        type="text"
                                         name="lives"
                                         placeholder="Lives in"
+                                        type="text"
                                         value={formData.lives}
                                         onChange={handleChange}
                                     />
                                     <input
                                         className="border p-2 rounded"
-                                        type="text"
                                         name="university"
                                         placeholder="University"
+                                        type="text"
                                         value={formData.university}
                                         onChange={handleChange}
                                     />
@@ -166,8 +182,8 @@ const Info = () => {
                                         Cancel
                                     </button>
                                     <button
-                                        type="submit"
                                         className="bg-blue-500 text-white px-4 py-2 rounded"
+                                        type="submit"
                                     >
                                         Save Changes
                                     </button>

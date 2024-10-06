@@ -36,8 +36,6 @@ const PetMarkDownEditor = () => {
             comments: [],
         };
 
-        console.log(payload)
-
         createPost(payload, {
             onSuccess: () => {
                 queryClient.invalidateQueries();
@@ -49,8 +47,6 @@ const PetMarkDownEditor = () => {
             }
         })
     };
-
-    console.log(createPost)
 
 
     return (

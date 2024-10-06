@@ -17,8 +17,8 @@ import { useUser } from '@/src/context/user.provider';
 import { useFollowUser, useUnfollowUser } from '@/src/hooks/follow.hook';
 import { useDownVotePost, useUpvotePost } from '@/src/hooks/post.hook';
 import DOMPurify from 'dompurify';
-import Feed from '../Spinner';
 import PetMarkDownEditor from '@/src/app/(WithCommonLayout)/(user)/profile/_components/pet-post';
+import { useGetUser } from '@/src/hooks/auth.hook';
 
 
 
@@ -27,16 +27,11 @@ import PetMarkDownEditor from '@/src/app/(WithCommonLayout)/(user)/profile/_comp
 const GetPost = () => {
 
     const { data: posts, isSuccess, refetch, isFetching } = useGetPost();
+    const {data} = useGetUser()
+    console.log(data)
 
     const { user } = useUser()
-
-    const stripePromise = loadStripe('pk_test_51OEWQiI8i8m69lNjPL8a3QNQtS31dfaIR6lr00gHoVxSTvtZpjdNVv186ZG7pYGfTwqchyWoClqvbBLGmdzA4Oxr00lZCJmnc7');
-
-    const shouldReduceMotion = useReducedMotion();
-
-
-
-
+    const stripePromise = loadStripe('pk_test_51OEWQiI8i8m69lNjPL8a3QNQtS31dfaIR6lr00gHoVxSTvtZpjdNVv186ZG7pYGfTwqchyWoClqvbBLGmdzA4Oxr00lZCJmnc7')
 
     const addComment = useAddComment();
     const editComment = useEditComment()
@@ -121,8 +116,6 @@ const GetPost = () => {
             return;
         }
 
-
-
         if (user?._id === targetUserId) {
             toast.error("You cannot follow yourself.");
             return;
@@ -169,6 +162,8 @@ const GetPost = () => {
 
 
 
+
+
     return (
         <div>
             <section className="flex flex-col items-center ">
@@ -212,7 +207,6 @@ const GetPost = () => {
                                             <motion.button className="bg-teal-700 ml-3 text-white px-4 py-1 rounded-md text-sm" whileHover={{ scale: 1.2, transition: { duration: 0.3 } }} whileTap={{ scale: 0.95 }} onClick={() => handleUnfollow(post._id)}>UnFollow</motion.button>
                                             <motion.button className="bg-purple-600 ml-3 text-white px-4 py-1 rounded-md text-sm" whileHover={{ scale: 1.2, transition: { duration: 0.3 } }} whileTap={{ scale: 0.95 }} onClick={() => handleUpvotePost(post._id)}>upvote</motion.button>
                                             <motion.button className="bg-red-400 ml-3 text-white px-4 py-1 rounded-md text-sm" whileHover={{ scale: 1.2, transition: { duration: 0.3 } }} whileTap={{ scale: 0.95 }} onClick={() => handleDownVotePost(post._id)}>downVote</motion.button>
-
                                         </div>
                                     </div>
 

@@ -52,7 +52,7 @@ const UserProfile = () => {
 
     return (
         <div className="p-4 lg:ml-80 md:ml-40 lg:mr-80">
-            <img alt="f" className='w-full h-[500px] sticky'  src={user?.coverPhoto}  />
+            {/* <img alt="f" className='w-full h-[500px] sticky'  src={user?.coverPhoto}  /> */}
             <div className='lg:flex mt-2 justify-between'>
                 <Info />
                 <PetMarkDownEditor />
