@@ -18,7 +18,6 @@ import { } from "@nextui-org/navbar";
 import { motion } from "framer-motion"
 
 import { Button } from "@nextui-org/button";
-import { Kbd } from "@nextui-org/kbd";
 import { Link } from "@nextui-org/link";
 import { Input } from "@nextui-org/input";
 import { link as linkStyles } from "@nextui-org/theme";
@@ -39,9 +38,15 @@ import { logout } from "../services/AuthServices";
 import { protectedRoutes } from "../constant";
 
 export const Navbar = () => {
+
+  
+  
+  
+  const router = useRouter();
+
+
   const { user } = useUser()
 
-  const router = useRouter();
   const pathname = usePathname();
 
   const { setIsLoading: userLoading } = useUser();
@@ -66,11 +71,6 @@ export const Navbar = () => {
         inputWrapper: "bg-default-100",
         input: "text-sm",
       }}
-      endContent={
-        <Kbd className="hidden lg:inline-block" keys={["command"]}>
-          K
-        </Kbd>
-      }
       labelPlacement="outside"
       placeholder="Search..."
       startContent={
@@ -88,7 +88,7 @@ export const Navbar = () => {
             <img alt="" src="https://i.ibb.co.com/BKKK5Lq/Logo-2.png" />
           </NextLink>
         </NavbarBrand>
-        < motion.ul  className="hidden lg:flex gap-4 justify-start ml-2">
+        < motion.ul className="hidden lg:flex gap-4 justify-start ml-2">
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
               <NextLink

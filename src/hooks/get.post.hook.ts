@@ -14,7 +14,7 @@ export const useGetPost = () => {
   };
   
 
-  export const useDeletePost = () => {
+export const useDeletePost = () => {
     return useMutation({
         mutationKey: ["DELETE_POST"],
         mutationFn: async (postId: string) => await deletePost(postId),

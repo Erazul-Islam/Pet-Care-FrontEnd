@@ -48,6 +48,14 @@ export interface TUser {
   }>;
 };
 
+
+export interface ISearchResult {
+  caption: string;
+  description: string;
+  thumbnail: string;
+  id: string;
+}
+
 export type TPost = {
   userName: string,
   userId: string,

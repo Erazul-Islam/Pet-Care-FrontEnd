@@ -1,10 +1,10 @@
 /* eslint-disable prettier/prettier */
-import {  useMutation, useQuery,  } from "@tanstack/react-query";
+import { useMutation, useQuery, } from "@tanstack/react-query";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 // import { toast } from "react-toastify";
 
-import { editUserInfo, loginUser, registerUser, userData } from "../services/AuthServices";
+import { deleteUser, editUserInfo, getAllprofile, loginUser, registerUser, userData, userRoleupdate } from "../services/AuthServices";
 import { changePasswordService } from "../services/change_password";
 import { TUser } from "../types";
 
@@ -20,6 +20,38 @@ export const useUserRegistration = () => {
         },
     });
 };
+
+export const useGetProfile = () => {
+    return useQuery({
+        queryKey: ["GET_USER"],
+        queryFn: async () => await getAllprofile(),
+    });
+};
+
+export const useDeleteUser = () => {
+    return useMutation({
+        mutationKey: ["DELETE_POST"],
+        mutationFn: async (postId: string) => await deleteUser(postId),
+        onSuccess: () => {
+            toast.success("DELETED");
+        },
+        onError: (error: any) => {
+            toast.error(error.message);
+        },
+    });
+};
+
+export const useUpdateUserRole = () => {
+    return useMutation <any,Error, {userId :string}> ({
+        mutationFn : async ({userId}) => userRoleupdate(userId),
+        onSuccess : () => {
+            toast.success("User role updated Successfully")
+        },
+        onError : (error) => {
+            toast.error(error.message)
+        }
+    })
+}
 
 export const useUserLogin = () => {
     return useMutation<any, Error, FieldValues>({

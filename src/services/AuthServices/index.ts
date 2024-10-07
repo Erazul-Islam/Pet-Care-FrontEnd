@@ -31,6 +31,25 @@ export const editUserInfo = async (payload: Partial<TUser>) => {
 
 }
 
+export const getAllprofile = async () => {
+    const res = await axiosInstance.get('/auth/all-profile')
+
+    return res.data
+}
+
+export const deleteUser = async (userId:string) => {
+
+    const response = await axiosInstance.delete(`/auth/${userId}`)
+
+    return response.data
+}
+
+export const userRoleupdate = async (userId:string) => {
+    const response = await axiosInstance.patch(`/auth/${userId}`)
+
+    return response.data
+}
+
 
 export const userData = async() => {
     const response = await axiosInstance.get('/auth/me') 
