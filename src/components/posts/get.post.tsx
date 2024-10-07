@@ -3,7 +3,7 @@
 /* eslint-disable prettier/prettier */
 "use client"
 
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { toast } from 'sonner';
 import { Avatar, Spinner, } from '@nextui-org/react';
 import { loadStripe } from '@stripe/stripe-js';
@@ -42,8 +42,28 @@ const GetPost = () => {
     const [currentCommentId, setCurrentCommentId] = useState<string | null>(null);
     const [currentPostId, setCurrentPostId] = useState<string | null>(null);
     const [updatedCommentText, setUpdatedCommentText] = useState('');
-    const [showOnlyUpvoted, setShowOnlyUpvoted] = useState(false);
-    const [isToggling, setIsToggling] = useState(false)
+    const [sortBy, setSortBy] = useState<'newest' | 'mostUpvoted'>('newest')
+    const [filterByCategory, setFilterByCategory] = useState<'All' | 'Story' | 'TIP'>('All');
+
+
+    const sortedPosts = useMemo(() => {
+        if (!isSuccess || !posts?.data) return [];
+
+        let sorted = [...posts.data];
+
+        if (filterByCategory !== 'All') {
+            sorted = sorted.filter(post => post.category === filterByCategory);
+        }
+
+        if (sortBy === 'newest') {
+            sorted.sort(
+                (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            );
+        } else if (sortBy === 'mostUpvoted') {
+            sorted.sort((a, b) => b.totalUpvotes - a.totalUpvotes);
+        }
+        return sorted;
+    }, [isSuccess, posts, sortBy, filterByCategory]);
 
     const handleAddComment = async (postId: string) => {
         const text = commentText[postId]?.trim();
@@ -137,53 +157,61 @@ const GetPost = () => {
             toast.error("You cannot unfollow yourself.");
             return;
         }
-        unfollow(targetUserId,{
-            onSuccess : () => {
+        unfollow(targetUserId, {
+            onSuccess: () => {
                 window.location.reload()
             }
         })
     };
 
-    const handleToggle = async () => {
-        setIsToggling(true);
-        setShowOnlyUpvoted(prev => !prev);
-        try {
-            await refetch(); // Refetch posts if necessary
-        } catch (error) {
-            toast.error("Failed to toggle posts");
-        } finally {
-            setIsToggling(false);
-        }
+    const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSortBy(e.target.value as 'newest' | 'mostUpvoted');
     };
 
-    const sortedPosts = posts?.data.filter(post => !showOnlyUpvoted || post.totalUpvotes > 0).sort((a, b) => b.totalUpvotes - a.totalUpvotes)
-
-
-
-
+    if (isFetching && !isSuccess) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <Spinner />
+            </div>
+        );
+    }
 
     return (
         <div>
             <section className="flex flex-col items-center ">
-                <button
-                    className={`bg-green-500 text-white mt-4 px-4 py-2 rounded-md mb-4 flex items-center justify-center ${isFetching ? 'cursor-not-allowed opacity-50' : ''
-                        }`}
-                    disabled={isFetching}
-                    onClick={handleToggle}
-                >
-                    {isFetching ? <Spinner /> : showOnlyUpvoted ? "Show All Posts" : "Show Only Upvoted Posts"}
-                </button>
                 <PetMarkDownEditor />
-                <motion.div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
+                <div className='flex gap-8'>
+                    <div className="flex  w-full max-w-screen-md mb-4">
+                        <select
+                            className="border bg-purple-600 rounded-md px-3 py-1"
+                            id="sort"
+                            value={sortBy}
+                            onChange={handleSortChange}
+                        >
+                            <option value="newest">Newest</option>
+                            <option value="mostUpvoted">Most Upvoted</option>
+                        </select>
+                    </div>
+                    <div className="flex  w-full max-w-screen-md mb-4">
+                        {/* <label htmlFor="filter" className="mr-2 font-medium">Filter By:</label> */}
+                        <select
+                            className="border bg-purple-600 rounded-md px-3 py-1"
+                            id="filter"
+                            value={filterByCategory}
+                            onChange={(e) => setFilterByCategory(e.target.value as 'All' | 'Story' | 'TIP')}
+                        >
+                            <option value="All">All</option>
+                            <option value="Story">Story</option>
+                            <option value="TIP">TIP</option>
+                        </select>
+                    </div>
+                </div>
+                <motion.div className='grid grid-cols-1 gap-4'>
                     {
                         isSuccess &&
                         sortedPosts?.map((post) => {
 
                             const isFollowing = userData?.data?.following?.some(followingUserId => followingUserId.id === post.userId)
-
-                            const isUpvoting = posts.data?.upvotes
-                            console.log(isUpvoting)
-
 
                             return (
 

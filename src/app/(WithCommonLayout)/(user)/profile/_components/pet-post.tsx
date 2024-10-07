@@ -51,7 +51,7 @@ const PetMarkDownEditor = () => {
 
     return (
         <>
-            <div className="max-w-2xl mx-auto p-4 shadow-md rounded-lg">
+            <div className="max-w-2xl mx-auto h-[500px] p-4 shadow-md rounded-lg">
                 <div className="flex items-start space-x-3">
                     <div className="flex-1">
                         <textarea

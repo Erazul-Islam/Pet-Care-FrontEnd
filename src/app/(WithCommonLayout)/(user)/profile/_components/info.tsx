@@ -63,9 +63,9 @@ const Info = () => {
                         <h2 className="text-3xl font-bold">{userData?.data?.name}</h2>
                         <p className="">{userData?.data?.email}</p>
                         <div className="flex items-center gap-2 mt-2">
-                            <h1 className="font-semibold">21K followers</h1>
+                            <h1 className="font-semibold">{userData?.data.followers.length} followers</h1>
                             <span className="text-gray-400">•</span>
-                            <h2 className="font-semibold">36 following</h2>
+                            <h2 className="font-semibold">{userData?.data.following.length} following</h2>
                         </div>
                         <Button
                             className="mt-4"
@@ -85,6 +85,30 @@ const Info = () => {
                     <p className="mt-1"><strong>From:</strong> {userData?.data?.from}</p>
                     <p className="mt-1"><strong>Lives in:</strong> {userData?.data?.lives}</p>
                     <p className="mt-1"><strong>University:</strong> {userData?.data?.university}</p>
+                    <div className="mt-12">
+                        <h3 className="text-xl font-semibold">Followers</h3>
+                        <div className='mt-3 grid grid-cols-2'>
+                            {
+                                userData?.data?.followers.map((follower) => (<div key={follower._id}>
+                                    <img className='h-40 w-40' src={follower.profilePhoto} alt="" />
+                                    <h1 className='mt-2 ml-8 font-bold'>{follower.username}</h1>
+                                    {/* <h1>{follower.email}</h1> */}
+                                </div>))
+                            }
+                        </div>
+                    </div>
+                    <div className="mt-12">
+                        <h3 className="text-xl font-semibold">Following</h3>
+                        <div className='mt-3 grid-cols-2'>
+                            {
+                                userData?.data?.following.map((follower) => (<div  key={follower._id}>
+                                    <img className='h-40 w-40' src={follower.profilePhoto} alt="" />
+                                    <h1 className='mt-2 ml-8 font-bold'>{follower.username}</h1>
+                                    {/* <h1>{follower.email}</h1> */}
+                                </div>))
+                            }
+                        </div>
+                    </div>
                 </div>
                 {modalVisible && (
                     <div className="fixed inset-0 flex items-center justify-center z-50">
@@ -137,7 +161,7 @@ const Info = () => {
                                         name="profilePhoto"
                                         placeholder="profile photo url"
                                         type="text"
-                                        value={formData. profilePhoto}
+                                        value={formData.profilePhoto}
                                         onChange={handleChange}
                                     />
                                     <input
