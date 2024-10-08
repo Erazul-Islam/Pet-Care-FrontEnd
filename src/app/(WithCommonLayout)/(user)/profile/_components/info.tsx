@@ -148,14 +148,6 @@ const Info = () => {
                                         value={formData.college}
                                         onChange={handleChange}
                                     />
-                                    {/* <input
-                                        className="border p-2 rounded"
-                                        name="coverPhoto"
-                                        placeholder="cover"
-                                        type="text"
-                                        value={formData.coverPhoto}
-                                        onChange={handleChange}
-                                    /> */}
                                     <input
                                         className="border p-2 rounded"
                                         name="profilePhoto"

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable import/order */
 /* eslint-disable prettier/prettier */
@@ -21,15 +22,17 @@ const UserProfile = () => {
 
     const { data, refetch } = useGetPost()
 
-    const filterData = data?.data?.filter((one) => one?.userEmail === user?.email)
+    const filterData = data?.data?.filter((one : any) => one?.userEmail === user?.email)
 
     const { mutate: deletePost, } = useDeletePost()
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
 
+    console.log("posts",posts)
+
     useEffect(() => {
         if (data?.data) {
-            const filteredPosts = data.data.filter((one) => one?.userEmail === user?.email);
+            const filteredPosts = data.data.filter((one : any) => one?.userEmail === user?.email);
 
             setPosts(filteredPosts);
         }
@@ -52,14 +55,13 @@ const UserProfile = () => {
 
     return (
         <div className="p-4 lg:ml-80 md:ml-40 lg:mr-80">
-            {/* <img alt="f" className='w-full h-[500px] sticky'  src={user?.coverPhoto}  /> */}
             <div className='lg:flex mt-2 justify-between'>
                 <Info />
                 <PetMarkDownEditor />
             </div>
             <div className='mt-4 lg:ml-[600px]'>
                 {
-                    filterData?.length === 0 ? <h1>No post you have</h1> : filterData?.map((one) => <div key={one._id}>
+                    filterData?.length === 0 ? <h1>No post you have</h1> : filterData?.map((one : any) => <div className='lg:grid-cols-3' key={one._id}>
                         <div
                             key={one._id}
                             className="bg-white mt-6 shadow-md rounded-lg p-4 max-w-md w-full"

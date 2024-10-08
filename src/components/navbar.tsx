@@ -39,14 +39,8 @@ import { protectedRoutes } from "../constant";
 
 export const Navbar = () => {
 
-  
-  
-  
   const router = useRouter();
-
-
   const { user } = useUser()
-
   const pathname = usePathname();
 
   const { setIsLoading: userLoading } = useUser();
@@ -56,7 +50,7 @@ export const Navbar = () => {
     userLoading(true);
 
     if (protectedRoutes.some((route) => pathname.match(route))) {
-      router.push("/");
+      router.push("/login");
     }
   };
 
@@ -155,7 +149,9 @@ export const Navbar = () => {
             </DropdownItem>
             <DropdownItem key="settings">My Settings</DropdownItem>
             <DropdownItem onClick={() => handleNavigation('/profile')} >profile</DropdownItem>
-            <DropdownItem key="analytics">Analytics</DropdownItem>
+            {
+              user?.role === "ADMIN" ? <DropdownItem onClick={() => handleNavigation('/adminDashboard')}>Dashboard</DropdownItem> : <DropdownItem onClick={() => handleNavigation('/userDashboard')}>Dashboard</DropdownItem>
+            }
             <DropdownItem key="system">System</DropdownItem>
             <DropdownItem key="configurations">Configurations</DropdownItem>
             <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>

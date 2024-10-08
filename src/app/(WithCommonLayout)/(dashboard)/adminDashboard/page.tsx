@@ -1,11 +1,13 @@
+/* eslint-disable react/jsx-sort-props */
 /* eslint-disable prettier/prettier */
 
 "use client"
 
+import React from 'react';
+import { Button } from '@nextui-org/button';
+
 import { useDeleteUser, useGetProfile, useUpdateUserRole } from '@/src/hooks/auth.hook';
 
-import { Button } from '@nextui-org/button';
-import React from 'react';
 
 const Adminpage = () => {
 
@@ -18,7 +20,6 @@ const Adminpage = () => {
     const handleUpdate = (userId: string) => {
         mutateAsync({ userId })
         refetch()
-        // window.location.reload()
     }
 
     const handleDelete = (userId: string) => {
@@ -45,7 +46,7 @@ const Adminpage = () => {
                 }
             </div>
             <div>
-                
+
             </div>
         </div>
     );

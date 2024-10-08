@@ -1,11 +1,10 @@
 /* eslint-disable prettier/prettier */
- import {motion} from "framer-motion"
 
 
 
 export default function BlogPage() {
   return (
-    <motion.div>
+    <div>
       <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-gray-100 dark:bg-gray-900">
         <h1 className="text-5xl font-extrabold text-center text-teal-600 mb-6">
           Get in Touch
@@ -89,6 +88,6 @@ export default function BlogPage() {
           </form>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
