@@ -63,11 +63,16 @@ export type TPost = {
   userEmail: string,
   caption: string,
   isPremium : string,
+  isPublished : boolean,
   description: string,
   photo: string,
   category: string,
   comments : TComment[]
 }
+
+export type TqueryKeys = 
+  | ["GET_POST"]
+  | ["PUBLISH_POST"]
 
 // export interface TUser {
 //   _id: string,

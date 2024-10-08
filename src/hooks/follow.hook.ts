@@ -12,23 +12,25 @@ export const useFollowUser = () => {
         mutationKey: ["FOLLOW_USER"],
         mutationFn: async (targetUserId: string) => await followUser(targetUserId),
         onSuccess: () => {
-            queryClient.invalidateQueries();
             toast.success("Following");
+            queryClient.invalidateQueries();
         },
         onError: (error: any) => {
             toast.error(error.message);
-            console.log(error)
-            console.log(error.message)
         },
     });
 };
 
 export const useUnfollowUser = () => {
+
+    const queryClient = useQueryClient();
+
     return useMutation({
         mutationKey: ["UNFOLLOW_USER"],
         mutationFn: async (targetUserId: string) => await unfollowUser(targetUserId),
         onSuccess: () => {
             toast.success("Unfollowed");
+            queryClient.invalidateQueries();
         },
         onError: (error: any) => {
             toast.error(error.message);

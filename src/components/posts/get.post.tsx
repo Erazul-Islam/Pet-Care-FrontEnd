@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable import/order */
 /* eslint-disable padding-line-between-statements */
 /* eslint-disable prettier/prettier */
@@ -46,7 +47,8 @@ const GetPost = () => {
     const [filterByCategory, setFilterByCategory] = useState<'All' | 'Story' | 'TIP'>('All');
 
 
-    const sortedPosts = useMemo(() => {
+    const 
+    sortedPosts = useMemo(() => {
         if (!isSuccess || !posts?.data) return [];
 
         let sorted = [...posts.data];
@@ -118,7 +120,7 @@ const GetPost = () => {
 
 
     const handleFollow = (postId: string) => {
-        const targetPost = posts?.data.find(post => post._id === postId);
+        const targetPost = posts?.data.find((post: { _id: string; }) => post._id === postId);
         if (!targetPost) {
             toast.error("Post not found.");
             return;
@@ -141,7 +143,7 @@ const GetPost = () => {
 
 
     const handleUnfollow = async (postId: string) => {
-        const targetPost = posts?.data.find(post => post._id === postId);
+        const targetPost = posts?.data.find((post: { _id: string; }) => post._id === postId);
         if (!targetPost) {
             toast.error("Post not found.");
             return;
@@ -157,11 +159,7 @@ const GetPost = () => {
             toast.error("You cannot unfollow yourself.");
             return;
         }
-        unfollow(targetUserId, {
-            onSuccess: () => {
-                window.location.reload()
-            }
-        })
+        unfollow(targetUserId)
     };
 
     const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -211,7 +209,7 @@ const GetPost = () => {
                         isSuccess &&
                         sortedPosts?.map((post) => {
 
-                            const isFollowing = userData?.data?.following?.some(followingUserId => followingUserId.id === post.userId)
+                            const isFollowing = userData?.data?.following?.some((followingUserId: { id: any; }) => followingUserId.id === post.userId)
 
                             return (
 
@@ -286,19 +284,19 @@ const GetPost = () => {
 
                                         {/* Display Comments */}
                                         <div className="mt-4">
-                                            {post.comments.map((comment) => (
+                                            {post.comments.map((comment: { _id: React.Key | null | undefined; userProfilePhoto: string | undefined; text: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | Promise<React.AwaitedReactNode> | null | undefined; userId: string | undefined; }) => (
                                                 <div key={comment._id} className="flex justify-between items-center mt-2 border-t pt-2">
                                                     <div className='flex gap-4'>
                                                         <Avatar src={comment?.userProfilePhoto} />
                                                         <p className=' mt-2'>{comment.text}</p>
                                                     </div>
                                                     <div>
-                                                        {user?._id != comment.userId ? '' : <button className="text-blue-500" onClick={() => openEditModal(post._id, comment._id, comment.text)}>
+                                                        {user?._id != comment.userId ? '' : <button className="text-blue-500" onClick={() => openEditModal(post._id, comment._id, comment.text) }>
                                                             Edit
                                                         </button>}
                                                         {user?._id != comment.userId ? '' : <button
                                                             className="text-red-500 ml-2"
-                                                            onClick={() => handleDeleteComment(post._id, comment._id)}
+                                                            onClick={() => handleDeleteComment(post._id, comment._id as string)}
                                                         >
                                                             Delete
                                                         </button>}

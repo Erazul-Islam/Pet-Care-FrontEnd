@@ -5,13 +5,23 @@
 
 import React from 'react';
 import { Button } from '@nextui-org/button';
+import { motion } from "framer-motion"
+import DOMPurify from 'dompurify';
 
 import { useDeleteUser, useGetProfile, useUpdateUserRole } from '@/src/hooks/auth.hook';
+import { useGetPost } from '@/src/hooks/get.post.hook';
+import { usePublish, useUnpublish } from '@/src/hooks/post.hook';
+
 
 
 const Adminpage = () => {
 
     const { data, refetch } = useGetProfile()
+
+    const {mutateAsync : unpublish} = useUnpublish()
+    const {mutateAsync : publish} = usePublish()
+
+    const { data: posts } = useGetPost()
 
     const { mutateAsync } = useUpdateUserRole()
 
@@ -22,10 +32,22 @@ const Adminpage = () => {
         refetch()
     }
 
+    const handleunPublish = (postId:string) => {
+        unpublish(postId)
+        refetch()
+    }
+
+    const handlePublish = (postId:string) => {
+        publish(postId)
+        refetch()
+    }
+
     const handleDelete = (userId: string) => {
         mutate(userId)
         refetch()
     }
+
+
 
 
 
@@ -46,7 +68,54 @@ const Adminpage = () => {
                 }
             </div>
             <div>
+                {
+                    posts?.data?.map((post) => (
 
+                        <div key={post._id}>
+                            <div
+                                className=" shadow-md mt-20 border border-purple-200 rounded-lg p-4 max-w-screen-md"
+                            >
+                                <div className="flex justify-between items-center mb-4">
+                                    <div className="flex items-center space-x-3">
+                                        <img
+                                            alt="User avatar"
+                                            className="w-10 h-10 rounded-full"
+                                            src={post.userProfilePhoto}
+                                        />
+                                        <div>
+                                            <h4 className="">{post.userName}</h4>
+                                            <p className="text-xs">{new Date(post.createdAt).toLocaleString()}</p>
+                                            <p className="text-xs">total upvotes {post?.totalUpvotes}</p>
+                                            <p className="text-xs">total downvote {post?.totalDownvotes}</p>
+                                        </div>
+                                        <div>
+                                            {post?.isPremium === "YES" ? <img alt="" className='w-12 h-12 ' src="https://i.ibb.co.com/jM3xrDW/premium-quality.png" /> : ""}
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Post Content */}
+                                <div className="mb-4">
+                                    <h3 className="font-semibold text-emerald-800 text-lg">{post.caption}</h3>
+                                    <div
+                                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.description) }}
+                                        className="text-sm mt-3"
+                                    />
+                                </div>
+                                {post.photo && (
+                                    <motion.img alt={post.caption} className="w-full h-96 object-cover rounded-lg mb-4"
+                                        src={post.photo}
+                                        transition={{ ease: "easeIn", duration: 1, type: 'spring', stiffness: 100 }}
+                                    // whileHover={{ scale: 1.1, }}
+                                    />
+                                )}
+                                {
+                                    post.isPublished === true ? <Button color='secondary' onClick={() => handleunPublish(post._id)}>unpublish</Button> : <Button color='secondary' onClick={() => handlePublish(post._id)}>publish</Button>
+                                }
+                            </div>
+                        </div>))
+                }
             </div>
         </div>
     );

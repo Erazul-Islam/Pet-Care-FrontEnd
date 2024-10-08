@@ -7,18 +7,19 @@ import DOMPurify from 'dompurify';
 
 import { useUser } from '@/src/context/user.provider';
 import { useGetPost } from '@/src/hooks/get.post.hook';
+import PdfGenerator from '@/src/components/pdf/pdf';
 
 const UserDashboard = () => {
 
     const { data, } = useGetPost()
     const { user, } = useUser()
 
-    const filterData = data?.data?.filter((one) => one?.userEmail === user?.email)
+    const filterData = data?.data?.filter((one : any) => one?.userEmail === user?.email)
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
         if (data?.data) {
-            const filteredPosts = data.data.filter((one) => one?.userEmail === user?.email);
+            const filteredPosts = data.data.filter((one : any) => one?.userEmail === user?.email);
 
             setPosts(filteredPosts);
         }
@@ -28,7 +29,7 @@ const UserDashboard = () => {
         <div>
             <div className='mt-4 '>
                 {
-                    filterData?.length === 0 ? <h1>No post you have</h1> : filterData?.map((one) => <div  key={one._id}>
+                    filterData?.length === 0 ? <h1>No post you have</h1> : filterData?.map((one) => <div key={one._id}>
                         <div
                             key={one._id}
                             className="bg-white mt-6 shadow-md rounded-lg p-4 max-w-md w-full"
@@ -62,6 +63,9 @@ const UserDashboard = () => {
 
                     </div>)
                 }
+            </div>
+            <div className='mt-4'>
+                <PdfGenerator />
             </div>
         </div>
     );

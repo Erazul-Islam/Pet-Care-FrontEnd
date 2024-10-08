@@ -5,15 +5,17 @@ import React, { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useCreatePost } from '@/src/hooks/post.hook';
-import { useUser } from '@/src/context/user.provider';
 import { TPost } from '@/src/types';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { useGetUser } from '@/src/hooks/auth.hook';
 
 
 
 const PetMarkDownEditor = () => {
-    const { userEmail, userName, userId, userProfilePhoto, } = useUser()
+    // const { userEmail, userName, userId, userProfilePhoto, } = useUser()
+    const {data} = useGetUser()
+
     const { mutate: createPost, } = useCreatePost();
     const queryClient = useQueryClient();
     const [caption, setCaption] = useState('');
@@ -21,18 +23,20 @@ const PetMarkDownEditor = () => {
     const [photo, setPhoto] = useState('');
     const [category, setCategory] = useState('TIP');
     const [isPremium,setPremium] = useState("YES")
+    const [isPublished,setIsPublished] = useState(true)
 
     const handlePost = () => {
         const payload: TPost = {
-            userEmail,
-            userName,
-            userId,
-            userProfilePhoto,
+            userEmail: data?.data?.email,
+            userName : data?.data?.name,
+            userId : data?.data?._id,
+            userProfilePhoto : data?.data?.profilePhoto,
             caption,
             description,
             photo,
             category,
             isPremium,
+            isPublished,
             comments: [],
         };
 
@@ -43,9 +47,11 @@ const PetMarkDownEditor = () => {
                 setDescription('');
                 setPhoto('');
                 setCategory('TIP');
-                setPremium("YES")
+                setPremium("YES"),
+                setIsPublished(true)
             }
         })
+        console.log(payload)
     };
 
 
