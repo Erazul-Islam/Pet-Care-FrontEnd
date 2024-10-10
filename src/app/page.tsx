@@ -16,9 +16,11 @@ export default function Home() {
   const [searchResults, setSearchResults] = useState<ISearchResult[] | []>([])
 
   const searchTerm = useDebounce(watch("search"))
-  console.log(searchTerm)
-  console.log(data)
 
+  console.log("searchTerm",searchTerm)
+
+  console.log('searchResult',searchResults)
+  
   useEffect(() => {
     if (searchTerm) {
       handleSearchPost(searchTerm)
@@ -59,8 +61,8 @@ export default function Home() {
           <Input
             {...register("search")}
             aria-label="Search"
-            placeholder="Search"
             className="w-48 items-center"
+            placeholder="Search"
             type="text"
           />
         </div>
@@ -80,9 +82,6 @@ export default function Home() {
                       />
                       <div>
                         <p className="text-lg font-semibold">{item.caption}</p>
-                        <p className="mt-1 line-clamp-2 h-12 w-full text-sm">
-                          {item.description}
-                        </p>
                       </div>
                     </div>
                   </div>

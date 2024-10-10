@@ -4,6 +4,7 @@ import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useState } from 'react';
 
 import { useCreatePayment } from '@/src/hooks/payment.hook';
+import { toast } from 'sonner';
 
 const Payment = () => {
 
@@ -32,8 +33,8 @@ const Payment = () => {
         try {
             // Trigger the payment creation via the mutate function
             const response = await mutateAsync(100);
-            console.log(response)
-            const clientSecret = response?.data.client_secret;
+
+            const clientSecret = response?.data?.secret.client_secret;
 
             if (!clientSecret) {
                 throw new Error('Failed to retrieve client secret.');
@@ -57,6 +58,7 @@ const Payment = () => {
             }
         } catch (error) {
             console.error('Payment error:', error);
+            toast.error(`Payment failed ${error}`)
         }
     };
 
@@ -88,7 +90,7 @@ const Payment = () => {
 
                         {/* Modal Body */}
                         <div className="px-4 py-6">
-                            <CardElement />
+                            <CardElement  />
                         </div>
 
                         {/* Modal Footer */}

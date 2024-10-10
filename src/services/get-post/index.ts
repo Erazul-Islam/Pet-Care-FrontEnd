@@ -5,10 +5,12 @@ import axiosInstance from "@/src/lib/axiosInstance"
 
 
 
-export const getAllPost = async () => {
+export const getAllPost = async (page = 1, limit = 5) => {
     try {
-        const {data} = await axiosInstance.get("/pet/pet-post")
-        
+        const { data } = await axiosInstance.get(`/pet/pet-post?page=${page}&limit=${limit}`)
+
+        console.log(data)
+
         return data
     }
     catch (err) {
@@ -16,7 +18,7 @@ export const getAllPost = async () => {
     }
 }
 
-export const deletePost = async (postId : string) => {
+export const deletePost = async (postId: string) => {
     const response = await axiosInstance.delete(`/pet/pet-post/${postId}`)
 
     return response.data

@@ -11,6 +11,7 @@ import DOMPurify from 'dompurify';
 import { useDeleteUser, useGetProfile, useUpdateUserRole } from '@/src/hooks/auth.hook';
 import { useGetPost } from '@/src/hooks/get.post.hook';
 import { usePublish, useUnpublish } from '@/src/hooks/post.hook';
+import { useGetHistory } from '@/src/hooks/payment.hook';
 
 
 
@@ -18,8 +19,11 @@ const Adminpage = () => {
 
     const { data, refetch } = useGetProfile()
 
-    const {mutateAsync : unpublish} = useUnpublish()
-    const {mutateAsync : publish} = usePublish()
+    const { data: history } = useGetHistory()
+    console.log(history)
+
+    const { mutateAsync: unpublish } = useUnpublish()
+    const { mutateAsync: publish } = usePublish()
 
     const { data: posts } = useGetPost()
 
@@ -32,12 +36,12 @@ const Adminpage = () => {
         refetch()
     }
 
-    const handleunPublish = (postId:string) => {
+    const handleunPublish = (postId: string) => {
         unpublish(postId)
         refetch()
     }
 
-    const handlePublish = (postId:string) => {
+    const handlePublish = (postId: string) => {
         publish(postId)
         refetch()
     }
@@ -116,6 +120,21 @@ const Adminpage = () => {
                             </div>
                         </div>))
                 }
+            </div>
+            <div className='grid items-center justify-center lg:grid-cols-3 gap-6 p-6'>
+                {history?.data?.length > 0 ? (
+                    history?.data?.map((one) => (
+                        <div key={one._id} className='bg-white shadow-md rounded-lg p-4 border border-gray-200 transition-transform transform hover:scale-105'>
+                            <img className='w-24 h-24 rounded-md mb-4 object-cover mx-auto' src={one.metadata.userProfilePhoto} alt={`${one.metadata.userName}'s profile`} />
+                            <h3 className='text-xl text-purple-500 font-semibold text-center mb-2'>{one.metadata.userName}</h3>
+                            <p className=' text-cyan-600 text-center'>Email: {one.metadata.userEmail}</p>
+                            <p className='text-green-500 text-center font-bold mt-2'>Amount: ${one.amount / 100}</p>
+                            <p className='text-pink-600 text-center'>Payment Created: {new Date(one.created * 1000).toLocaleString()}</p>
+                        </div>
+                    ))
+                ) : (
+                    <p className='text-gray-500 text-center col-span-full'>No payment history available.</p>
+                )}
             </div>
         </div>
     );
