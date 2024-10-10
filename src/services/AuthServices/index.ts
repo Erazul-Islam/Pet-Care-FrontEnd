@@ -105,3 +105,16 @@ export const getCurrentUser = async () => {
 
     return decodedToken;
 };
+
+
+export const forgetPassword = async (email : string) => {
+    const response = await axiosInstance.post('/auth/forget-password', {email})
+
+    return response.data
+}
+
+export const resetPassword = async (token:string,newPassword : string) => {
+    const response = await axiosInstance.post(`/auth/reset-password/${token}`, {password:newPassword})
+
+    return response.data
+}

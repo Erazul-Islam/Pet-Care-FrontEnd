@@ -22,6 +22,7 @@ import { useFollowUser, useUnfollowUser } from '@/src/hooks/follow.hook';
 import { useDownVotePost, useUpvotePost } from '@/src/hooks/post.hook';
 import PetMarkDownEditor from '@/src/app/(WithCommonLayout)/(user)/profile/_components/pet-post';
 import { useGetUser } from '@/src/hooks/auth.hook';
+import { TComment } from '@/src/types';
 
 const GetPost = () => {
 
@@ -149,7 +150,7 @@ const GetPost = () => {
     };
 
     const handleUnfollow = async (postId: string) => {
-        const targetPost = posts?.data.find((post) => post._id === postId);
+        const targetPost = posts?.data.find((post : any) => post._id === postId);
 
         if (!targetPost) {
             toast.error("Post not found.");
@@ -217,7 +218,7 @@ const GetPost = () => {
                 <motion.div className='grid grid-cols-1 gap-4'>
                     {
                         isSuccess && sortedPosts.map((post, index) => {
-                            const isFollowing = userData?.data?.following?.some(followingUserId => followingUserId.id === post.userId);
+                            const isFollowing = userData?.data?.following?.some((followingUserId: { id: any; }) => followingUserId.id === post.userId);
 
                             // const isLastPost = index === sortedPosts.length - 1;
 
@@ -325,7 +326,7 @@ const GetPost = () => {
 
                                         {/* Display Comments */}
                                         <div className="mt-4">
-                                            {post.comments.map((comment) => (
+                                            {post.comments.map((comment : TComment) => (
                                                 <div key={comment._id} className="flex justify-between items-center mt-2 border-t pt-2">
                                                     <div className='flex gap-4'>
                                                         <Avatar src={comment?.userProfilePhoto} />

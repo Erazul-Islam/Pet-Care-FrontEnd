@@ -4,7 +4,7 @@ import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 // import { toast } from "react-toastify";
 
-import { deleteUser, editUserInfo, getAllprofile, loginUser, registerUser, userData, userRoleupdate } from "../services/AuthServices";
+import { deleteUser, editUserInfo, forgetPassword, getAllprofile, loginUser, registerUser, resetPassword, userData, userRoleupdate } from "../services/AuthServices";
 import { changePasswordService } from "../services/change_password";
 import { TUser } from "../types";
 
@@ -42,12 +42,12 @@ export const useDeleteUser = () => {
 };
 
 export const useUpdateUserRole = () => {
-    return useMutation <any,Error, {userId :string}> ({
-        mutationFn : async ({userId}) => userRoleupdate(userId),
-        onSuccess : () => {
+    return useMutation<any, Error, { userId: string }>({
+        mutationFn: async ({ userId }) => userRoleupdate(userId),
+        onSuccess: () => {
             toast.success("User role updated Successfully")
         },
-        onError : (error) => {
+        onError: (error) => {
             toast.error(error.message)
         }
     })
@@ -98,6 +98,34 @@ export const useChangePassword = () => {
         onError: () => {
             toast.error("Does not work")
 
+        }
+    })
+}
+
+export const useForgetPassword = () => {
+    return useMutation({
+        mutationFn: (email: string) => forgetPassword(email),
+        onSuccess: () => {
+            toast.success('Reset link sent to you email')
+        },
+        onError: (err: any) => {
+            toast.error(err.message)
+        }
+    })
+}
+
+export const useResetPassword = () => {
+    return useMutation({
+        mutationFn: (payload: { token: string, newPassword: string }) => resetPassword(payload.token, payload.newPassword),
+        onSuccess: () => {
+            toast.success('Password reset successfully')
+        },
+        onError: (err: any) => {
+            if (err.response?.status === 401) {
+                toast.error('Token expired. Please request a new password reset link.');
+            } else {
+                toast.error('Something went wrong. Please try again.');
+            }
         }
     })
 }

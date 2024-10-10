@@ -9,6 +9,16 @@ import { useUser } from '@/src/context/user.provider';
 import { useGetPost } from '@/src/hooks/get.post.hook';
 import PdfGenerator from '@/src/components/pdf/pdf';
 
+interface TUserPost {
+    _id :string,
+    userProfilePhoto : string,
+    userName : string,
+    caption : string,
+    photo : string,
+    description : string,
+    createdAt : Date
+}
+
 const UserDashboard = () => {
 
     const { data, } = useGetPost()
@@ -23,13 +33,13 @@ const UserDashboard = () => {
 
             setPosts(filteredPosts);
         }
-    }, [data, user?.email]);
+    }, [data, user?.email,posts]);
 
     return (
         <div>
             <div className='mt-4 '>
                 {
-                    filterData?.length === 0 ? <h1>No post you have</h1> : filterData?.map((one) => <div key={one._id}>
+                    filterData?.length === 0 ? <h1>No post you have</h1> : filterData?.map((one : TUserPost) => <div key={one._id}>
                         <div
                             key={one._id}
                             className="bg-white mt-6 shadow-md rounded-lg p-4 max-w-md w-full"

@@ -14,13 +14,46 @@ import { usePublish, useUnpublish } from '@/src/hooks/post.hook';
 import { useGetHistory } from '@/src/hooks/payment.hook';
 
 
+interface TUserInfo {
+    _id : string,
+    name : string,
+    profilePhoto : string,
+    role : string
+}
+
+interface TMetaData {
+    _id: string,
+    amount : number,
+    created : number,
+    metadata : {
+        userName : string,
+        userEmail : string,
+        userProfilePhoto : string
+    }
+}
+
+interface TPost {
+    _id : string,
+    userProfilePhoto : string,
+    userName : string,
+    createdAt : Date,
+    totalUpvotes : number,
+    totalDownvotes : number,
+    isPremium : string,
+    isPublished : boolean,
+    photo : string,
+    caption : string,
+    description : string
+}
+
+
 
 const Adminpage = () => {
 
     const { data, refetch } = useGetProfile()
 
     const { data: history } = useGetHistory()
-    console.log(history)
+
 
     const { mutateAsync: unpublish } = useUnpublish()
     const { mutateAsync: publish } = usePublish()
@@ -59,7 +92,7 @@ const Adminpage = () => {
         <div>
             <div className='grid lg:grid-cols-3 lg:ml-80 lg:mr-60'>
                 {
-                    data?.data?.map((one) => (<div key={one._id}>
+                    data?.data?.map((one : TUserInfo) => (<div key={one._id}>
                         <div>
                             <h1>{one.name}</h1>
                             <img className='w-40 rounded-sm h-40' src={one.profilePhoto} alt="" />
@@ -73,7 +106,7 @@ const Adminpage = () => {
             </div>
             <div>
                 {
-                    posts?.data?.map((post) => (
+                    posts?.data?.map((post : TPost) => (
 
                         <div key={post._id}>
                             <div
@@ -123,7 +156,7 @@ const Adminpage = () => {
             </div>
             <div className='grid items-center justify-center lg:grid-cols-3 gap-6 p-6'>
                 {history?.data?.length > 0 ? (
-                    history?.data?.map((one) => (
+                    history?.data?.map((one : TMetaData) => (
                         <div key={one._id} className='bg-white shadow-md rounded-lg p-4 border border-gray-200 transition-transform transform hover:scale-105'>
                             <img className='w-24 h-24 rounded-md mb-4 object-cover mx-auto' src={one.metadata.userProfilePhoto} alt={`${one.metadata.userName}'s profile`} />
                             <h3 className='text-xl text-purple-500 font-semibold text-center mb-2'>{one.metadata.userName}</h3>

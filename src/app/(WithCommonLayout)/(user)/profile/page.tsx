@@ -13,6 +13,18 @@ import PetMarkDownEditor from './_components/pet-post';
 import { useDeletePost, useGetPost } from '@/src/hooks/get.post.hook';
 import Info from './_components/info';
 import DOMPurify from 'dompurify';
+import { TPost } from '@/src/types';
+
+
+interface TUserPost {
+    _id: string,
+    userProfilePhoto: string,
+    userName: string,
+    caption: string,
+    photo: string,
+    description: string,
+    createdAt: Date
+}
 
 
 const UserProfile = () => {
@@ -22,17 +34,17 @@ const UserProfile = () => {
 
     const { data, refetch } = useGetPost()
 
-    const filterData = data?.data?.filter((one : any) => one?.userEmail === user?.email)
+    const filterData = data?.data?.filter((one: TPost) => one?.userEmail === user?.email)
 
     const { mutate: deletePost, } = useDeletePost()
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    console.log("posts",posts)
+    console.log("posts", posts)
 
     useEffect(() => {
         if (data?.data) {
-            const filteredPosts = data.data.filter((one : any) => one?.userEmail === user?.email);
+            const filteredPosts = data.data.filter((one: any) => one?.userEmail === user?.email);
 
             setPosts(filteredPosts);
         }
@@ -42,7 +54,7 @@ const UserProfile = () => {
         setLoading(true);
         deletePost(postId, {
             onSuccess: () => {
-                setPosts((prevPosts) => prevPosts.filter(post => post._id !== postId));
+                setPosts((prevPosts) => prevPosts.filter((post: TUserPost) => post._id !== postId));
                 refetch();
             },
             onError: () => {
@@ -61,7 +73,7 @@ const UserProfile = () => {
             </div>
             <div className='mt-4 lg:ml-[600px]'>
                 {
-                    filterData?.length === 0 ? <h1>No post you have</h1> : filterData?.map((one : any) => <div className='lg:grid-cols-3' key={one._id}>
+                    filterData?.length === 0 ? <h1>No post you have</h1> : filterData?.map((one: TUserPost) => <div className='lg:grid-cols-3' key={one._id}>
                         <div
                             key={one._id}
                             className="bg-white mt-6 shadow-md rounded-lg p-4 max-w-md w-full"

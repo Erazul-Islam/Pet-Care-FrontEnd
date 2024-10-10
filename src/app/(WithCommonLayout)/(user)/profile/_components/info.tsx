@@ -8,11 +8,14 @@ import { Button } from '@nextui-org/button'
 
 import { useGetUser, useUserProfileUpdate } from '@/src/hooks/auth.hook';
 
-
+interface TFollow {
+    id : string,
+    _id : string,
+    username : string,
+    profilePhoto : string
+}
 
 const Info = () => {
-
-
 
     const { data: userData, refetch } = useGetUser()
     const { mutateAsync: updateProfile, } = useUserProfileUpdate()
@@ -89,7 +92,7 @@ const Info = () => {
                         <h3 className="text-xl font-semibold">Followers</h3>
                         <div className='mt-3 grid grid-cols-2'>
                             {
-                                userData?.data?.followers.map((follower) => (<div key={follower._id}>
+                                userData?.data?.followers.map((follower : TFollow) => (<div key={follower._id}>
                                     <img className='h-40 w-40' src={follower.profilePhoto} alt="" />
                                     <h1 className='mt-2 ml-8 font-bold'>{follower.username}</h1>
                                     {/* <h1>{follower.email}</h1> */}
@@ -101,7 +104,7 @@ const Info = () => {
                         <h3 className="text-xl font-semibold">Following</h3>
                         <div className='mt-3 grid-cols-2'>
                             {
-                                userData?.data?.following.map((follower) => (<div  key={follower._id}>
+                                userData?.data?.following.map((follower : TFollow) => (<div  key={follower._id}>
                                     <img className='h-40 w-40' src={follower.profilePhoto} alt="" />
                                     <h1 className='mt-2 ml-8 font-bold'>{follower.username}</h1>
                                     {/* <h1>{follower.email}</h1> */}

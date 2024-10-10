@@ -9,87 +9,77 @@ const PdfGenerator = () => {
     const [petWeight, setPetWeight] = useState('');
     const [petType, setPetType] = useState('');
     const [petSize, setPetSize] = useState('');
-    const [dailyFood, setDailyFood] = useState('');
+    const [dailyFood, setDailyFood] = useState("");
     const [calories, setCalories] = useState('');
 
-    // Function to calculate recommended daily food intake
     const calculateNutrition = () => {
-        let dailyIntake = 0;
+        let dailyIntake  = 0;
         let dailyCalories = 0;
 
-        // Convert age and weight to numbers for calculations
         const age = Number(petAge);
         const weightInKg = Number(petWeight);
-        const weightInLbs = weightInKg * 2.20462; // Convert weight to lbs for calorie calculation
+        const weightInLbs = weightInKg * 2.20462; 
 
-        // Simple logic for calculating food intake based on age and weight
         if (petType.toLowerCase() === 'dog') {
             if (age < 1) {
-                // Puppy: 50 grams of food per kg of body weight
                 dailyIntake = weightInKg * 50;
             } else {
-                // Adult: 30 grams of food per kg of body weight
+
                 dailyIntake = weightInKg * 30;
             }
         } else if (petType.toLowerCase() === 'cat') {
             if (age < 1) {
-                // Kitten: 60 grams of food per kg of body weight
                 dailyIntake = weightInKg * 60;
             } else {
-                // Adult Cat: 40 grams of food per kg of body weight
                 dailyIntake = weightInKg * 40;
             }
         }
 
-        // Calculate recommended daily calories based on size
         if (petSize === 'toy') {
-            dailyCalories = weightInLbs * 40; // Toy breeds
+            dailyCalories = weightInLbs * 40;
         } else if (petSize === 'small') {
-            dailyCalories = weightInLbs * 30; // Small breeds
+            dailyCalories = weightInLbs * 30; 
         } else if (petSize === 'medium') {
-            dailyCalories = weightInLbs * 25; // Medium breeds
+            dailyCalories = weightInLbs * 25; 
         } else if (petSize === 'large') {
-            dailyCalories = weightInLbs * 20; // Large breeds
+            dailyCalories = weightInLbs * 20; 
         }
 
-        setDailyFood(dailyIntake);
-        setCalories(dailyCalories);
+        setDailyFood(dailyIntake.toString() );
+        setCalories(dailyCalories.toString());
     };
 
     const generatePdf = () => {
         const doc = new jsPDF();
 
-        // Add title and styling
         doc.setFontSize(22);
         doc.setTextColor(40, 40, 120);
         doc.text(`Nutrition Plan for ${petName}`, 105, 20, { align: 'center' });
 
-        // Add a header or logo section (optional)
+       
         doc.setFontSize(16);
         doc.setTextColor(100);
         doc.text('Pet Nutrition Report', 105, 30, { align: 'center' });
 
-        // Draw a line under the title
         doc.setLineWidth(0.5);
         doc.line(20, 35, 190, 35);
 
-        // Add pet details with a styled box
+
         doc.setFontSize(12);
         doc.setTextColor(0);
         doc.text('Pet Details:', 20, 40);
 
-        // Draw a box around pet details
+
         doc.rect(20, 50, 170, 40);
         doc.setFontSize(10);
         doc.text(`Name: ${petName}`, 25, 60);
         doc.text(`Type: ${petType}`, 25, 70);
         doc.text(`Age: ${petAge} years`, 25, 80);
-        doc.text(`Size: ${petSize}`, 25, 88); // Pet Size Field
+        doc.text(`Size: ${petSize}`, 25, 88); 
         doc.text(`Weight: ${petWeight} kg`, 100, 60);
         doc.text(`Daily Food Intake: ${dailyFood} grams`, 100, 70);
-        doc.text(`Calories: ${calories} kcal`, 100, 80); // Display Calories
+        doc.text(`Calories: ${calories} kcal`, 100, 80);
 
-        // Add recommended daily feeding table
         const startY = 110;
         const margin = 20;
         const cellPadding = 6;
@@ -97,7 +87,6 @@ const PdfGenerator = () => {
         const columns = ['Pet Name', 'Pet Type', 'Daily Food (g)', 'Calories (kcal)'];
         const data = [[petName, petType, dailyFood, calories]];
 
-        // Table Header
         doc.setFontSize(12);
         doc.setTextColor(255, 255, 255);
         doc.setFillColor(40, 40, 120);
@@ -106,7 +95,7 @@ const PdfGenerator = () => {
             doc.text(col, margin + index * cellWidth + cellPadding, startY + 7);
         });
 
-        // Table Data
+ 
         data.forEach((row, rowIndex) => {
             row.forEach((cell, cellIndex) => {
                 doc.setTextColor(0);
