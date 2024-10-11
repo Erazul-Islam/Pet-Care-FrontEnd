@@ -13,12 +13,12 @@ const PdfGenerator = () => {
     const [calories, setCalories] = useState('');
 
     const calculateNutrition = () => {
-        let dailyIntake  = 0;
+        let dailyIntake = 0;
         let dailyCalories = 0;
 
         const age = Number(petAge);
         const weightInKg = Number(petWeight);
-        const weightInLbs = weightInKg * 2.20462; 
+        const weightInLbs = weightInKg * 2.20462;
 
         if (petType.toLowerCase() === 'dog') {
             if (age < 1) {
@@ -38,14 +38,14 @@ const PdfGenerator = () => {
         if (petSize === 'toy') {
             dailyCalories = weightInLbs * 40;
         } else if (petSize === 'small') {
-            dailyCalories = weightInLbs * 30; 
+            dailyCalories = weightInLbs * 30;
         } else if (petSize === 'medium') {
-            dailyCalories = weightInLbs * 25; 
+            dailyCalories = weightInLbs * 25;
         } else if (petSize === 'large') {
-            dailyCalories = weightInLbs * 20; 
+            dailyCalories = weightInLbs * 20;
         }
 
-        setDailyFood(dailyIntake.toString() );
+        setDailyFood(dailyIntake.toString());
         setCalories(dailyCalories.toString());
     };
 
@@ -56,7 +56,7 @@ const PdfGenerator = () => {
         doc.setTextColor(40, 40, 120);
         doc.text(`Nutrition Plan for ${petName}`, 105, 20, { align: 'center' });
 
-       
+
         doc.setFontSize(16);
         doc.setTextColor(100);
         doc.text('Pet Nutrition Report', 105, 30, { align: 'center' });
@@ -75,7 +75,7 @@ const PdfGenerator = () => {
         doc.text(`Name: ${petName}`, 25, 60);
         doc.text(`Type: ${petType}`, 25, 70);
         doc.text(`Age: ${petAge} years`, 25, 80);
-        doc.text(`Size: ${petSize}`, 25, 88); 
+        doc.text(`Size: ${petSize}`, 25, 88);
         doc.text(`Weight: ${petWeight} kg`, 100, 60);
         doc.text(`Daily Food Intake: ${dailyFood} grams`, 100, 70);
         doc.text(`Calories: ${calories} kcal`, 100, 80);
@@ -95,7 +95,7 @@ const PdfGenerator = () => {
             doc.text(col, margin + index * cellWidth + cellPadding, startY + 7);
         });
 
- 
+
         data.forEach((row, rowIndex) => {
             row.forEach((cell, cellIndex) => {
                 doc.setTextColor(0);
@@ -115,84 +115,91 @@ const PdfGenerator = () => {
 
     return (
         <div className="p-4 max-w-lg mx-auto">
-            <h1 className="text-2xl font-bold mb-4">Pet Nutrition Calculator</h1>
+            <div>
+                <div>
+                    <h1 className="text-2xl text-pink-600 text-center font-bold mb-4">Pet Nutrition Calculator</h1>
 
-            <div className="mb-4">
-                <label className="block font-semibold mb-2">Pet Name:</label>
-                <input
-                    required
-                    className="w-full border rounded p-2"
-                    type="text"
-                    value={petName}
-                    onChange={(e) => setPetName(e.target.value)}
-                />
-            </div>
+                    <div className="mb-4">
+                        <label className="block font-semibold mb-2">Pet Name:</label>
+                        <input
+                            required
+                            className="w-full border rounded p-2"
+                            type="text"
+                            value={petName}
+                            onChange={(e) => setPetName(e.target.value)}
+                        />
+                    </div>
 
-            <div className="mb-4">
-                <label className="block font-semibold mb-2">Pet Type (Dog/Cat):</label>
-                <input
-                    required
-                    className="w-full border rounded p-2"
-                    type="text"
-                    value={petType}
-                    onChange={(e) => setPetType(e.target.value)}
-                />
-            </div>
+                    <div className="mb-4">
+                        <label className="block font-semibold mb-2">Pet Type (Dog/Cat):</label>
+                        <input
+                            required
+                            className="w-full border rounded p-2"
+                            type="text"
+                            value={petType}
+                            onChange={(e) => setPetType(e.target.value)}
+                        />
+                    </div>
 
-            <div className="mb-4">
-                <label className="block font-semibold mb-2">Pet Size (Toy/Small/Medium/Large):</label>
-                <select
-                    required
-                    className="w-full border rounded p-2"
-                    value={petSize}
-                    onChange={(e) => setPetSize(e.target.value)}
-                >
-                    <option value="">Select Size</option>
-                    <option value="toy">Toy</option>
-                    <option value="small">Small</option>
-                    <option value="medium">Medium</option>
-                    <option value="large">Large</option>
-                </select>
-            </div>
+                    <div className="mb-4">
+                        <label className="block font-semibold mb-2">Pet Size (Toy/Small/Medium/Large):</label>
+                        <select
+                            required
+                            className="w-full border rounded p-2"
+                            value={petSize}
+                            onChange={(e) => setPetSize(e.target.value)}
+                        >
+                            <option value="">Select Size</option>
+                            <option value="toy">Toy</option>
+                            <option value="small">Small</option>
+                            <option value="medium">Medium</option>
+                            <option value="large">Large</option>
+                        </select>
+                    </div>
 
-            <div className="mb-4">
-                <label className="block font-semibold mb-2">Pet Age (in years):</label>
-                <input
-                    required
-                    className="w-full border rounded p-2"
-                    type="number"
-                    value={petAge}
-                    onChange={(e) => setPetAge(e.target.value)}
-                />
-            </div>
+                    <div className="mb-4">
+                        <label className="block font-semibold mb-2">Pet Age (in years):</label>
+                        <input
+                            required
+                            className="w-full border rounded p-2"
+                            type="number"
+                            value={petAge}
+                            onChange={(e) => setPetAge(e.target.value)}
+                        />
+                    </div>
 
-            <div className="mb-4">
-                <label className="block font-semibold mb-2">Pet Weight (in kg):</label>
-                <input
-                    required
-                    className="w-full border rounded p-2"
-                    type="number"
-                    value={petWeight}
-                    onChange={(e) => setPetWeight(e.target.value)}
-                />
-            </div>
+                    <div className="mb-4">
+                        <label className="block font-semibold mb-2">Pet Weight (in kg):</label>
+                        <input
+                            required
+                            className="w-full border rounded p-2"
+                            type="number"
+                            value={petWeight}
+                            onChange={(e) => setPetWeight(e.target.value)}
+                        />
+                    </div>
 
-            <div className="flex space-x-4">
-                <button
-                    className="bg-blue-500 text-white px-4 py-2 rounded"
-                    onClick={calculateNutrition}
-                >
-                    Calculate Nutrition
-                </button>
+                    <div className="flex space-x-4">
+                        <button
+                            className="bg-pink-700 text-white px-4 py-2 rounded"
+                            onClick={calculateNutrition}
+                        >
+                            Calculate Nutrition
+                        </button>
 
-                {dailyFood && (
-                    <button
-                        className="bg-green-500 text-white px-4 py-2 rounded"
-                        onClick={generatePdf}
-                    >
-                        Download PDF
-                    </button>
-                )}
+                        {dailyFood && (
+                            <button
+                                className="bg-purple-700 text-white px-4 py-2 rounded"
+                                onClick={generatePdf}
+                            >
+                                Download PDF
+                            </button>
+                        )}
+                    </div>
+                </div>
+                <div>
+                    
+                </div>
             </div>
 
             {dailyFood && (

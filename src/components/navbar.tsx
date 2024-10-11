@@ -36,11 +36,13 @@ import { useUser } from "../context/user.provider";
 import { usePathname, useRouter } from "next/navigation";
 import { logout } from "../services/AuthServices";
 import { protectedRoutes } from "../constant";
+import { useGetUser } from "../hooks/auth.hook";
 
 export const Navbar = () => {
 
   const router = useRouter();
   const { user } = useUser()
+  const {data} = useGetUser()
   const pathname = usePathname();
 
   const { setIsLoading: userLoading } = useUser();
@@ -139,7 +141,7 @@ export const Navbar = () => {
               color="secondary"
               name="Jason Hughes"
               size="sm"
-              src={user?.profilePhoto}
+              src={data?.data?.profilePhoto}
             />
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">

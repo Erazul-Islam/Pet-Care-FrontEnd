@@ -5,7 +5,7 @@
 /* eslint-disable prettier/prettier */
 "use client"
 
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
 import { Avatar, Spinner, } from '@nextui-org/react';
 import { loadStripe } from '@stripe/stripe-js';
@@ -23,11 +23,34 @@ import { useDownVotePost, useUpvotePost } from '@/src/hooks/post.hook';
 import PetMarkDownEditor from '@/src/app/(WithCommonLayout)/(user)/profile/_components/pet-post';
 import { useGetUser } from '@/src/hooks/auth.hook';
 import { TComment } from '@/src/types';
+import { useInView } from 'react-intersection-observer';
+import { getScrollAllPost } from '@/src/services/get-post';
+import Loading from '@/src/app/loading';
 
-const GetPost = () => {
+
+export type TPost = {
+    _id: string
+    userName: string,
+    userId: string,
+    userProfilePhoto: string,
+    userEmail: string,
+    caption: string,
+    isPremium: string,
+    isPublished: boolean,
+    description: string,
+    photo: string,
+    category: string,
+    createdAt: Date,
+    totalUpvotes: number,
+    totalDownvotes: number
+    comments: TComment[]
+}
+
+
+const ScrollPost = () => {
 
     // const { data: posts, isSuccess, refetch, isFetching, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetPost();
-    const { data: posts, isSuccess, refetch, isFetching, } = useGetPost();
+    const { isSuccess, refetch, isFetching, } = useGetPost();
     const { data: userData } = useGetUser()
 
     const { user } = useUser()
@@ -49,11 +72,49 @@ const GetPost = () => {
     const [sortBy, setSortBy] = useState<'newest' | 'mostUpvoted'>('newest')
     const [filterByCategory, setFilterByCategory] = useState<'All' | 'Story' | 'TIP'>('All');
 
+    const [posts, setPosts] = useState<TPost[]>([]);
+    const { ref, inView } = useInView();
+    const [isLoading, setIsLoading] = useState(false);
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
+
+    useEffect(() => {
+        const fetchPosts = async () => {
+            setIsLoading(true); // Start loading immediately
+
+            // Delay the fetch operation by 3000ms (3 seconds)
+            // const delay = new Promise(resolve => setTimeout(resolve, 3000));
+
+            try {
+                // await delay; // Wait for 3 seconds
+                const res = await getScrollAllPost(page);
+
+                // Check if there are no more posts
+                if (res.length === 0) {
+                    setHasMore(false);
+                } else {
+                    setPosts(prevPosts => [...prevPosts, ...res]);
+                    setPage(prevPage => prevPage + 1); // Increment the page after fetching
+                }
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setIsLoading(false); // Stop loading after fetching
+            }
+        };
+
+        if (inView && !isLoading && hasMore) {
+            fetchPosts();
+        }
+    }, [inView, page, isLoading, hasMore]);
+
+    console.log(posts)
+
 
     const sortedPosts = useMemo(() => {
-        if (!isSuccess || !posts?.data) return [];
 
-        let sorted = [...posts.data];
+
+        let sorted = [...posts];
 
         sorted = sorted.filter(post => post.isPublished === true)
 
@@ -71,8 +132,6 @@ const GetPost = () => {
 
         return sorted;
     }, [isSuccess, posts, sortBy, filterByCategory]);
-
-    console.log("sorted", sortedPosts)
 
     const handleAddComment = async (postId: string) => {
         const text = commentText[postId]?.trim();
@@ -125,7 +184,7 @@ const GetPost = () => {
     };
 
     const handleFollow = (postId: string) => {
-        const targetPost = posts?.data.find((post: { _id: string; }) => post._id === postId);
+        const targetPost = posts?.find((post: { _id: string; }) => post._id === postId);
 
         if (!targetPost) {
             toast.error("Post not found.");
@@ -151,7 +210,7 @@ const GetPost = () => {
     };
 
     const handleUnfollow = async (postId: string) => {
-        const targetPost = posts?.data.find((post: any) => post._id === postId);
+        const targetPost = posts?.find((post: any) => post._id === postId);
 
         if (!targetPost) {
             toast.error("Post not found.");
@@ -360,6 +419,12 @@ const GetPost = () => {
                         })
                     }
                 </motion.div>
+                <section className="flex justify-center items-center w-full">
+                    <div ref={ref}>
+                        {isLoading && <Loading />}
+                        {!hasMore && <p>No more posts to load</p>}
+                    </div>
+                </section>
                 {modalVisible && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
                         <div className="bg-white rounded-lg shadow-lg p-6 w-11/12 max-w-md">
@@ -392,4 +457,4 @@ const GetPost = () => {
     );
 };
 
-export default GetPost;
+export default ScrollPost;

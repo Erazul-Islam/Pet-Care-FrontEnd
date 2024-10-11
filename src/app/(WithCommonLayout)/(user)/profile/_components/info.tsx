@@ -5,14 +5,14 @@
 import React, { useState } from 'react';
 import { Button } from '@nextui-org/button'
 
-
 import { useGetUser, useUserProfileUpdate } from '@/src/hooks/auth.hook';
+import { Avatar } from '@nextui-org/react';
 
-interface TFollow {
-    id : string,
-    _id : string,
-    username : string,
-    profilePhoto : string
+export interface TFollow {
+    id: string,
+    _id: string,
+    username: string,
+    profilePhoto: string
 }
 
 const Info = () => {
@@ -43,12 +43,7 @@ const Info = () => {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        updateProfile(formData, {
-            onSuccess: () => {
-                refetch()
-                window.location.reload()
-            }
-        })
+        updateProfile(formData)
         setModalVisible(false);
         refetch()
     };
@@ -63,15 +58,15 @@ const Info = () => {
                         src={userData?.data?.profilePhoto}
                     />
                     <div className="flex flex-col justify-center">
-                        <h2 className="text-3xl font-bold">{userData?.data?.name}</h2>
+                        <h2 className="text-3xl text-pink-600 font-bold">{userData?.data?.name}</h2>
                         <p className="">{userData?.data?.email}</p>
                         <div className="flex items-center gap-2 mt-2">
                             <h1 className="font-semibold">{userData?.data.followers.length} followers</h1>
                             <span className="text-gray-400">•</span>
                             <h2 className="font-semibold">{userData?.data.following.length} following</h2>
                         </div>
-                        <Button
-                            className="mt-4"
+                        <Button color='warning'
+                            className="mt-4 text-white rounded-sm"
                             onClick={() => setModalVisible(true)}
                         >
                             Edit Profile
@@ -81,33 +76,36 @@ const Info = () => {
 
                 <div className="mt-6">
                     <h3 className="text-xl font-semibold">About</h3>
-                    <p className="mt-2">{userData?.data?.intro}</p>
-                    <p className="mt-1"><strong>Address:</strong> {userData?.data?.address}</p>
-                    <p className="mt-1"><strong>College:</strong> {userData?.data?.college}</p>
-                    <p className="mt-1"><strong>Mobile:</strong> {userData?.data?.mobileNumber}</p>
-                    <p className="mt-1"><strong>From:</strong> {userData?.data?.from}</p>
-                    <p className="mt-1"><strong>Lives in:</strong> {userData?.data?.lives}</p>
-                    <p className="mt-1"><strong>University:</strong> {userData?.data?.university}</p>
+                    <p className="mt-4 text-center text-xl font-bold text-emerald-500">{userData?.data?.intro}</p>
+                    <p className="mt-3"><strong className='text-purple-500'>Address </strong> {userData?.data?.address}</p>
+                    <p className="mt-3"><strong className='text-purple-500'>College:</strong> {userData?.data?.college}</p>
+                    <p className="mt-3"><strong className='text-purple-500'>Mobile:</strong> {userData?.data?.mobileNumber}</p>
+                    <p className="mt-3"><strong className='text-purple-500'>From:</strong> {userData?.data?.from}</p>
+                    <p className="mt-3"><strong className='text-purple-500'>Lives in:</strong> {userData?.data?.lives}</p>
+                    <p className="mt-3"><strong className='text-purple-500'>University:</strong> {userData?.data?.university}</p>
                     <div className="mt-12">
                         <h3 className="text-xl font-semibold">Followers</h3>
-                        <div className='mt-3 grid grid-cols-2'>
+                        <div className='mt-3'>
                             {
-                                userData?.data?.followers.map((follower : TFollow) => (<div key={follower._id}>
-                                    <img className='h-40 w-40' src={follower.profilePhoto} alt="" />
-                                    <h1 className='mt-2 ml-8 font-bold'>{follower.username}</h1>
-                                    {/* <h1>{follower.email}</h1> */}
+                                userData?.data?.followers.map((follower: TFollow) => (<div key={follower._id}>
+                                    <div className='flex justify-between border h-16 border-white'>
+                                        <Avatar className='mt-3 ml-8' src={follower.profilePhoto} alt="" />
+                                        <h1 className='mt-4 text-pink-500 ml-8 mr-8 font-bold'>{follower.username}</h1>
+                                    </div>
                                 </div>))
                             }
                         </div>
                     </div>
                     <div className="mt-12">
                         <h3 className="text-xl font-semibold">Following</h3>
-                        <div className='mt-3 grid-cols-2'>
+                        <div className='mt-3'>
                             {
-                                userData?.data?.following.map((follower : TFollow) => (<div  key={follower._id}>
-                                    <img className='h-40 w-40' src={follower.profilePhoto} alt="" />
-                                    <h1 className='mt-2 ml-8 font-bold'>{follower.username}</h1>
-                                    {/* <h1>{follower.email}</h1> */}
+                                userData?.data?.following.map((follower: TFollow) => (<div key={follower._id}>
+                                    <div className='flex gap-4 justify-between border h-16 border-white'>
+                                        <Avatar className='mt-3 ml-8' src={follower.profilePhoto} alt="" />
+                                        <h1 className='mt-4 mr-8 text-pink-500 ml-8 font-bold'>{follower.username}</h1>
+                                        {/* <Button color='warning' className='rounded-sm text-white mt-2 mr-5'>Unfollow</Button> */}
+                                    </div>
                                 </div>))
                             }
                         </div>
@@ -116,7 +114,7 @@ const Info = () => {
                 {modalVisible && (
                     <div className="fixed inset-0 flex items-center justify-center z-50">
                         <div className="bg-white rounded-lg p-6 w-full max-w-md z-10">
-                            <h2 className="text-xl font-bold mb-4">Edit Profile</h2>
+                            <h2 className="text-xl text-yellow-400 font-bold mb-4">Edit Profile</h2>
                             <form onSubmit={handleSubmit}>
                                 <div className="flex flex-col space-y-4">
                                     <input
@@ -183,6 +181,7 @@ const Info = () => {
                                         value={formData.lives}
                                         onChange={handleChange}
                                     />
+                                    
                                     <input
                                         className="border p-2 rounded"
                                         name="university"
@@ -201,7 +200,7 @@ const Info = () => {
                                         Cancel
                                     </button>
                                     <button
-                                        className="bg-blue-500 text-white px-4 py-2 rounded"
+                                        className="bg-purple-600 text-white px-4 py-2 rounded"
                                         type="submit"
                                     >
                                         Save Changes

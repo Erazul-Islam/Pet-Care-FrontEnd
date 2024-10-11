@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import { ISearchResult } from "../types";
 import useDebounce from "../hooks/debounce.hook";
 import { Input } from "@nextui-org/input";
-import { useRouter } from "next/router";
 export default function Home() {
 
   const { register, handleSubmit, watch } = useForm()
