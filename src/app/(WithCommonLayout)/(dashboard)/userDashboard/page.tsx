@@ -78,7 +78,7 @@ const UserDashboard = () => {
             </div>
             <div className='mt-4 lg:ml-80 ml-6 mb-6 md:ml-40 lg:mr-80'>
                 {
-                    filterData?.length === 0 ? <h1>No post you have</h1> : <div className='lg:flex lg:justify-between'>
+                    filterData?.length === 0 ? <h1 className='text-center'>No post you have</h1> : <div className='lg:flex lg:justify-between'>
                         {
                             filterData?.map((one: TUserPost) => <div key={one._id}>
                                 <div

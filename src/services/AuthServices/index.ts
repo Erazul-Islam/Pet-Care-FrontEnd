@@ -34,25 +34,27 @@ export const editUserInfo = async (payload: Partial<TUser>) => {
 export const getAllprofile = async () => {
     const res = await axiosInstance.get('/auth/all-profile')
 
+    console.log(res)
+
     return res.data
 }
 
-export const deleteUser = async (userId:string) => {
+export const deleteUser = async (userId: string) => {
 
     const response = await axiosInstance.delete(`/auth/${userId}`)
 
     return response.data
 }
 
-export const userRoleupdate = async (userId:string) => {
+export const userRoleupdate = async (userId: string) => {
     const response = await axiosInstance.patch(`/auth/${userId}`)
 
     return response.data
 }
 
 
-export const userData = async() => {
-    const response = await axiosInstance.get('/auth/me') 
+export const userData = async () => {
+    const response = await axiosInstance.get('/auth/me')
 
     return response.data
 }
@@ -65,6 +67,8 @@ export const loginUser = async (userData: FieldValues) => {
         if (data.success) {
             cookies().set("accessToken", data?.accessToken);
         }
+
+        console.log(data)
 
         return data;
     } catch (error: any) {
@@ -87,6 +91,7 @@ export const getCurrentUser = async () => {
         return {
             _id: decodedToken._id,
             email: decodedToken.email,
+            password: decodedToken.password,
             role: decodedToken.role,
             name: decodedToken.name,
             mobileNumber: decodedToken.mobileNumber,
@@ -99,7 +104,10 @@ export const getCurrentUser = async () => {
             lives: decodedToken.lives,
             from: decodedToken.from,
             followers: decodedToken.followers,
-            following: decodedToken.following
+            following: decodedToken.following,
+            createdAt: decodedToken.createdAt,
+            updatedAt: decodedToken.updatedAt,
+            needsPasswordChange: decodedToken?.needsPasswordChange
         };
     }
 
@@ -107,14 +115,14 @@ export const getCurrentUser = async () => {
 };
 
 
-export const forgetPassword = async (email : string) => {
-    const response = await axiosInstance.post('/auth/forget-password', {email})
+export const forgetPassword = async (email: string) => {
+    const response = await axiosInstance.post('/auth/forget-password', { email })
 
     return response.data
 }
 
-export const resetPassword = async (token:string,newPassword : string) => {
-    const response = await axiosInstance.post(`/auth/reset-password/${token}`, {password:newPassword})
+export const resetPassword = async (token: string, newPassword: string) => {
+    const response = await axiosInstance.post(`/auth/reset-password/${token}`, { password: newPassword })
 
     return response.data
 }

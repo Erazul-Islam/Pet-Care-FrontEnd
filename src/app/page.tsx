@@ -1,8 +1,9 @@
+/* eslint-disable react/self-closing-comp */
 /* eslint-disable prettier/prettier */
 "use client"
 
 import GetPost from "../components/posts/get.post";
-import { FieldValues,  SubmitHandler, useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useSearchPosts } from "../hooks/search.hook";
 import { useEffect, useState } from "react";
 import { ISearchResult } from "../types";
@@ -16,10 +17,10 @@ export default function Home() {
 
   const searchTerm = useDebounce(watch("search"))
 
-  console.log("searchTerm",searchTerm)
+  console.log("searchTerm", searchTerm)
 
-  console.log('searchResult',searchResults)
-  
+  console.log('searchResult', searchResults)
+
   useEffect(() => {
     if (searchTerm) {
       handleSearchPost(searchTerm)
@@ -28,7 +29,7 @@ export default function Home() {
 
   // const router = useRouter()
 
-  const onSubmit: SubmitHandler<FieldValues> = (data:any) => {
+  const onSubmit: SubmitHandler<FieldValues> = (data: any) => {
     // handleSeeAll(data.search);
 
   };
@@ -57,13 +58,19 @@ export default function Home() {
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <Input
-            {...register("search")}
-            aria-label="Search"
-            className="w-48 items-center"
-            placeholder="Search"
-            type="text"
-          />
+
+          <div className="flex items-center justify-center min-h-scree">
+            <div className="relative w-full max-w-md">
+              <Input
+                {...register("search")}
+                aria-label="Search"
+                className="w-full pl-10 pr-4 py-2 rounded-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                placeholder="Search"
+                type="text"
+              />
+            </div>
+          </div>
+
         </div>
       </form>
       {

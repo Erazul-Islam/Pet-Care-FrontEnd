@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable prettier/prettier */
+
 import jsPDF from 'jspdf';
 import React, { useState } from 'react';
 
@@ -50,67 +51,70 @@ const PdfGenerator = () => {
     };
 
     const generatePdf = () => {
-        const doc = new jsPDF();
 
-        doc.setFontSize(22);
-        doc.setTextColor(40, 40, 120);
-        doc.text(`Nutrition Plan for ${petName}`, 105, 20, { align: 'center' });
+        if (typeof window !== undefined) {
+            const doc = new jsPDF();
 
-
-        doc.setFontSize(16);
-        doc.setTextColor(100);
-        doc.text('Pet Nutrition Report', 105, 30, { align: 'center' });
-
-        doc.setLineWidth(0.5);
-        doc.line(20, 35, 190, 35);
+            doc.setFontSize(22);
+            doc.setTextColor(40, 40, 120);
+            doc.text(`Nutrition Plan for ${petName}`, 105, 20, { align: 'center' });
 
 
-        doc.setFontSize(12);
-        doc.setTextColor(0);
-        doc.text('Pet Details:', 20, 40);
+            doc.setFontSize(16);
+            doc.setTextColor(100);
+            doc.text('Pet Nutrition Report', 105, 30, { align: 'center' });
+
+            doc.setLineWidth(0.5);
+            doc.line(20, 35, 190, 35);
 
 
-        doc.rect(20, 50, 170, 40);
-        doc.setFontSize(10);
-        doc.text(`Name: ${petName}`, 25, 60);
-        doc.text(`Type: ${petType}`, 25, 70);
-        doc.text(`Age: ${petAge} years`, 25, 80);
-        doc.text(`Size: ${petSize}`, 25, 88);
-        doc.text(`Weight: ${petWeight} kg`, 100, 60);
-        doc.text(`Daily Food Intake: ${dailyFood} grams`, 100, 70);
-        doc.text(`Calories: ${calories} kcal`, 100, 80);
-
-        const startY = 110;
-        const margin = 20;
-        const cellPadding = 6;
-        const cellWidth = 40;
-        const columns = ['Pet Name', 'Pet Type', 'Daily Food (g)', 'Calories (kcal)'];
-        const data = [[petName, petType, dailyFood, calories]];
-
-        doc.setFontSize(12);
-        doc.setTextColor(255, 255, 255);
-        doc.setFillColor(40, 40, 120);
-        doc.rect(margin, startY, cellWidth * columns.length, 10, 'F');
-        columns.forEach((col, index) => {
-            doc.text(col, margin + index * cellWidth + cellPadding, startY + 7);
-        });
+            doc.setFontSize(12);
+            doc.setTextColor(0);
+            doc.text('Pet Details:', 20, 40);
 
 
-        data.forEach((row, rowIndex) => {
-            row.forEach((cell, cellIndex) => {
-                doc.setTextColor(0);
-                doc.rect(margin + cellIndex * cellWidth, startY + (rowIndex + 1) * 10, cellWidth, 10);
-                doc.text(cell.toString(), margin + cellIndex * cellWidth + cellPadding, startY + (rowIndex + 1) * 10 + 7);
+            doc.rect(20, 50, 170, 40);
+            doc.setFontSize(10);
+            doc.text(`Name: ${petName}`, 25, 60);
+            doc.text(`Type: ${petType}`, 25, 70);
+            doc.text(`Age: ${petAge} years`, 25, 80);
+            doc.text(`Size: ${petSize}`, 25, 88);
+            doc.text(`Weight: ${petWeight} kg`, 100, 60);
+            doc.text(`Daily Food Intake: ${dailyFood} grams`, 100, 70);
+            doc.text(`Calories: ${calories} kcal`, 100, 80);
+
+            const startY = 110;
+            const margin = 20;
+            const cellPadding = 6;
+            const cellWidth = 40;
+            const columns = ['Pet Name', 'Pet Type', 'Daily Food (g)', 'Calories (kcal)'];
+            const data = [[petName, petType, dailyFood, calories]];
+
+            doc.setFontSize(12);
+            doc.setTextColor(255, 255, 255);
+            doc.setFillColor(40, 40, 120);
+            doc.rect(margin, startY, cellWidth * columns.length, 10, 'F');
+            columns.forEach((col, index) => {
+                doc.text(col, margin + index * cellWidth + cellPadding, startY + 7);
             });
-        });
-
-        // Footer or notes
-        doc.setFontSize(10);
-        doc.setTextColor(100);
-        doc.text('Note: Always consult a veterinarian for breed-specific feeding guidelines.', margin, 160);
 
 
-        doc.save(`${petName}-nutrition-plan.pdf`);
+            data.forEach((row, rowIndex) => {
+                row.forEach((cell, cellIndex) => {
+                    doc.setTextColor(0);
+                    doc.rect(margin + cellIndex * cellWidth, startY + (rowIndex + 1) * 10, cellWidth, 10);
+                    doc.text(cell.toString(), margin + cellIndex * cellWidth + cellPadding, startY + (rowIndex + 1) * 10 + 7);
+                });
+            });
+
+            // Footer or notes
+            doc.setFontSize(10);
+            doc.setTextColor(100);
+            doc.text('Note: Always consult a veterinarian for breed-specific feeding guidelines.', margin, 160);
+
+
+            doc.save(`${petName}-nutrition-plan.pdf`);
+        }
     };
 
     return (
@@ -198,7 +202,7 @@ const PdfGenerator = () => {
                     </div>
                 </div>
                 <div>
-                    
+
                 </div>
             </div>
 

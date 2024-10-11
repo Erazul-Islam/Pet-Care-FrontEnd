@@ -53,7 +53,7 @@ const GetPost = () => {
     const sortedPosts = useMemo(() => {
         if (!isSuccess || !posts?.data) return [];
 
-        let sorted = [...posts.data];
+        let sorted = [...posts?.data];
 
         sorted = sorted.filter(post => post.isPublished === true)
 
@@ -220,8 +220,6 @@ const GetPost = () => {
                     {
                         isSuccess && sortedPosts.map((post, index) => {
                             const isFollowing = userData?.data?.following?.some((followingUserId: { id: any; }) => followingUserId.id === post.userId);
-
-                            // const isLastPost = index === sortedPosts.length - 1;
 
                             return (
                                 <div key={index} >

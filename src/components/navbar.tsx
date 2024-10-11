@@ -60,21 +60,6 @@ export const Navbar = () => {
     router.push(pathname);
   };
 
-  const searchInput = (
-    <Input
-      aria-label="Search"
-      classNames={{
-        inputWrapper: "bg-default-100",
-        input: "text-sm",
-      }}
-      labelPlacement="outside"
-      placeholder="Search..."
-      startContent={
-        <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
-      }
-      type="search"
-    />
-  );
 
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
@@ -109,7 +94,7 @@ export const Navbar = () => {
         <NavbarItem className="hidden sm:flex gap-2">
           <ThemeSwitch />
         </NavbarItem>
-        <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
+        {/* <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem> */}
         <NavbarItem className="hidden md:flex">
           <Button
             isExternal
@@ -131,8 +116,8 @@ export const Navbar = () => {
         <ThemeSwitch />
         <NavbarMenuToggle />
       </NavbarContent>
-      <NavbarContent as="div" className="items-center" justify="end">
-        <Dropdown placement="bottom-end">
+      <NavbarContent  className="items-center " justify="end">
+        <Dropdown className="rounded-sm border border-white"  placement="bottom-end">
           <DropdownTrigger>
             <Avatar
               isBordered
@@ -144,21 +129,17 @@ export const Navbar = () => {
               src={data?.data?.profilePhoto}
             />
           </DropdownTrigger>
-          <DropdownMenu aria-label="Profile Actions" variant="flat">
+          <DropdownMenu  variant="bordered">
             <DropdownItem key="profile" className="h-14 gap-2">
               <p className="font-semibold">Signed in as</p>
               <p className="font-semibold text-red-600">{user?.email}</p>
             </DropdownItem>
-            <DropdownItem key="settings">My Settings</DropdownItem>
             <DropdownItem onClick={() => handleNavigation('/profile')} >profile</DropdownItem>
             {
-              user?.role === "ADMIN" ? <DropdownItem onClick={() => handleNavigation('/adminDashboard')}>Dashboard</DropdownItem> : <DropdownItem onClick={() => handleNavigation('/userDashboard')}>Dashboard</DropdownItem>
+              data?.data?.role === "ADMIN" ? <DropdownItem onClick={() => handleNavigation('/adminDashboard')}>Dashboard</DropdownItem> : <DropdownItem onClick={() => handleNavigation('/userDashboard')}>Dashboard</DropdownItem>
             }
-            <DropdownItem key="system">System</DropdownItem>
-            <DropdownItem key="configurations">Configurations</DropdownItem>
-            <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
             <DropdownItem key="logout" color="success">
-              {user ? <Button onClick={() => handleLogout()}>Log out</Button> : <Link href="/login"><Button>Log in</Button></Link>}
+              {user ? <Button className="rounded-sm text-white" color="warning" onClick={() => handleLogout()}>Log out</Button> : <Link href="/login"><Button color="success" className="rounded-sm text-white">Log in</Button></Link>}
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>

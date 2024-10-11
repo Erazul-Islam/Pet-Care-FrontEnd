@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable react/jsx-sort-props */
 /* eslint-disable prettier/prettier */
 
@@ -15,42 +16,43 @@ import { useGetHistory } from '@/src/hooks/payment.hook';
 
 
 interface TUserInfo {
-    _id : string,
-    name : string,
-    profilePhoto : string,
-    role : string
+    _id: string,
+    name: string,
+    profilePhoto: string,
+    role: string
 }
 
 interface TMetaData {
     _id: string,
-    amount : number,
-    created : number,
-    metadata : {
-        userName : string,
-        userEmail : string,
-        userProfilePhoto : string
+    amount: number,
+    created: number,
+    metadata: {
+        userName: string,
+        userEmail: string,
+        userProfilePhoto: string
     }
 }
 
 interface TPost {
-    _id : string,
-    userProfilePhoto : string,
-    userName : string,
-    createdAt : Date,
-    totalUpvotes : number,
-    totalDownvotes : number,
-    isPremium : string,
-    isPublished : boolean,
-    photo : string,
-    caption : string,
-    description : string
+    _id: string,
+    userProfilePhoto: string,
+    userName: string,
+    createdAt: Date,
+    totalUpvotes: number,
+    totalDownvotes: number,
+    isPremium: string,
+    isPublished: boolean,
+    photo: string,
+    caption: string,
+    description: string
 }
 
 
 
 const Adminpage = () => {
 
-    const { data, refetch } = useGetProfile()
+    const { data } = useGetProfile()
+    console.log('all profile', data)
 
     const { data: history } = useGetHistory()
 
@@ -58,7 +60,7 @@ const Adminpage = () => {
     const { mutateAsync: unpublish } = useUnpublish()
     const { mutateAsync: publish } = usePublish()
 
-    const { data: posts } = useGetPost()
+    const { data: posts, refetch } = useGetPost()
 
     const { mutateAsync } = useUpdateUserRole()
 
@@ -89,28 +91,46 @@ const Adminpage = () => {
 
 
     return (
-        <div>
-            <div className='grid lg:grid-cols-3 lg:ml-80 lg:mr-60'>
+        <div className='lg:ml-80 lg:mr-80'>
+            <h1 className='text-center mt-5 text-2xl text-pink-500 font-bold'>Payment history</h1>
+            <h2 className='text-xl text-center font-bold text-purple-500 mt-4'>This history came from stripe.So I show limited</h2>
+            <div className='grid items-center justify-center cursor-pointer lg:grid-cols-3 gap-6 p-6'>
+                {history?.data?.length > 0 ? (
+                    history?.data?.map((one: TMetaData) => (
+                        <div key={one._id} className=' shadow-md rounded-lg p-4 border border-gray-200 transition-transform transform hover:scale-105'>
+                            <img className='w-24 h-24 rounded-md mb-4 object-cover mx-auto' src={one.metadata.userProfilePhoto} alt={`${one.metadata.userName}'s profile`} />
+                            <h3 className='text-xl text-purple-500 font-semibold text-center mb-2'>{one.metadata.userName}</h3>
+                            <p className=' text-cyan-600 text-center'>Email: {one.metadata.userEmail}</p>
+                            <p className='text-green-500 text-center font-bold mt-2'>Amount: ${one.amount / 100}</p>
+                            <p className='text-pink-600 text-center'>Payment Created: {new Date(one.created * 1000).toLocaleString()}</p>
+                        </div>
+                    ))
+                ) : (
+                    <p className='text-gray-500 text-center col-span-full'>No payment history available.</p>
+                )}
+            </div>
+            {/* <div className='grid lg:grid-cols-3 lg:ml-80 lg:mr-60'>
                 {
-                    data?.data?.map((one : TUserInfo) => (<div key={one._id}>
+                    data?.data?.map((one: TUserInfo) => (<div key={one?._id}>
                         <div>
-                            <h1>{one.name}</h1>
+                            <h1>{one?.name}</h1>
                             <img className='w-40 rounded-sm h-40' src={one.profilePhoto} alt="" />
                             {
-                                one.role === "USER" ? <Button color='secondary' className='mt-3 ml-7' onClick={() => handleUpdate(one._id)} >Make Admin</Button> : <Button color='secondary' className='mt-3 ml-7'>{one.role}</Button>
+                                one?.role === "USER" ? <Button color='secondary' className='mt-3 ml-7' onClick={() => handleUpdate(one._id)} >Make Admin</Button> : <Button color='secondary' className='mt-3 ml-7'>{one.role}</Button>
                             } <br />
-                            <Button className='mt-3 ml-7' color='warning' onClick={() => handleDelete(one._id)}>Delete</Button>
+                            <Button className='mt-3 ml-7' color='warning' onClick={() => handleDelete(one?._id)}>Delete</Button>
                         </div>
                     </div>))
                 }
-            </div>
-            <div>
+            </div> */}
+            <div className=''>
+                <h1 className='text-3xl mt-6 mb-6 font-bold text-pink-600 text-center'>All posts</h1>
                 {
-                    posts?.data?.map((post : TPost) => (
+                    posts?.data?.map((post: TPost) => (
 
-                        <div key={post._id}>
+                        <div className='lg:ml-64' key={post._id}>
                             <div
-                                className=" shadow-md mt-20 border border-purple-200 rounded-lg p-4 max-w-screen-md"
+                                className=" shadow-md mt-20 cursor-pointer border border-purple-200 rounded-lg p-4 max-w-screen-md"
                             >
                                 <div className="flex justify-between items-center mb-4">
                                     <div className="flex items-center space-x-3">
@@ -131,8 +151,6 @@ const Adminpage = () => {
                                         </div>
                                     </div>
                                 </div>
-
-                                {/* Post Content */}
                                 <div className="mb-4">
                                     <h3 className="font-semibold text-emerald-800 text-lg">{post.caption}</h3>
                                     <div
@@ -148,26 +166,11 @@ const Adminpage = () => {
                                     />
                                 )}
                                 {
-                                    post.isPublished === true ? <Button color='secondary' onClick={() => handleunPublish(post._id)}>unpublish</Button> : <Button color='secondary' onClick={() => handlePublish(post._id)}>publish</Button>
+                                    post.isPublished === true ? <Button className='rounded-sm text-white' color='warning' onClick={() => handleunPublish(post._id)}>unpublish</Button> : <Button className='rounded-sm text-white' color='warning' onClick={() => handlePublish(post._id)}>publish</Button>
                                 }
                             </div>
                         </div>))
                 }
-            </div>
-            <div className='grid items-center justify-center lg:grid-cols-3 gap-6 p-6'>
-                {history?.data?.length > 0 ? (
-                    history?.data?.map((one : TMetaData) => (
-                        <div key={one._id} className='bg-white shadow-md rounded-lg p-4 border border-gray-200 transition-transform transform hover:scale-105'>
-                            <img className='w-24 h-24 rounded-md mb-4 object-cover mx-auto' src={one.metadata.userProfilePhoto} alt={`${one.metadata.userName}'s profile`} />
-                            <h3 className='text-xl text-purple-500 font-semibold text-center mb-2'>{one.metadata.userName}</h3>
-                            <p className=' text-cyan-600 text-center'>Email: {one.metadata.userEmail}</p>
-                            <p className='text-green-500 text-center font-bold mt-2'>Amount: ${one.amount / 100}</p>
-                            <p className='text-pink-600 text-center'>Payment Created: {new Date(one.created * 1000).toLocaleString()}</p>
-                        </div>
-                    ))
-                ) : (
-                    <p className='text-gray-500 text-center col-span-full'>No payment history available.</p>
-                )}
             </div>
         </div>
     );

@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 /* eslint-disable prettier/prettier */
 
 "use client"
@@ -6,12 +7,14 @@ import React, { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useCreatePost } from '@/src/hooks/post.hook';
-import { useUser } from '@/src/context/user.provider';
+
 import { TPost } from '@/src/types';
 import PhotoModal from './modal/modal';
+import { useGetUser } from '../hooks/auth.hook';
 
 const Feed = () => {
-    const { userEmail, userName, userId, userProfilePhoto } = useUser()
+
+    const { data } = useGetUser()
     const { mutate: createPost } = useCreatePost();
     const queryClient = useQueryClient();
 
@@ -20,16 +23,18 @@ const Feed = () => {
     const [photo, setPhoto] = useState('');
     const [category, setCategory] = useState('TIP');
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isPremium,setisPremium] = useState("NO")
+    const [isPremium, setisPremium] = useState("NO")
+    const [isPublished, setIsPublished] = useState(true)
 
     const handlePost = () => {
         const payload: TPost = {
-            userEmail,
-            userName,
-            userId,
-            userProfilePhoto,
+            userEmail : data?.data?.userEmail,
+            userName : data?.data?.userName,
+            userId : data?.data?.userId,
+            userProfilePhoto : data?.data?.userProfilePhoto,
             caption,
             description,
+            isPublished,
             photo,
             category,
             isPremium,
@@ -43,7 +48,8 @@ const Feed = () => {
                 setDescription('');
                 setPhoto('');
                 setCategory('TIP');
-                setisPremium(false)
+                setIsPublished(true)
+                setisPremium("YES")
             }
         });
     };
