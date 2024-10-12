@@ -44,7 +44,7 @@ const UserProfile = () => {
 
     useEffect(() => {
         if (data?.data) {
-            const filteredPosts = data.data.filter((one: any) => one?.userEmail === user?.email);
+            const filteredPosts = data?.data.filter((one: any) => one?.userEmail === user?.email);
 
             setPosts(filteredPosts);
         }
@@ -54,7 +54,7 @@ const UserProfile = () => {
         setLoading(true);
         deletePost(postId, {
             onSuccess: () => {
-                setPosts((prevPosts) => prevPosts.filter((post: TUserPost) => post._id !== postId));
+                setPosts((prevPosts) => prevPosts?.filter((post: TUserPost) => post._id !== postId));
                 refetch();
             },
             onError: () => {
@@ -64,6 +64,10 @@ const UserProfile = () => {
             }
         });
     };
+
+    if (!data) {
+        return <div> <Spinner /> </div>;
+    }
 
     return (
         <div className="p-4 lg:ml-80 md:ml-40 lg:mr-80">

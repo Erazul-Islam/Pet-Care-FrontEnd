@@ -36,7 +36,7 @@ const UserDashboard = () => {
 
     useEffect(() => {
         if (data?.data) {
-            const filteredPosts = data.data.filter((one: any) => one?.userEmail === user?.email);
+            const filteredPosts = data?.data?.filter((one: any) => one?.userEmail === user?.email);
 
             setPosts(filteredPosts);
         }
@@ -44,7 +44,7 @@ const UserDashboard = () => {
 
     return (
         <div>
-            <h1 className='text-center mt-4 text-purple-500'>Welcome {userData.data.name}</h1>
+            <h1 className='text-center mt-4 text-purple-500'>Welcome {userData?.data?.name}</h1>
             <div className='lg:flex lg:justify-evenly lg:ml-80 lg:mr-80'>
                 <div className='mt-4'>
                     <PdfGenerator />

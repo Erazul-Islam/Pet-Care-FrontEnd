@@ -7,7 +7,7 @@ import axiosInstance from "@/src/lib/axiosInstance"
 
 export const searchPosts = async (searchTerm:string) => {
     try {
-        const res = await axiosInstance.get(`/search-items?searchTerm=${searchTerm}`)
+        const res = await axiosInstance.get(`/pet/search?searchTerm=${searchTerm}`)
 
         return res.data
     }

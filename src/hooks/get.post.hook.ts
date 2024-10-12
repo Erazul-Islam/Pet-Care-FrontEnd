@@ -2,7 +2,6 @@
 
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { useInfiniteQuery } from "react-query";
 
 import { deletePost, getAllPost } from "../services/get-post";
 

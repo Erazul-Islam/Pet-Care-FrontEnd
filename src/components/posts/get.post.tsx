@@ -243,8 +243,8 @@ const GetPost = () => {
                                                 <div>
                                                     <h4 className="">{post.userName}</h4>
                                                     <p className="text-xs">{new Date(post.createdAt).toLocaleString()}</p>
-                                                    <p className="text-xs">total upvotes {post?.totalUpvotes}</p>
-                                                    <p className="text-xs">total downvote {post?.totalDownvotes}</p>
+                                                    <p className="text-xs text-purple-600 font-bold">total upvotes {post?.totalUpvotes}</p>
+                                                    <p className="text-xs text-pink-600 font-bold">total downvote {post?.totalDownvotes}</p>
                                                 </div>
                                                 <div>
                                                     {post?.isPremium === "YES" ? (
@@ -252,10 +252,10 @@ const GetPost = () => {
                                                     ) : ""}
                                                 </div>
                                             </div>
-                                            <div className=''>
+                                            <div className='lg:flex flex'>
                                                 {isFollowing ? (
                                                     <motion.button
-                                                        className="bg-teal-700 ml-3 text-white px-4 py-1 rounded-md text-sm"
+                                                        className="bg-teal-700 ml-3 text-white px-4 py-1 rounded-sm text-sm"
                                                         whileHover={{ scale: 1.2, transition: { duration: 0.3 } }}
                                                         whileTap={{ scale: 0.95 }}
                                                         onClick={() => handleUnfollow(post._id)}
@@ -264,7 +264,7 @@ const GetPost = () => {
                                                     </motion.button>
                                                 ) : (
                                                     <motion.button
-                                                        className="bg-teal-700 text-white px-4 py-1 rounded-md text-sm"
+                                                        className="bg-teal-700 text-white px-4 py-1 rounded-sm text-sm"
                                                         whileHover={{ scale: 1.2, backgroundColor: "blueviolet", transition: { duration: 0.3 } }}
                                                         whileTap={{ scale: 0.95 }}
                                                         onClick={() => handleFollow(post._id)}
@@ -273,7 +273,7 @@ const GetPost = () => {
                                                     </motion.button>
                                                 )}
                                                 <motion.button
-                                                    className="bg-purple-600 ml-3 text-white px-4 py-1 rounded-md text-sm"
+                                                    className="bg-purple-600 ml-3 text-white px-4 py-1 rounded-sm text-sm"
                                                     whileHover={{ scale: 1.2, transition: { duration: 0.3 } }}
                                                     whileTap={{ scale: 0.95 }}
                                                     onClick={() => handleUpvotePost(post._id)}
@@ -281,7 +281,7 @@ const GetPost = () => {
                                                     Upvote
                                                 </motion.button>
                                                 <motion.button
-                                                    className="bg-red-400 ml-3 text-white px-4 py-1 rounded-md text-sm"
+                                                    className="bg-red-400 ml-3 text-white px-4 py-1 rounded-sm text-sm"
                                                     whileHover={{ scale: 1.2, transition: { duration: 0.3 } }}
                                                     whileTap={{ scale: 0.95 }}
                                                     onClick={() => handleDownVotePost(post._id)}

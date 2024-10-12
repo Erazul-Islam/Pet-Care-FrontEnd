@@ -52,7 +52,7 @@ export interface TUser {
 export interface ISearchResult {
   caption: string;
   description: string;
-  thumbnail: string;
+  photo: string;
   id: string;
 }
 
