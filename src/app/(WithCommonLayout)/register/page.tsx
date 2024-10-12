@@ -1,8 +1,9 @@
+/* eslint-disable import/order */
 /* eslint-disable padding-line-between-statements */
 /* eslint-disable prettier/prettier */
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@nextui-org/button";
@@ -12,27 +13,34 @@ import TSForm from "@/src/components/form/Form";
 import TSInput from "@/src/components/form/Input";
 import { useUserRegistration } from "@/src/hooks/auth.hook";
 import registerValidationSchema from "@/src/schema/register.schema";
+import { Spinner } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 
 const SignupUser = () => {
-  const { mutate: handleUserRegistration, isPending} = useUserRegistration();
+  const { mutate: handleUserRegistration, isPending } = useUserRegistration();
+
+  const [loading, setLoading] = useState(false)
+
+  const router = useRouter()
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const userData = {
       ...data,
-      role:"USER"
+      role: "USER"
     };
-
-
-    handleUserRegistration(userData);
+    setLoading(true)
+    handleUserRegistration(userData, {
+      onSettled: () => setLoading(false)
+    });
+    router.push('/login')
   };
   if (isPending) {
 
-   }
+  }
 
   return (
     <div className="flex h-[calc(100vh-100px)] flex-col items-center justify-center">
-      <h3 className="my-2 text-xl font-bold">Register with FoundX</h3>
-      <p className="mb-4">Help Lost Items Find Their Way Home</p>
+      <h3 className="my-2 text-xl text-pink-500 font-bold">Please Sign up</h3>
       <div className="w-[35%]">
         <TSForm
           //! Only for development
@@ -41,7 +49,7 @@ const SignupUser = () => {
             email: "taosif@gmail.com",
             mobileNumber: "01711223344",
             password: "123456",
-            address:'Sahid Tajuddin Ahmod Hall',
+            address: 'Sahid Tajuddin Ahmod Hall',
             profilePhoto: 'https://ibb.co.com/mhH18dQ'
           }}
           resolver={zodResolver(registerValidationSchema)}
@@ -72,11 +80,11 @@ const SignupUser = () => {
           </div>
 
           <Button
-            className="my-3 w-full rounded-md bg-default-900 text-default"
+            className="my-3 w-full rounded-sm bg-pink-600 text-white"
             size="lg"
             type="submit"
           >
-            Registration
+            {loading ? <Spinner /> : 'Registration'}
           </Button>
         </TSForm>
         <div className="text-center">

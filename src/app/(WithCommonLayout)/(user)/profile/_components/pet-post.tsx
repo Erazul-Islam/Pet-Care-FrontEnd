@@ -1,4 +1,6 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable import/order */
+/* eslint-disable prettier/prettier */
 "use client"
 
 import React, { useState } from 'react';
@@ -6,11 +8,12 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { useCreatePost } from '@/src/hooks/post.hook';
 import { TPost } from '@/src/types';
-import ReactQuill from 'react-quill';
+// import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useGetUser } from '@/src/hooks/auth.hook';
+import dynamic from 'next/dynamic';
 
-
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const PetMarkDownEditor = () => {
     // const { userEmail, userName, userId, userProfilePhoto, } = useUser()

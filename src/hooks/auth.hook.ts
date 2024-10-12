@@ -29,10 +29,12 @@ export const useGetProfile = () => {
 };
 
 export const useDeleteUser = () => {
+    const queryClient = useQueryClient()
     return useMutation({
         mutationKey: ["DELETE_POST"],
         mutationFn: async (postId: string) => await deleteUser(postId),
         onSuccess: () => {
+            queryClient.invalidateQueries()
             toast.success("DELETED");
         },
         onError: (error: any) => {

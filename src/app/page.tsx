@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable prettier/prettier */
 "use client"
@@ -29,7 +30,7 @@ export default function Home() {
 
   // const router = useRouter()
 
-  const onSubmit: SubmitHandler<FieldValues> = (data: any) => {
+  const onSubmit: SubmitHandler<FieldValues> = (_data: any) => {
     // handleSeeAll(data.search);
 
   };
@@ -59,12 +60,12 @@ export default function Home() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
 
-          <div className="flex items-center justify-center min-h-scree">
-            <div className="relative w-full max-w-md">
+          <div className="">
+            <div className=" w-full max-w-md">
               <Input
                 {...register("search")}
                 aria-label="Search"
-                className="w-full pl-10 pr-4 py-2 rounded-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                className="w-full pl-10  mt-12 lg:ml-32 lg:mt-8 pr-4 py-2 rounded-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none focus:ring focus:ring-opacity-40"
                 placeholder="Search"
                 type="text"
               />
@@ -75,7 +76,7 @@ export default function Home() {
       </form>
       {
         searchResults.length > 0 && (
-          <div className="mt-2 w-56 rounded-xl bg-default-100 p-3">
+          <div className="mt-2 w-56 rounded-sm bg-default-100 p-3">
             <div className="space-y-3 ">
               {
                 searchResults.map((item, index) => (

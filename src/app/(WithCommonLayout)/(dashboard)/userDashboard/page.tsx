@@ -1,15 +1,18 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable import/order */
+/* eslint-disable prettier/prettier */
 
 "use client"
 
 import React, { useEffect, useState } from 'react';
 import DOMPurify from 'dompurify';
+import { Avatar } from '@nextui-org/react';
 
+import { TFollow } from '../../(user)/profile/_components/info';
 import { useUser } from '@/src/context/user.provider';
 import { useGetPost } from '@/src/hooks/get.post.hook';
 import PdfGenerator from '@/src/components/pdf/pdf';
-import { Avatar } from '@nextui-org/react';
-import { TFollow } from '../../(user)/profile/_components/info';
+
 import { useGetUser } from '@/src/hooks/auth.hook';
 
 interface TUserPost {

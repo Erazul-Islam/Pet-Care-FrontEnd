@@ -32,11 +32,11 @@ export const editUserInfo = async (payload: Partial<TUser>) => {
 }
 
 export const getAllprofile = async () => {
-    const res = await axiosInstance.get('/auth/all-profile')
+    const {data} = await axiosInstance.get('/auth/all-profile')
 
-    console.log(res)
+    console.log(data)
 
-    return res.data
+    return data
 }
 
 export const deleteUser = async (userId: string) => {

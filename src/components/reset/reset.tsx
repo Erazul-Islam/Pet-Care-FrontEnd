@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable import/order */
 /* eslint-disable react/jsx-sort-props */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable prettier/prettier */
@@ -24,13 +26,13 @@ const ResetPassword = () => {
 
     return (
         <div className="flex items-center justify-center min-h-screen">
-            <div className="bg-white p-8 rounded-lg shadow-lg w-96">
-                <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+            <div className="bg-pink-600 p-8 rounded-lg shadow-lg w-96">
+                <h2 className="text-2xl font-bold text-white mb-6 text-center">
                     Reset Your Password
                 </h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label className="block text-sm font-medium text-white mb-2">
                             New Password
                         </label>
                         <input
@@ -44,7 +46,7 @@ const ResetPassword = () => {
                     </div>
                     <button
                         type="submit"
-                        className="w-full bg-purple-700 hover:bg-purple-900 text-white font-semibold py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out"
+                        className="w-full bg-purple-700 hover:bg-purple-900 text-white font-semibold py-2 px-4 rounded-sm shadow-md transition duration-300 ease-in-out"
                     >
                         Reset Password
                     </button>

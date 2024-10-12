@@ -1,4 +1,6 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable import/order */
+/* eslint-disable prettier/prettier */
 
 "use client"
 
@@ -61,9 +63,9 @@ const Info = () => {
                         <h2 className="text-3xl text-pink-600 font-bold">{userData?.data?.name}</h2>
                         <p className="">{userData?.data?.email}</p>
                         <div className="flex items-center gap-2 mt-2">
-                            <h1 className="font-semibold">{userData?.data.followers.length} followers</h1>
+                            <h1 className="font-semibold">{userData?.data?.followers?.length} followers</h1>
                             <span className="text-gray-400">•</span>
-                            <h2 className="font-semibold">{userData?.data.following.length} following</h2>
+                            <h2 className="font-semibold">{userData?.data?.following?.length} following</h2>
                         </div>
                         <Button color='warning'
                             className="mt-4 text-white rounded-sm"
@@ -87,7 +89,7 @@ const Info = () => {
                         <h3 className="text-xl font-semibold">Followers</h3>
                         <div className='mt-3'>
                             {
-                                userData?.data?.followers.map((follower: TFollow) => (<div key={follower._id}>
+                                userData?.data?.followers?.map((follower: TFollow) => (<div key={follower._id}>
                                     <div className='flex justify-between border h-16 border-white'>
                                         <Avatar className='mt-3 ml-8' src={follower.profilePhoto} alt="" />
                                         <h1 className='mt-4 text-pink-500 ml-8 mr-8 font-bold'>{follower.username}</h1>
@@ -100,7 +102,7 @@ const Info = () => {
                         <h3 className="text-xl font-semibold">Following</h3>
                         <div className='mt-3'>
                             {
-                                userData?.data?.following.map((follower: TFollow) => (<div key={follower._id}>
+                                userData?.data?.following?.map((follower: TFollow) => (<div key={follower._id}>
                                     <div className='flex gap-4 justify-between border h-16 border-white'>
                                         <Avatar className='mt-3 ml-8' src={follower.profilePhoto} alt="" />
                                         <h1 className='mt-4 mr-8 text-pink-500 ml-8 font-bold'>{follower.username}</h1>

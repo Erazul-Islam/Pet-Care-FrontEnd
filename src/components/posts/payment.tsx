@@ -1,15 +1,19 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable import/order */
+/* eslint-disable prettier/prettier */
 
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useState } from 'react';
 
 import { useCreatePayment } from '@/src/hooks/payment.hook';
 import { toast } from 'sonner';
+import { useGetUser } from '@/src/hooks/auth.hook';
 
 const Payment = () => {
 
     const [isOpen, setIsOpen] = useState(false);
     const { mutateAsync } = useCreatePayment()
+    const {refetch} = useGetUser()
     const stripe = useStripe()
     const elements = useElements()
 
@@ -55,6 +59,7 @@ const Payment = () => {
             if (paymentIntent.status === 'succeeded') {
                 console.log('Payment successful!');
                 setIsOpen(false);
+                refetch()
             }
         } catch (error) {
             console.error('Payment error:', error);
@@ -80,6 +85,7 @@ const Payment = () => {
                         {/* Modal Header */}
                         <div className="flex justify-between items-center px-4 py-2 border-b">
                             <h2 className="text-lg  font-bold">Confirm Payment</h2>
+                            <h2 className="text-lg  font-bold">Automatic cut $1</h2>
                             <button
                                 className="text-gray-500 hover:text-gray-700"
                                 onClick={toggleModal}
@@ -93,16 +99,18 @@ const Payment = () => {
                             <CardElement  />
                         </div>
 
-                        {/* Modal Footer */}
+                        <div className='text-center mb-4'>
+                            card Number 4242 4242 4242 4242
+                        </div>
                         <div className="flex justify-end px-4 py-2 border-t">
                             <button
-                                className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-blue-700 mr-2"
+                                className="px-4 py-2 bg-purple-600 text-white rounded-sm hover:bg-blue-700 mr-2"
                                 onClick={handlePayment}
                             >
                                 Pay Now
                             </button>
                             <button
-                                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400"
+                                className="px-4 py-2 bg-yellow-500 text-white rounded-sm hover:bg-gray-400"
                                 onClick={toggleModal}
                             >
                                 Cancel

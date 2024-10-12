@@ -1,7 +1,8 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable prettier/prettier */
 
-import jsPDF from 'jspdf';
+// import jsPDF from 'jspdf';
 import React, { useState } from 'react';
 
 const PdfGenerator = () => {
@@ -50,9 +51,12 @@ const PdfGenerator = () => {
         setCalories(dailyCalories.toString());
     };
 
-    const generatePdf = () => {
+    const generatePdf = async () => {
 
-        if (typeof window !== undefined) {
+        if (typeof window !== 'undefined') {
+
+            const { jsPDF } = await import('jspdf');
+
             const doc = new jsPDF();
 
             doc.setFontSize(22);
@@ -200,9 +204,6 @@ const PdfGenerator = () => {
                             </button>
                         )}
                     </div>
-                </div>
-                <div>
-
                 </div>
             </div>
 

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable import/order */
 /* eslint-disable prettier/prettier */
 
@@ -11,6 +12,7 @@ import { useCreatePost } from '@/src/hooks/post.hook';
 import { TPost } from '@/src/types';
 import PhotoModal from './modal/modal';
 import { useGetUser } from '../hooks/auth.hook';
+import ReactQuill from 'react-quill';
 
 const Feed = () => {
 
@@ -28,10 +30,10 @@ const Feed = () => {
 
     const handlePost = () => {
         const payload: TPost = {
-            userEmail : data?.data?.userEmail,
-            userName : data?.data?.userName,
-            userId : data?.data?.userId,
-            userProfilePhoto : data?.data?.userProfilePhoto,
+            userEmail: data?.data?.userEmail,
+            userName: data?.data?.userName,
+            userId: data?.data?.userId,
+            userProfilePhoto: data?.data?.userProfilePhoto,
             caption,
             description,
             isPublished,
@@ -92,12 +94,7 @@ const Feed = () => {
                                 </select>
                             </div>
                         </div>
-                        <textarea
-                            className="w-full h-24 p-2  rounded-lg resize-none mt-4 focus:outline-none "
-                            placeholder="Add a description..."
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                        />
+                        <ReactQuill className='mt-6 mb-6' placeholder='Description' theme="snow" value={description} onChange={setDescription} />
 
                         <button
                             className="bg-blue-500 text-white rounded-lg py-2 px-4 mt-4 w-full hover:bg-blue-600"

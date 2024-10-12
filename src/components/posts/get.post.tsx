@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 // /* eslint-disable prettier/prettier */
 // // /* eslint-disable prettier/prettier */
 // // /* eslint-disable import/order */
@@ -23,6 +24,7 @@ import { useDownVotePost, useUpvotePost } from '@/src/hooks/post.hook';
 import PetMarkDownEditor from '@/src/app/(WithCommonLayout)/(user)/profile/_components/pet-post';
 import { useGetUser } from '@/src/hooks/auth.hook';
 import { TComment } from '@/src/types';
+
 
 const GetPost = () => {
 
@@ -174,7 +176,6 @@ const GetPost = () => {
         }
         unfollow(targetUserId)
     };
-
     const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSortBy(e.target.value as 'newest' | 'mostUpvoted');
     };
@@ -191,10 +192,10 @@ const GetPost = () => {
         <div>
             <section className="flex flex-col items-center ">
                 <PetMarkDownEditor />
-                <div className='flex gap-8'>
-                    <div className="flex  w-full max-w-screen-md mb-4">
+                <div className='flex mt-14 mb-2 gap-20'>
+                    <div className="flex  w-full max-w-screen-md mb-1">
                         <select
-                            className="border bg-purple-600 rounded-md px-3 py-1"
+                            className="border bg-purple-600 rounded-md px-3 py-2"
                             id="sort"
                             value={sortBy}
                             onChange={handleSortChange}
@@ -203,9 +204,9 @@ const GetPost = () => {
                             <option value="mostUpvoted">Most Upvoted</option>
                         </select>
                     </div>
-                    <div className="flex  w-full max-w-screen-md mb-4">
+                    <div className="flex  w-full max-w-screen-md mb-1">
                         <select
-                            className="border bg-purple-600 rounded-md px-3 py-1"
+                            className="border bg-purple-600 rounded-md px-3 py-2"
                             id="filter"
                             value={filterByCategory}
                             onChange={(e) => setFilterByCategory(e.target.value as 'All' | 'Story' | 'TIP')}
@@ -218,12 +219,20 @@ const GetPost = () => {
                 </div>
                 <motion.div className='grid grid-cols-1 gap-4'>
                     {
-                        isSuccess && sortedPosts.map((post, index) => {
+                        isSuccess && sortedPosts?.map((post, index) => {
                             const isFollowing = userData?.data?.following?.some((followingUserId: { id: any; }) => followingUserId.id === post.userId);
+                            const isUserPremium = userData?.data?.isPremium
+                            const isPostPremium = post.isPremium === "YES";
+                            const shouldShowFullContent = isPostPremium ? isUserPremium : true;
+                            const displayContent = shouldShowFullContent
+                                ? post.description
+                                : post.description.length > 100
+                                    ? post.description.substring(0, 100) + '...'
+                                    : post.description;
 
                             return (
                                 <div key={index} >
-                                    <div className="shadow-md mt-20 border border-purple-200 rounded-lg p-4 max-w-screen-md">
+                                    <div className="shadow-md  border border-purple-200 rounded-lg p-4 max-w-screen-md">
                                         <div className="flex justify-between items-center mb-4">
                                             <div className="flex items-center space-x-3">
                                                 <img
@@ -283,12 +292,25 @@ const GetPost = () => {
                                         </div>
 
                                         {/* Post Content */}
+
                                         <div className="mb-4">
                                             <h3 className="font-semibold text-emerald-800 text-lg">{post.caption}</h3>
                                             <div
-                                                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.description) }}
+                                                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(displayContent) }}
                                                 className="text-sm mt-3"
                                             />
+                                            {
+                                                // Show Read More / Read Less only if content is truncated or if it's premium and user is premium
+                                                (isPostPremium && !isUserPremium && post.description.length > 100) ||
+                                                    (!isPostPremium && post.description.length > 100) ? (
+                                                    isPostPremium ? <button
+                                                        className="text-pink-700 font-bold mt-2"
+                                                        disabled={userData?.data?.isPremium === false}
+                                                    >
+                                                        Pay to see
+                                                    </button> : ''
+                                                ) : ""
+                                            }
                                         </div>
 
                                         {/* Post Image */}
@@ -301,7 +323,7 @@ const GetPost = () => {
                                             />
                                         )}
 
-                                        {post && post.isPremium === "YES" ? (
+                                        {post && post.isPremium === "YES" && userData?.data?.isPremium === false ? (
                                             <Elements stripe={stripePromise}>
                                                 <Payment />
                                             </Elements>
@@ -316,7 +338,7 @@ const GetPost = () => {
                                                 onChange={(e) => setCommentText(prev => ({ ...prev, [post._id]: e.target.value }))}
                                             />
                                             <button
-                                                className="bg-blue-500 text-white px-4 py-1 rounded-full mt-2"
+                                                className="bg-pink-700  text-white px-4 py-1 rounded-sm mt-4"
                                                 onClick={() => handleAddComment(post._id)}
                                             >
                                                 Add Comment
@@ -359,8 +381,8 @@ const GetPost = () => {
                     }
                 </motion.div>
                 {modalVisible && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                        <div className="bg-white rounded-lg shadow-lg p-6 w-11/12 max-w-md">
+                    <div className="fixed inset-0 z-50 flex items-center justify-center  bg-opacity-50">
+                        <div className="bg-pink-600 rounded-lg shadow-lg p-6 w-11/12 max-w-md">
                             <h4 className="text-lg font-semibold mb-4">Edit Comment</h4>
                             <input
                                 className="border rounded-md p-2 w-full"
@@ -370,13 +392,13 @@ const GetPost = () => {
                             />
                             <div className="flex justify-end mt-4">
                                 <button
-                                    className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md mr-2"
+                                    className="bg-yellow-500 text-white px-4 py-2 rounded-md mr-2"
                                     onClick={() => setModalVisible(false)}
                                 >
                                     Close
                                 </button>
                                 <button
-                                    className="bg-blue-500 text-white px-4 py-2 rounded-md"
+                                    className="bg-purple-700 text-white px-4 py-2 rounded-md"
                                     onClick={handleUpdateComment}
                                 >
                                     Update Comment
@@ -386,7 +408,7 @@ const GetPost = () => {
                     </div>
                 )}
             </section>
-        </div>
+        </div >
     );
 };
 

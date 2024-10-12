@@ -19,7 +19,6 @@ import { motion } from "framer-motion"
 
 import { Button } from "@nextui-org/button";
 import { Link } from "@nextui-org/link";
-import { Input } from "@nextui-org/input";
 import { link as linkStyles } from "@nextui-org/theme";
 import NextLink from "next/link";
 import clsx from "clsx";
@@ -28,8 +27,6 @@ import { siteConfig } from "@/src/config/site";
 import { ThemeSwitch } from "@/src/components/theme-switch";
 import {
   GithubIcon,
-  HeartFilledIcon,
-  SearchIcon,
 } from "@/src/components/icons";
 import { Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
 import { useUser } from "../context/user.provider";
@@ -94,19 +91,7 @@ export const Navbar = () => {
         <NavbarItem className="hidden sm:flex gap-2">
           <ThemeSwitch />
         </NavbarItem>
-        {/* <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem> */}
-        <NavbarItem className="hidden md:flex">
-          <Button
-            isExternal
-            as={Link}
-            className="text-sm font-normal text-default-600 bg-default-100"
-            href={siteConfig.links.sponsor}
-            startContent={<HeartFilledIcon className="text-danger" />}
-            variant="flat"
-          >
-            Sponsor
-          </Button>
-        </NavbarItem>
+       
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">

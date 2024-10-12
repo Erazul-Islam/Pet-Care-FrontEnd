@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 "use client";
 /* eslint-disable import/order */
 /* eslint-disable prettier/prettier */
@@ -7,9 +8,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import { FieldValues, SubmitHandler } from "react-hook-form";
 
-import { useEffect } from "react";
-
-import { useUser } from "@/src/context/user.provider";
+import { useEffect, useState } from "react";
 import { useUserLogin } from "@/src/hooks/auth.hook";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,21 +17,26 @@ import { Button } from "@nextui-org/button";
 import TSForm from "@/src/components/form/Form";
 import TSInput from "@/src/components/form/Input";
 import Link from "next/link";
+import { Spinner } from "@nextui-org/react";
 
 
 /* eslint-disable prettier/prettier */
 const LoginPage = () => {
     const searchParams = useSearchParams();
     const router = useRouter();
-    const { setIsLoading: userLoading } = useUser();
+    // const { setIsLoading: userLoading } = useUser();
 
     const redirect = searchParams.get("redirect");
 
     const { mutate: handleUserLogin, isPending, isSuccess } = useUserLogin();
+    const [loading,setLoading] = useState(false)
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
-        handleUserLogin(data);
-        userLoading(true);
+        setLoading(true)
+        handleUserLogin(data,{
+            onSettled : () => setLoading(false)
+        });
+        // userLoading(true);
     };
 
     useEffect(() => {
@@ -47,10 +51,10 @@ const LoginPage = () => {
 
     return (
         <>
-            {isPending }
+            {isPending}
             <div className="flex h-[calc(100vh-200px)] w-full flex-col items-center justify-center">
-                <h3 className="my-2 text-2xl font-bold">Login with FoundX</h3>
-                <p className="mb-4">Welcome Back! Let&lsquo;s Get Started</p>
+                <h3 className="my-2 text-2xl text-pink-700 font-bold">Please log in</h3>
+                <p className="mb-4"></p>
                 <div className="w-[35%]">
                     <TSForm
                         resolver={zodResolver(loginValidationSchema)}
@@ -64,15 +68,20 @@ const LoginPage = () => {
                         </div>
 
                         <Button
-                            className="my-3 w-full rounded-md bg-default-900 font-semibold text-default"
+                            className="my-3 w-full rounded-sm  bg-pink-700 font-semibold text-white"
                             size="lg"
                             type="submit"
                         >
-                            Login
+                            {loading ? <Spinner/> : 'Login'}
                         </Button>
                     </TSForm>
-                    <div className="text-center">
-                        Don&lsquo;t have account ? <Link href={"/register"}>Register</Link>
+                    <div className="md:flex justify-evenly">
+                        <div className="text-center">
+                            Don&lsquo;t have account ? <Link href={"/register"}> <p className="text-pink-500">Register</p> </Link>
+                        </div>
+                        <div className="text-center">
+                            Forget Password? <Link href={"/reset"}> <p className="text-pink-500">Reset password</p> </Link>
+                        </div>
                     </div>
                 </div>
             </div>
