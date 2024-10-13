@@ -1,53 +1,88 @@
-# Next.js & NextUI Template
+**Welcome to our pet care project project**
 
-This is a template for creating applications using Next.js 14 (app directory) and NextUI (v2).
 
-[Try it on CodeSandbox](https://githubbox.com/nextui-org/next-app-template)
+##Introduction
 
-## Technologies Used
+This is mainly pet care project. Where a user can post story and also Tip. It has
+custom authentication section. A user can can register his email name password address etc.
 
-- [Next.js 14](https://nextjs.org/docs/getting-started)
-- [NextUI v2](https://nextui.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Tailwind Variants](https://tailwind-variants.org)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [next-themes](https://github.com/pacocoursey/next-themes)
+_Technology fo FrontEnd_
 
-## How to Use
+            1. Next js
+            2. Typescript
+            3. Tanstack Query
+            4. And npm packages
 
-### Use the template with create-next-app
+_Technology fo BackEnd_
+            
+            1. Node js
+            2. Typescript
+            3. Mongoose
+            4. And npm packages
+            5. Nodemailer for mail
 
-To create a new project based on this template using `create-next-app`, run the following command:
+_Feature_
 
-```bash
-npx create-next-app -e https://github.com/nextui-org/next-app-template
-```
+*Authentication*
+    -Custom authentication
+       -Log in with email and password
+       -Reset password
+       -Change password
 
-### Install dependencies
+*Feed*
+     
+     user can see his and others post.
+     User can comment othere post and also can delete and edit.
+     user can upvote and downvote.
+     user can follow and unfollow other user.
+     Also user can post in the feed.
+     Advanced search with debouncing.
+     User can sort the post based on category
 
-You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
+*profile*
 
-```bash
-npm install
-```
+    user can see his information including edit option.
+    also can change profile photo.
+    Also see his post .
+    Delete his post.
+    Also see his follower and following section.
+    This is including ```ADMIN``` and ```USER```
 
-### Run the development server
+*Dashboard*
+    In User dashboard he can see his post also followr and following
+    _Also he can calculate his pet nutration using pet nutration calculator_
+    _Download the PDF_
 
-```bash
-npm run dev
-```
+**ADMIN DASHBOARD**
 
-### Setup pnpm (optional)
+    Admin can see the payment history
+    Admin can manage user. like make admin and delete user
+    Also admin can puplish or unpublish post
+    If admin unpublish the post. this post cannot shown in the FEED
 
-If you are using `pnpm`, you need to add the following code to your `.npmrc` file:
+*Contact*
+    IT is a form. User can contact with us
 
-```bash
-public-hoist-pattern[]=*@nextui-org/*
-```
+*About us*
 
-After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
+    Here every user can see about us
 
-## License
+**Deploying**
+    1. Backend in vercel 
+    2. Frontend also vercel
 
-Licensed under the [MIT license](https://github.com/nextui-org/next-app-template/blob/main/LICENSE).
+**Locally working**
+
+    If anyone want to see this project his local machine
+
+    1. clone the backend repo
+    2. npm i
+    3. Put his env variable
+    4. npm run start:dev
+
+    5.After cloning Client side
+    2.Put it env for in client
+    3.npm i
+    4.npm run dev
+
+That's all about it. Thanks for your patient 

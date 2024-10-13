@@ -29,12 +29,12 @@ const LoginPage = () => {
     const redirect = searchParams.get("redirect");
 
     const { mutate: handleUserLogin, isPending, isSuccess } = useUserLogin();
-    const [loading,setLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
         setLoading(true)
-        handleUserLogin(data,{
-            onSettled : () => setLoading(false)
+        handleUserLogin(data, {
+            onSettled: () => setLoading(false)
         });
         // userLoading(true);
     };
@@ -72,7 +72,7 @@ const LoginPage = () => {
                             size="lg"
                             type="submit"
                         >
-                            {loading ? <Spinner/> : 'Login'}
+                            {loading ? <Spinner /> : 'Login'}
                         </Button>
                     </TSForm>
                     <div className="md:flex justify-evenly">

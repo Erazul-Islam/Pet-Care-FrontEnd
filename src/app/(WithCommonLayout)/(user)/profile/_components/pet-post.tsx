@@ -12,12 +12,14 @@ import { TPost } from '@/src/types';
 import 'react-quill/dist/quill.snow.css';
 import { useGetUser } from '@/src/hooks/auth.hook';
 import dynamic from 'next/dynamic';
+import { useUser } from '@/src/context/user.provider';
+import { toast } from 'sonner';
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const PetMarkDownEditor = () => {
-    // const { userEmail, userName, userId, userProfilePhoto, } = useUser()
     const {data} = useGetUser()
+    const {user} = useUser()
 
     const { mutate: createPost, } = useCreatePost();
     const queryClient = useQueryClient();
@@ -42,6 +44,12 @@ const PetMarkDownEditor = () => {
             isPublished,
             comments: [],
         };
+
+        if(!user){
+            toast.error('Please log in firs')
+
+            return
+        }
 
         createPost(payload, {
             onSuccess: () => {

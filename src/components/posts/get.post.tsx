@@ -79,6 +79,12 @@ const GetPost = () => {
     const handleAddComment = async (postId: string) => {
         const text = commentText[postId]?.trim();
 
+        if (!user) {
+            toast.error('Please log in First')
+
+            return
+        }
+
         if (!text) {
             toast.error("Comment cannot be empty");
             refetch()
@@ -95,10 +101,20 @@ const GetPost = () => {
     }
 
     const handleUpvotePost = async (postId: string) => {
+        if (!user) {
+            toast.error('Please log in First')
+
+            return
+        }
         await upvotePost.mutateAsync(postId)
     }
 
     const handleDownVotePost = async (postId: string) => {
+        if (!user) {
+            toast.error('Please log in First')
+
+            return
+        }
         await downVotePost.mutateAsync(postId)
     }
 
@@ -129,6 +145,12 @@ const GetPost = () => {
     const handleFollow = (postId: string) => {
         const targetPost = posts?.data.find((post: { _id: string; }) => post._id === postId);
 
+        if (!user) {
+            toast.error('Please log in First')
+
+            return
+        }
+
         if (!targetPost) {
             toast.error("Post not found.");
 
@@ -154,6 +176,12 @@ const GetPost = () => {
 
     const handleUnfollow = async (postId: string) => {
         const targetPost = posts?.data.find((post: any) => post._id === postId);
+
+        if (!user) {
+            toast.error('Please log in First')
+
+            return
+        }
 
         if (!targetPost) {
             toast.error("Post not found.");

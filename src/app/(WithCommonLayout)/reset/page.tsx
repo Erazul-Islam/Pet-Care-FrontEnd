@@ -14,10 +14,14 @@ const ForgetPassword = () => {
 
     const [email, setEmail] = useState('')
     const { mutate } = useForgetPassword()
+    const [loading,setLoading] = useState(false)
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        mutate(email)
+        setLoading(true)
+        mutate(email, {
+            onSettled : () => setLoading(false)
+        })
     }
 
     return (
@@ -42,9 +46,9 @@ const ForgetPassword = () => {
                     </div>
                     <button
                         type="submit"
-                        className="w-full bg-purple-700 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-sm shadow-md transition duration-300 ease-in-out"
+                        className="w-full bg-purple-700 hover:bg-pink-400 text-white font-semibold py-2 px-4 rounded-sm shadow-md transition duration-300 ease-in-out"
                     >
-                        Send Reset Email
+                        {loading ? 'Sending...' : 'Send Reset Email'}
                     </button>
                 </form>
             </div>

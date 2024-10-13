@@ -4,7 +4,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable prettier/prettier */
 import { useResetPassword } from '@/src/hooks/auth.hook';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -13,6 +13,9 @@ const ResetPassword = () => {
     const { token } = useParams<{ token: string }>()
     const [newPassword, setNewPassword] = useState('')
     const { mutate } = useResetPassword()
+    const [loading, setLoading] = useState(false)
+
+    const router = useRouter()
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
@@ -20,8 +23,11 @@ const ResetPassword = () => {
         if (!newPassword) {
             toast.message('New password is required')
         }
-
-        mutate({ token: token as string, newPassword })
+        setLoading(true)
+        mutate({ token: token as string, newPassword }, {
+            onSettled: () => setLoading(false)
+        })
+        router.push('/login')
     }
 
     return (
@@ -48,7 +54,7 @@ const ResetPassword = () => {
                         type="submit"
                         className="w-full bg-purple-700 hover:bg-purple-900 text-white font-semibold py-2 px-4 rounded-sm shadow-md transition duration-300 ease-in-out"
                     >
-                        Reset Password
+                        {loading ? 'Reseting..' : 'Reset Password'}
                     </button>
                 </form>
             </div>
