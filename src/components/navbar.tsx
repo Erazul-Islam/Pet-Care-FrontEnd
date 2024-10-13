@@ -32,19 +32,18 @@ import { useUser } from "../context/user.provider";
 import { usePathname, useRouter } from "next/navigation";
 import { logout } from "../services/AuthServices";
 import { protectedRoutes } from "../constant";
-import { useGetUser } from "../hooks/auth.hook";
 
 export const Navbar = () => {
 
   const router = useRouter();
   const { user } = useUser()
-  const { data } = useGetUser()
   const pathname = usePathname();
 
   const { setIsLoading: userLoading } = useUser();
 
   const handleLogout = () => {
     logout();
+    router.push('/')
     userLoading(true);
 
     if (protectedRoutes.some((route) => pathname.match(route))) {
@@ -88,24 +87,6 @@ export const Navbar = () => {
         <NavbarItem className="hidden sm:flex gap-2">
           <ThemeSwitch />
         </NavbarItem>
-        {/* <NavbarItem>
-          <form >
-            <div>
-
-              <div className="">
-                <div className=" w-full max-w-md">
-                  <Input
-                    aria-label="Search"
-                    className=" pl-10  pr-4 py-2 rounded-sm"
-                    placeholder="Search"
-                    type="text"
-                  />
-                </div>
-              </div>
-
-            </div>
-          </form>
-        </NavbarItem> */}
       </NavbarContent>
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
         <Link isExternal aria-label="Github" href={siteConfig.links.github}>
@@ -123,7 +104,7 @@ export const Navbar = () => {
               color="secondary"
               name="Jason Hughes"
               size="sm"
-              src={data?.data?.profilePhoto}
+              src={user?.profilePhoto}
             />
           </DropdownTrigger>
           <DropdownMenu variant="bordered">
@@ -135,7 +116,7 @@ export const Navbar = () => {
             <DropdownItem onClick={() => handleNavigation('/contact')} >Contact</DropdownItem>
             <DropdownItem onClick={() => handleNavigation('/about')} >About</DropdownItem>
             {
-              data?.data?.role === "ADMIN" ? <DropdownItem onClick={() => handleNavigation('/adminDashboard')}>Dashboard</DropdownItem> : <DropdownItem onClick={() => handleNavigation('/userDashboard')}>Dashboard</DropdownItem>
+              user?.role === "ADMIN" ? <DropdownItem onClick={() => handleNavigation('/adminDashboard')}>Dashboard</DropdownItem> : <DropdownItem onClick={() => handleNavigation('/userDashboard')}>Dashboard</DropdownItem>
             }
             <DropdownItem key="change">
               {user ? <Link href="/changePassword"><p className=" text-white">Change Password</p></Link> : ''}

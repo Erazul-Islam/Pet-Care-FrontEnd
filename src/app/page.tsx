@@ -31,7 +31,6 @@ export default function Home() {
   console.log("searchTerm", searchTerm)
 
   const onSubmit: SubmitHandler<FieldValues> = (_data: any) => {
-    // handleSeeAll(data.search);
 
   };
 
@@ -44,99 +43,79 @@ export default function Home() {
     }
   }, [isPending, isSuccess, data, searchTerm])
 
-  // const onSubmit: SubmitErrorHandler<FieldValues> = (data) => {
-
-  // }
-
   return <section>
-    {/* <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <div className="relative flex items-center justify-center">
-            <div className="w-full max-w-md">
-              <Input
-                {...register("search")}
-                aria-label="Search"
-                className="w-full pl-10 pr-4 py-2 rounded-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none focus:ring focus:ring-opacity-40"
-                placeholder="Search"
-                type="text"
-              />
-            </div>
-          </div>
+    <div
+      className="relative min-h-screen bg-cover bg-center bg-animate"
+      style={{ backgroundImage: 'url("https://i.ibb.co/BNWYps3/home-hero-01-1.jpg")' }} 
+    >
+      <style>{`
+@keyframes backgroundSlide {
+0% {
+  background-image: url("https://i.ibb.co/BNWYps3/home-hero-01-1.jpg");
+}
+33% {
+  background-image: url("https://i.ibb.co.com/pJPYTTP/home-hero-02.jpg"); /* Replace with your second image URL */
+}
+66% {
+  background-image: url("https://i.ibb.co.com/K7P2kdD/home-hero-03.jpg"); /* Replace with your third image URL */
+}
+100% {
+  background-image: url("https://i.ibb.co/BNWYps3/home-hero-01-1.jpg"); /* Back to first image */
+}
+}
 
-        </div>
-      </form>
-      {
-        searchResults.length > 0 && (
-          <div className="mt-2 absolute items-center justify-center w-56 rounded-sm bg-default-100 p-3">
-            <div className="space-y-3 items-center justify-center ">
-              {
-                searchResults.map((item, index) => (
-                  <div key={index}>
-                    <div className="flex items-center gap-4">
-                      <img
-                        alt="item"
-                        className="h-20 w-20 rounded-md"
-                        src={item.photo}
-                      />
-                      <div>
-                        <p className="text-sm font-semibold">{item.caption.substring(0, 30)}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))
-              }
-            </div>
-          </div>
-        )
-      }
-      <GetPost />
-    </div> */}
+.bg-animate {
+animation: backgroundSlide 15s ease-in-out infinite;
+background-size: cover;
+background-position: center;
+}
+`}
+      </style>
 
-    <div className="relative">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="relative flex items-center justify-center">
-          <div className="w-full max-w-md">
+
+      <div className="flex flex-col items-center justify-center min-h-[50vh] pt-24 px-4 sm:px-6 lg:px-8">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md p-4">
+          <div className="w-full">
             <Input
               {...register("search")}
               aria-label="Search"
-              className="w-[400px]  mt-12 mb-12 ml-6 border border-white focus:border-blue-500 focus:ring-blue-500 focus:outline-none focus:ring focus:ring-opacity-40"
+              color="primary"
+              className="w-full max-w-full p-4 rounded-md border border-transparent bg-none bg-opacity-80  focus:border-blue-500 focus:ring-blue-500 focus:outline-none focus:ring focus:ring-opacity-50 shadow-lg"
               placeholder="Search posts"
               type="text"
             />
           </div>
-        </div>
-      </form>
-
-      {/* Loading spinner for search results */}
-      {isPending && (
-        <div className="flex items-center justify-center mt-2">
-          <Spinner color="primary" size="md" />
-        </div>
-      )}
-
-      {/* Render search results */}
-      {searchResults.length > 0 && !isPending && (
-        <div className="mt-2 absolute lg:left-96 z-10 w-full max-w-md shadow-lg rounded-md">
-          <div className="p-4">
-            {searchResults.map((item, index) => (
-              <div key={index} className="flex items-center gap-4 p-2 hover: rounded-md">
-                <img
-                  alt={item.caption}
-                  className="h-16 w-16 rounded-md object-cover"
-                  src={item.photo}
-                />
-                <div>
-                  <p className="text-sm font-semibold">{item.caption.substring(0, 30)}...</p>
-                </div>
-              </div>
-            ))}
+        </form>
+        {isPending && (
+          <div className="flex items-center justify-center mt-4">
+            <Spinner color="primary" size="md" />
           </div>
-        </div>
-      )}
-      {/* Main post section */}
-      <GetPost />
+        )}
+        {searchResults.length > 0 && !isPending && (
+          <div className="w-full max-w-md mt-4 z-10 shadow-lg  bg-opacity-90 rounded-md">
+            <div className="p-4">
+              {searchResults.map((item, index) => (
+                <div key={index} className="flex items-center gap-4 p-2  rounded-md transition-all duration-200">
+                  <img
+                    alt={item.caption}
+                    className="h-16 w-16 rounded-md object-cover"
+                    src={item.photo}
+                  />
+                  <div>
+                    <p className="text-sm font-semibold">{item.caption.substring(0, 30)}...</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
+
+    <GetPost />
+
+
+
 
   </section>;
 }

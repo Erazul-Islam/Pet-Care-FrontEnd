@@ -43,15 +43,6 @@ const SignupUser = () => {
       <h3 className="my-2 text-xl text-pink-500 font-bold">Please Sign up</h3>
       <div className="w-[35%]">
         <TSForm
-          //! Only for development
-          defaultValues={{
-            name: "Taosif",
-            email: "taosif@gmail.com",
-            mobileNumber: "01711223344",
-            password: "123456",
-            address: 'Sahid Tajuddin Ahmod Hall',
-            profilePhoto: 'https://ibb.co.com/mhH18dQ'
-          }}
           resolver={zodResolver(registerValidationSchema)}
           onSubmit={onSubmit}
         >
@@ -68,7 +59,7 @@ const SignupUser = () => {
             <TSInput label="Address" name="address" size="sm" />
           </div>
           <div className="py-3">
-            <TSInput label="profilePhoto" name="profilePhoto" size="sm" />
+            <TSInput label="profilePhotoUrl" name="profilePhoto" size="sm" />
           </div>
           <div className="py-3">
             <TSInput
@@ -78,7 +69,6 @@ const SignupUser = () => {
               type="password"
             />
           </div>
-
           <Button
             className="my-3 w-full rounded-sm bg-pink-600 text-white"
             size="lg"
