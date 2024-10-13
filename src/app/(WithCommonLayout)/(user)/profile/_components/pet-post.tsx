@@ -51,6 +51,18 @@ const PetMarkDownEditor = () => {
             return
         }
 
+        if(!caption){
+            toast.error('Please put down a caption')
+        }
+
+        if(!description){
+            toast.error('Please put down a description')
+        }
+
+        if(!photo){
+            toast.error('Please provide photo url')
+        }
+
         createPost(payload, {
             onSuccess: () => {
                 queryClient.invalidateQueries();

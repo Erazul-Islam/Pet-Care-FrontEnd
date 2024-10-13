@@ -18,25 +18,25 @@ import TSForm from "@/src/components/form/Form";
 import TSInput from "@/src/components/form/Input";
 import Link from "next/link";
 import { Spinner } from "@nextui-org/react";
+import { useUser } from "@/src/context/user.provider";
 
 
 /* eslint-disable prettier/prettier */
 const LoginPage = () => {
     const searchParams = useSearchParams();
     const router = useRouter();
-    // const { setIsLoading: userLoading } = useUser();
-
     const redirect = searchParams.get("redirect");
 
     const { mutate: handleUserLogin, isPending, isSuccess } = useUserLogin();
     const [loading, setLoading] = useState(false)
+    const { setIsLoading: userLoading } = useUser();
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
         setLoading(true)
         handleUserLogin(data, {
             onSettled: () => setLoading(false)
         });
-        // userLoading(true);
+        userLoading(true);
     };
 
     useEffect(() => {

@@ -98,11 +98,11 @@ background-position: center;
                 <div key={index} className="flex items-center gap-4 p-2  rounded-md transition-all duration-200">
                   <img
                     alt={item.caption}
-                    className="h-16 w-16 rounded-md object-cover"
+                    className="h-20 w-20 rounded-md object-cover"
                     src={item.photo}
                   />
                   <div>
-                    <p className="text-sm font-semibold">{item.caption.substring(0, 30)}...</p>
+                    <p className="text-sm font-semibold">{item.caption.substring(0, 40)}...</p>
                   </div>
                 </div>
               ))}

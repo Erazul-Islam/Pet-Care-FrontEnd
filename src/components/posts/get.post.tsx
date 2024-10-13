@@ -322,13 +322,12 @@ const GetPost = () => {
                                         {/* Post Content */}
 
                                         <div className="mb-4">
-                                            <h3 className="font-semibold text-emerald-800 text-lg">{post.caption}</h3>
-                                            <div
-                                                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(displayContent) }}
-                                                className="text-sm mt-3"
-                                            />
+                                            <div className='flex justify-between'>
+                                                <h3 className="font-semibold text-yellow-500 text-lg">{post.caption}</h3>
+                                                <button className='bg-pink-600 rounded-sm w-12 h-8'>{post.category}</button>
+                                            </div>
+                                            <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(displayContent) }} className="text-sm mt-3" />
                                             {
-                                                // Show Read More / Read Less only if content is truncated or if it's premium and user is premium
                                                 (isPostPremium && !isUserPremium && post.description.length > 100) ||
                                                     (!isPostPremium && post.description.length > 100) ? (
                                                     isPostPremium ? <button

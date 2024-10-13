@@ -68,8 +68,6 @@ export const loginUser = async (userData: FieldValues) => {
             cookies().set("accessToken", data?.accessToken);
         }
 
-        console.log(data)
-
         return data;
     } catch (error: any) {
         throw new Error(error);
