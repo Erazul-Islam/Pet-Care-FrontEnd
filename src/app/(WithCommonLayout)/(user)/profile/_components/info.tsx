@@ -9,6 +9,7 @@ import { Button } from '@nextui-org/button'
 
 import { useGetUser, useUserProfileUpdate } from '@/src/hooks/auth.hook';
 import { Avatar } from '@nextui-org/react';
+import { useAcceptFriendRequest } from '@/src/hooks/friend.request.hook';
 
 export interface TFollow {
     id: string,
@@ -17,10 +18,19 @@ export interface TFollow {
     profilePhoto: string
 }
 
+export interface TFriend {
+    sender: string,
+    status: string,
+    senderProfilePhoto: string
+    senderName: string,
+    _id: string
+}
+
 const Info = () => {
 
     const { data: userData, refetch } = useGetUser()
     const { mutateAsync: updateProfile, } = useUserProfileUpdate()
+    const { mutate: acceptFriendRequest } = useAcceptFriendRequest()
     const [modalVisible, setModalVisible] = useState(false);
 
 
@@ -48,6 +58,22 @@ const Info = () => {
         updateProfile(formData)
         setModalVisible(false);
         refetch()
+    };
+
+    const friendRequest = userData?.data?.friendRequest
+
+    const userId = userData?.data?._id
+    console.log(userId)
+
+    
+    const handleAccepFriendRequest = async (senderId: string) => {
+        console.log(senderId)
+
+        if (!userId || !senderId) {
+            return;
+        }        
+
+        await acceptFriendRequest({ userId, senderId });
     };
 
     return (
@@ -112,6 +138,34 @@ const Info = () => {
                             }
                         </div>
                     </div>
+                    <div className="mt-12">
+                        <h3 className="text-xl font-semibold">Friend Request</h3>
+                        <div className='mt-3'>
+                            {
+                                friendRequest?.map((friend: TFriend) => (<div key={friend._id}>
+                                    <div className='flex gap-4 justify-between border h-16 border-white'>
+                                        <Avatar className='mt-3 ml-8' src={friend.senderProfilePhoto} alt="" />
+                                        <h1 className='mt-4 mr-8 text-pink-500 ml-8 font-bold'>{friend.senderName}</h1>
+                                        <button onClick={() => handleAccepFriendRequest(friend._id)} color='warning' className='rounded-sm text-white mt-2 mr-5'>Accept</button>
+                                    </div>
+                                </div>))
+                            }
+                        </div>
+                    </div>
+                    {/* <div className="mt-12">
+                        <h3 className="text-xl font-semibold">Friends</h3>
+                        <div className='mt-3'>
+                            {
+                                friendRequest?.map((friend: TFriend) => (<div key={friend._id}>
+                                    <div className='flex gap-4 justify-between border h-16 border-white'>
+                                        <Avatar className='mt-3 ml-8' src={friend.senderProfilePhoto} alt="" />
+                                        <h1 className='mt-4 mr-8 text-pink-500 ml-8 font-bold'>{friend.senderName}</h1>
+                                        <button color='warning' className='rounded-sm text-white mt-2 mr-5'>Accept</button>
+                                    </div>
+                                </div>))
+                            }
+                        </div>
+                    </div> */}
                 </div>
                 {modalVisible && (
                     <div className="fixed inset-0 flex items-center justify-center z-50">
@@ -183,7 +237,7 @@ const Info = () => {
                                         value={formData.lives}
                                         onChange={handleChange}
                                     />
-                                    
+
                                     <input
                                         className="border p-2 rounded"
                                         name="university"

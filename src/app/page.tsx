@@ -11,6 +11,8 @@ import { ISearchResult } from "../types";
 import useDebounce from "../hooks/debounce.hook";
 import { Input } from "@nextui-org/input";
 import { Spinner } from "@nextui-org/react";
+import People from "../components/friend/people";
+import Group from "../components/Group/Group";
 export default function Home() {
 
   const { register, handleSubmit, watch } = useForm()
@@ -46,7 +48,7 @@ export default function Home() {
   return <section>
     <div
       className="relative min-h-screen bg-cover bg-center bg-animate"
-      style={{ backgroundImage: 'url("https://i.ibb.co/BNWYps3/home-hero-01-1.jpg")' }} 
+      style={{ backgroundImage: 'url("https://i.ibb.co/BNWYps3/home-hero-01-1.jpg")' }}
     >
       <style>{`
 @keyframes backgroundSlide {
@@ -112,7 +114,11 @@ background-position: center;
       </div>
     </div>
 
-    <GetPost />
+    <div className="flex justify-evenly">
+      <People/>
+      <GetPost />
+      <Group/>
+    </div>
 
 
 

@@ -34,8 +34,6 @@ export const editUserInfo = async (payload: Partial<TUser>) => {
 export const getAllprofile = async () => {
     const {data} = await axiosInstance.get('/auth/all-profile')
 
-    console.log(data)
-
     return data
 }
 

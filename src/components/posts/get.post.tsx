@@ -21,14 +21,12 @@ import { useAddComment, useDeleteComment, useEditComment } from '@/src/hooks/com
 import { useUser } from '@/src/context/user.provider';
 import { useFollowUser, useUnfollowUser } from '@/src/hooks/follow.hook';
 import { useDownVotePost, useUpvotePost } from '@/src/hooks/post.hook';
-import PetMarkDownEditor from '@/src/app/(WithCommonLayout)/(user)/profile/_components/pet-post';
 import { useGetUser } from '@/src/hooks/auth.hook';
 import { TComment } from '@/src/types';
 
 
 const GetPost = () => {
 
-    // const { data: posts, isSuccess, refetch, isFetching, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetPost();
     const { data: posts, isSuccess, refetch, isFetching, } = useGetPost();
     const { data: userData } = useGetUser()
 
@@ -219,7 +217,7 @@ const GetPost = () => {
     return (
         <div>
             <section className="flex flex-col items-center ">
-                <PetMarkDownEditor />
+                {/* <PetMarkDownEditor /> */}
                 <div className='flex mt-14 mb-2 gap-20'>
                     <div className="flex  w-full max-w-screen-md mb-1">
                         <select
