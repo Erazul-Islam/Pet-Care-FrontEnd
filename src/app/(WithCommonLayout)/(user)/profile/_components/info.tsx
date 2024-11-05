@@ -18,12 +18,20 @@ export interface TFollow {
     profilePhoto: string
 }
 
-export interface TFriend {
+export interface TFriendRequest {
     sender: string,
     status: string,
     senderProfilePhoto: string
     senderName: string,
     _id: string
+}
+
+export interface TFriend {
+    email: string,
+    username: string,
+    profilePhoto: string
+    _id: string
+    id: string
 }
 
 const Info = () => {
@@ -61,17 +69,18 @@ const Info = () => {
     };
 
     const friendRequest = userData?.data?.friendRequest
+    const friend = userData?.data?.friend
 
     const userId = userData?.data?._id
     console.log(userId)
 
-    
+
     const handleAccepFriendRequest = async (senderId: string) => {
         console.log(senderId)
 
         if (!userId || !senderId) {
             return;
-        }        
+        }
 
         await acceptFriendRequest({ userId, senderId });
     };
@@ -142,30 +151,33 @@ const Info = () => {
                         <h3 className="text-xl font-semibold">Friend Request</h3>
                         <div className='mt-3'>
                             {
-                                friendRequest?.map((friend: TFriend) => (<div key={friend._id}>
+                                friendRequest?.map((friend: TFriendRequest) => (<div key={friend._id}>
                                     <div className='flex gap-4 justify-between border h-16 border-white'>
                                         <Avatar className='mt-3 ml-8' src={friend.senderProfilePhoto} alt="" />
                                         <h1 className='mt-4 mr-8 text-pink-500 ml-8 font-bold'>{friend.senderName}</h1>
-                                        <button onClick={() => handleAccepFriendRequest(friend._id)} color='warning' className='rounded-sm text-white mt-2 mr-5'>Accept</button>
+                                        {friend.status === "accepted"
+                                         ?
+                                            (<button className='rounded-sm bg-purple-800 w-20 h-6 text-white mt-5 mr-5'>Accepted</button>)
+                                             :
+                                            (<button onClick={() => handleAccepFriendRequest(friend.sender)} color='warning' className='rounded-sm bg-pink-700 w-16 h-6 text-white mt-5 mr-5'>Accept</button>)}
                                     </div>
                                 </div>))
                             }
                         </div>
                     </div>
-                    {/* <div className="mt-12">
+                    <div className="mt-12">
                         <h3 className="text-xl font-semibold">Friends</h3>
                         <div className='mt-3'>
                             {
-                                friendRequest?.map((friend: TFriend) => (<div key={friend._id}>
+                                friend?.map((friend: TFriend) => (<div key={friend._id}>
                                     <div className='flex gap-4 justify-between border h-16 border-white'>
-                                        <Avatar className='mt-3 ml-8' src={friend.senderProfilePhoto} alt="" />
-                                        <h1 className='mt-4 mr-8 text-pink-500 ml-8 font-bold'>{friend.senderName}</h1>
-                                        <button color='warning' className='rounded-sm text-white mt-2 mr-5'>Accept</button>
+                                        <Avatar className='mt-3 ml-8' src={friend.profilePhoto} alt="" />
+                                        <h1 className='mt-4 mr-8 text-pink-500 ml-8 font-bold'>{friend.username}</h1>
                                     </div>
                                 </div>))
                             }
                         </div>
-                    </div> */}
+                    </div>
                 </div>
                 {modalVisible && (
                     <div className="fixed inset-0 flex items-center justify-center z-50">

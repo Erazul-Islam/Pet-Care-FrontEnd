@@ -12,10 +12,10 @@ export const useFriendRequest = () => {
     const queryClient = useQueryClient();
 
     return useMutation <any, Error, { senderId: string, receiverId: string }> ({
-        mutationKey: ["FOLLOW_USER"],
+        mutationKey: ["REQUEST_SENT"],
         mutationFn: async ({ senderId, receiverId }) => await requestFriend(senderId, receiverId),
         onSuccess: () => {
-            toast.success("Request Accepted");
+            toast.success("Request sent");
             queryClient.invalidateQueries();
         },
         onError: (error: any) => {
@@ -28,10 +28,10 @@ export const useAcceptFriendRequest = () => {
     const queryClient = useQueryClient();
 
     return useMutation <any, Error, { userId: string, senderId: string }> ({
-        mutationKey: ["FOLLOW_USER"],
+        mutationKey: ["ACCEPT_REQUEST"],
         mutationFn: async ({ userId, senderId }) => await acceptFriendRequest(userId,senderId),
         onSuccess: () => {
-            toast.success("Request sent");
+            toast.success("Request Accepted");
             queryClient.invalidateQueries();
         },
         onError: (error: any) => {

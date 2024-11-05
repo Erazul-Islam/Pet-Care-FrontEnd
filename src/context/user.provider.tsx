@@ -1,5 +1,7 @@
 /* eslint-disable prettier/prettier */
 
+"use client"
+
 import {
   createContext,
   Dispatch,

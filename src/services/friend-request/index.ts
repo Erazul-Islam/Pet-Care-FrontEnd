@@ -10,7 +10,7 @@ export const requestFriend = async (senderId : string,receiverId : string)  => {
         return response.data;
     } catch (error: any) {
 
-        throw error.response?.data || new Error('An error occurred while following the user.');
+        throw error.response?.data || new Error('An error occurred while sending request.');
     }
 }
 
@@ -20,8 +20,8 @@ export const acceptFriendRequest = async (userId:string,senderId:string)  => {
         console.log(response.data)
         return response.data;
     } catch (error: any) {
-
-        throw error.response?.data || new Error('An error occurred while following the user.');
+        console.log(error)
+        throw error.response?.data || new Error('An error occurred while accepting request')
     }
 }
 

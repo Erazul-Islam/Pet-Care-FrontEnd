@@ -119,9 +119,5 @@ background-position: center;
       <GetPost />
       <Group/>
     </div>
-
-
-
-
   </section>;
 }
