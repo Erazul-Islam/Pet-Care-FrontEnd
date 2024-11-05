@@ -48,41 +48,13 @@ const People = () => {
         <div className='mt-20'>
             {
                 people?.map((man: any) => {
-
-                    const person = man.friendRequest.filter((x: any) => x.sender === senderId)
-
-                    const pending = person.some((one: any) => one.status === 'pending')
-
-                    if (person.status === 'pending') {
-                        console.log('request pending')
-                    } else if (person.status === 'accepted') {
-                        console.log('friend')
-                    } else {
-                        console.log('Add friend')
-                    }
-
-
                     return (<div key={man._id}>
                         <div>
                             <div className='flex border justify-between gap-4 h-16'>
                                 <img className='rounded-full ml-2 mt-2 w-12 h-12' src={man?.profilePhoto} alt="" />
                                 <div className='pt-4'>{man?.name}</div>
-
-                                {/* {
-                                    pending === true ? "pending" : "Friend"
-                                }
-                                   <button onClick={() => handleAddFriend(man._id)} className='ml-4 mr-4'>{'Add friend'}</button> */}
-
-                                {
-                                    !person
-                                        ? person.status === 'pending'
-                                            ? 'request pending'
-                                            : person.status === 'accepted'
-                                                ? 'friend'
-                                                : 'Add friend'
-                                        : 'Add friend'
-                                }
-
+                                
+                                   <button onClick={() => handleAddFriend(man._id)} className='ml-4 mr-4'>{'Add friend'}</button>
                             </div>
                         </div>
                     </div>)

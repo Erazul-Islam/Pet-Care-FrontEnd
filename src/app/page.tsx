@@ -114,7 +114,7 @@ background-position: center;
       </div>
     </div>
 
-    <div className="flex justify-evenly">
+    <div className="md:flex justify-evenly">
       <People/>
       <GetPost />
       <Group/>
