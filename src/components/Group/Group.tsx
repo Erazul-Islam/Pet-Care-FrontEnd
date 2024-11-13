@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 /* eslint-disable prettier/prettier */
 import { useUser } from '@/src/context/user.provider';
 import { useGetUser } from '@/src/hooks/auth.hook';

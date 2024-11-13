@@ -12,7 +12,7 @@ const People = () => {
     const { data } = useGetProfile()  || {};
     // const [pendingRequests, setPendingRequests] = useState<string[]>([]);
 
-    const people = data?.data || []
+    const people = Array.isArray(data?.data) ? data?.data : [];
 
     const { user } = useUser()
 
@@ -45,7 +45,7 @@ const People = () => {
     };
 
     return (
-        <div className='mt-20'>
+        <div className=''>
             {
                 people?.map((man: any) => {
                     return (<div key={man._id}>

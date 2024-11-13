@@ -40,8 +40,6 @@ const UserProfile = () => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    console.log("posts", posts)
-
     useEffect(() => {
         if (data?.data) {
             const filteredPosts = data?.data.filter((one: any) => one?.userEmail === user?.email);
