@@ -114,10 +114,28 @@ background-position: center;
       </div>
     </div>
 
-    <div className="md:flex justify-evenly">
-      <People/>
-      <GetPost />
-      <Group/>
-    </div>
+    <section className=" flex flex-col md:flex-row">
+      {/* Left Section: People */}
+      <div className="md:w-1/4 p-4">
+        <div className="sticky top-0">
+          <People />
+        </div>
+      </div>
+
+      {/* Middle Section: GetPost (Scrollable with hidden scrollbar) */}
+      <div className="pb-0">
+        <div className="overflow-y-scroll h-[80vh] no-scrollbar">
+          <GetPost />
+        </div>
+      </div>
+
+      {/* Right Section: Group */}
+      <div className="md:w-1/4 p-4">
+        <div className="sticky top-0">
+          <Group />
+        </div>
+      </div>
+    </section>
+
   </section>;
 }

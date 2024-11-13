@@ -72,8 +72,6 @@ const GetPost = () => {
         return sorted;
     }, [isSuccess, posts, sortBy, filterByCategory]);
 
-    console.log("sorted", sortedPosts)
-
     const handleAddComment = async (postId: string) => {
         const text = commentText[postId]?.trim();
 

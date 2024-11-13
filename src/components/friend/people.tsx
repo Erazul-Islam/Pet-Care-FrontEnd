@@ -9,10 +9,10 @@ import { toast } from 'sonner';
 
 const People = () => {
 
-    const { data } = useGetProfile() || []
+    const { data } = useGetProfile()  || {};
     // const [pendingRequests, setPendingRequests] = useState<string[]>([]);
 
-    const people = data?.data
+    const people = data?.data || []
 
     const { user } = useUser()
 
@@ -53,8 +53,8 @@ const People = () => {
                             <div className='flex border justify-between gap-4 h-16'>
                                 <img className='rounded-full ml-2 mt-2 w-12 h-12' src={man?.profilePhoto} alt="" />
                                 <div className='pt-4'>{man?.name}</div>
-                                
-                                   <button onClick={() => handleAddFriend(man._id)} className='ml-4 mr-4'>{'Add friend'}</button>
+
+                                <button onClick={() => handleAddFriend(man._id)} className='ml-4 mr-4'>{'Add friend'}</button>
                             </div>
                         </div>
                     </div>)

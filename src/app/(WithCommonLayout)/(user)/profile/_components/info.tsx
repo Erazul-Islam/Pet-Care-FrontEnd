@@ -72,7 +72,6 @@ const Info = () => {
     const friend = userData?.data?.friend
 
     const userId = userData?.data?._id
-    console.log(userId)
 
 
     const handleAccepFriendRequest = async (senderId: string) => {
