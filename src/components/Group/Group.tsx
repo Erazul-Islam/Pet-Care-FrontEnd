@@ -4,7 +4,9 @@ import React from 'react';
 const Group = () => {
     return (
         <div>
-            Group
+            <div className='mt-12'>
+                Your Group
+            </div>
         </div>
     );
 };
