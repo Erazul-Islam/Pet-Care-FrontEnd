@@ -53,7 +53,7 @@ export default function Home() {
           <People />
         </div>
       </div>
-      <div className="pb-0">
+      <div className="pb-0 md:ml-16">
         <div className="overflow-y-scroll h-[80vh] no-scrollbar">
           <GetPost />
         </div>
@@ -64,6 +64,5 @@ export default function Home() {
         </div>
       </div>
     </section>
-
   </section>;
 }

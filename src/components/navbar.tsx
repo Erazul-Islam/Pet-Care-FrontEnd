@@ -76,6 +76,9 @@ export const Navbar = () => {
         />
       </NavbarContent>
       <NavbarContent>
+
+      </NavbarContent>
+      <NavbarContent>
         < motion.ul className="hidden lg:flex gap-12 justify-center items-center ml-2">
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
@@ -101,6 +104,7 @@ export const Navbar = () => {
           <ThemeSwitch />
         </NavbarItem>
       </NavbarContent>
+      
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
         <ThemeSwitch />
       </NavbarContent>
