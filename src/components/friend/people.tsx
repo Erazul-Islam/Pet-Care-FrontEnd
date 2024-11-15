@@ -14,6 +14,11 @@ import { BsSaveFill } from "react-icons/bs";
 import { SiHomepage } from "react-icons/si";
 import { MdOutlineGroups2 } from "react-icons/md";
 import { FaVideo } from "react-icons/fa";
+import { SiCoinmarketcap } from "react-icons/si";
+import { BsFillCameraReelsFill } from "react-icons/bs";
+import { FaMemory } from "react-icons/fa6";
+import { FaPeopleRoof } from "react-icons/fa6";
+import { SiEventstore } from "react-icons/si";
 
 const People = () => {
 
@@ -64,6 +69,10 @@ const People = () => {
                     <h1 className='font-semibold mt-1'>Friends ( 100 )</h1>
                 </div>
                 <div className='flex mt-6 gap-4'>
+                    <FaPeopleRoof size='30' />
+                    <h1 className='font-semibold mt-1'>People you may know</h1>
+                </div>
+                <div className='flex mt-6 gap-4'>
                     <MdDashboardCustomize size='30' />
                     <h1 className='font-semibold mt-1'>Professional Dashboard</h1>
                 </div>
@@ -87,27 +96,25 @@ const People = () => {
                     <FaVideo size='30' />
                     <h1 className='font-semibold mt-1'>Videos</h1>
                 </div>
-                
+                <div className='flex mt-6 gap-4'>
+                    <SiCoinmarketcap size='30' />
+                    <h1 className='font-semibold mt-1'>Marketplace</h1>
+                </div>
+                <div className='flex mt-6 gap-4'>
+                    <BsFillCameraReelsFill size='25' />
+                    <h1 className='font-semibold mt-1 ml-1'>Reels</h1>
+                </div>
+                <div className='flex mt-6 gap-4'>
+                    <FaMemory size='30' />
+                    <h1 className='font-semibold mt-1'>Memory</h1>
+                </div>
+                <div className='flex mt-6 gap-4'>
+                    <SiEventstore size='30' />
+                    <h1 className='font-semibold mt-1'>Events</h1>
+                </div>
             </div>
         </div>
     );
 };
 
 export default People;
-
-{/* <div className=''>
-    {
-        people?.map((man: any) => {
-            return (<div key={man._id}>
-                <div>
-                    <div className='flex border justify-between gap-4 h-16'>
-                        <img className='rounded-full ml-2 w-12 h-12' src={man?.profilePhoto} alt="" />
-                        <div className='pt-4'>{man?.name}</div>
-
-                        <button onClick={() => handleAddFriend(man._id)} className='ml-4 mr-4'>{'Add friend'}</button>
-                    </div>
-                </div>
-            </div>)
-        })
-    }
-</div> */}
