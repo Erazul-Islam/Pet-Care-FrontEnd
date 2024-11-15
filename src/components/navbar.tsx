@@ -27,7 +27,7 @@ import { ThemeSwitch } from "@/src/components/theme-switch";
 import {
   GithubIcon,
 } from "@/src/components/icons";
-import { Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, } from "@nextui-org/react";
+import { Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, } from "@nextui-org/react";
 import { useUser } from "../context/user.provider";
 import { usePathname, useRouter } from "next/navigation";
 import { logout } from "../services/AuthServices";
@@ -56,14 +56,27 @@ export const Navbar = () => {
 
 
   return (
-    <NextUINavbar maxWidth="xl" position="sticky">
-      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
+    <NextUINavbar maxWidth="full" position="sticky">
+      <NavbarContent >
         <NavbarBrand as="li" className="gap-3 max-w-fit">
-          <NextLink className="flex justify-start items-center gap-1" href="/">
-            <img alt="" src="https://i.ibb.co.com/BKKK5Lq/Logo-2.png" />
+          <NextLink className="flex justify-start items-center ml-0 gap-1" href="/">
+            <img alt="" className="w-24 h-24" src="https://i.ibb.co.com/2gSg6jT/Brown-and-Yellow-Flat-Illustrative-Pet-Shop-Logo-removebg-preview.png" />
           </NextLink>
         </NavbarBrand>
-        < motion.ul className="hidden lg:flex gap-4 justify-start ml-2">
+        <Input
+          classNames={{
+            base: "max-w-full sm:max-w-[10rem] h-10",
+            mainWrapper: "h-full",
+            input: "text-small",
+            inputWrapper: "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
+          }}
+          placeholder="Type to search..."
+          size="sm"
+          type="search"
+        />
+      </NavbarContent>
+      <NavbarContent>
+        < motion.ul className="hidden lg:flex gap-12 justify-center items-center ml-2">
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
               <NextLink
@@ -89,9 +102,6 @@ export const Navbar = () => {
         </NavbarItem>
       </NavbarContent>
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-        <Link isExternal aria-label="Github" href={siteConfig.links.github}>
-          <GithubIcon className="text-default-500" />
-        </Link>
         <ThemeSwitch />
       </NavbarContent>
       <NavbarContent className="items-center " justify="end">
@@ -124,7 +134,6 @@ export const Navbar = () => {
             <DropdownItem key="logout" color="success">
               {user ? <Button className="rounded-sm text-white" color="warning" onClick={() => handleLogout()}>Log out</Button> : <Link href="/login"><Button color="success" className="rounded-sm text-white">Log in</Button></Link>}
             </DropdownItem>
-
           </DropdownMenu>
         </Dropdown>
       </NavbarContent>
