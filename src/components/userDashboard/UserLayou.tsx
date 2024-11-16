@@ -5,28 +5,26 @@
 "use client"
 
 
-
 import React, { ReactNode, useState } from 'react';
-import UserManagement from './adminUi/UserManagement';
-import PostsManagement from './adminUi/PostsManagement';
-import PaymentManagement from './adminUi/PaymentManagement';
+import PdfGenerator from '../pdf/pdf';
+import UserPostManagement from './UserPostManagement';
 
 interface LayoutProps {
     children: ReactNode
 }
 
-const Layout: React.FC<LayoutProps> = () => {
+const UserLayout: React.FC<LayoutProps> = () => {
 
     const [activeSection, setActiveSection] = useState('Home');
 
     const renderSection = () => {
         switch (activeSection) {
-            case 'Payment Info':
-                return <PaymentManagement />;
+            case 'pdf':
+                return <PdfGenerator />;
             case 'user':
-                return <UserManagement />;
+                return;
             case 'post':
-                return <PostsManagement />;
+                return <UserPostManagement />;
             case 'Home':
             default:
                 return <div>Home Section</div>;
@@ -40,29 +38,24 @@ const Layout: React.FC<LayoutProps> = () => {
                 <nav>
                     <ul>
                         <li className="mb-2">
-                            <button
-                                onClick={() => setActiveSection('Home')}
-                                className="block py-2 px-3 hover:bg-gray-700 rounded"
-                            >
-                                Home
-                            </button>
+                            <a href="/">
+                                <button
+                                    onClick={() => setActiveSection('Home')}
+                                    className="block py-2 px-3 hover:bg-gray-700 rounded"
+                                >
+                                    Home
+                                </button>
+                            </a>
                         </li>
                         <li className="mb-2">
                             <button
-                                onClick={() => setActiveSection('Payment Info')}
+                                onClick={() => setActiveSection('pdf')}
                                 className="block py-2 px-3 hover:bg-gray-700 rounded"
                             >
-                                Payment Info
+                                Generate Pdf
                             </button>
                         </li>
-                        <li className="mb-2">
-                            <button
-                                onClick={() => setActiveSection('user')}
-                                className="block py-2 px-3 hover:bg-gray-700 rounded"
-                            >
-                                User Management
-                            </button>
-                        </li>
+
                         <li className="mb-2">
                             <button
                                 onClick={() => setActiveSection('post')}
@@ -84,4 +77,4 @@ const Layout: React.FC<LayoutProps> = () => {
     );
 };
 
-export default Layout;
+export default UserLayout;
