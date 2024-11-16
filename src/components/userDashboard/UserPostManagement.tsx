@@ -36,13 +36,25 @@ const UserPostManagement = () => {
         }
     }, [data, user?.email, posts]);
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 1
+    const indexOfLastUser = currentPage * itemsPerPage;
+    const indexOfFirstUser = indexOfLastUser - itemsPerPage;
+    const currentPosts = posts?.slice(indexOfFirstUser, indexOfLastUser)
+
+    const handlePageChange = (pageNumber: number) => {
+        setCurrentPage(pageNumber);
+    };
+
+    const totalPages = Math.ceil(posts?.length / itemsPerPage);
+
     return (
         <div>
             <div className=''>
                 {
-                    filterData?.length === 0 ? <h1 className='text-center'>No post you have</h1> : <div className='lg:flex lg:justify-between'>
+                    currentPosts?.length === 0 ? <h1 className='text-center'>No post you have</h1> : <div className=''>
                         {
-                            filterData?.map((one: TUserPost) => <div key={one._id}>
+                            currentPosts?.map((one: TUserPost) => <div key={one._id}>
                                 <div
                                     key={one._id}
                                     className="bg-white mt-6 shadow-md rounded-lg p-4 max-w-md w-full"
@@ -78,6 +90,39 @@ const UserPostManagement = () => {
                         }
                     </div>
                 }
+            </div>
+            <div className="flex justify-center mb-2">
+                <button
+                    onClick={() => handlePageChange(1)}
+                    className="px-4 py-2 mx-1 text-sm text-white bg-pink-600 rounded-sm hover:bg-blue-600"
+                    disabled={currentPage === 1}
+                >
+                    First
+                </button>
+                <button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    className="px-4 py-2 mx-1 text-sm text-white bg-pink-600 rounded-sm hover:bg-blue-600"
+                    disabled={currentPage === 1}
+                >
+                    Previous
+                </button>
+                <span className="px-4 py-2 text-sm ">
+                    Page {currentPage} of {totalPages}
+                </span>
+                <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    className="px-4 py-2 mx-1 text-sm text-white bg-pink-600 rounded-sm hover:bg-blue-600"
+                    disabled={currentPage === totalPages}
+                >
+                    Next
+                </button>
+                <button
+                    onClick={() => handlePageChange(totalPages)}
+                    className="px-4 py-2 mx-1 text-sm text-white bg-pink-600 rounded-sm hover:bg-blue-600"
+                    disabled={currentPage === totalPages}
+                >
+                    Last
+                </button>
             </div>
         </div>
     );

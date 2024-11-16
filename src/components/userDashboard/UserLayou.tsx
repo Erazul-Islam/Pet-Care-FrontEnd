@@ -16,6 +16,11 @@ interface LayoutProps {
 const UserLayout: React.FC<LayoutProps> = () => {
 
     const [activeSection, setActiveSection] = useState('Home');
+    const sections = [
+ 
+        { id: "pdf", label: "Generate Pdf" },
+        { id: "post", label: "Post Management" },
+    ];
 
     const renderSection = () => {
         switch (activeSection) {
@@ -27,7 +32,7 @@ const UserLayout: React.FC<LayoutProps> = () => {
                 return <UserPostManagement />;
             case 'Home':
             default:
-                return <div>Home Section</div>;
+                return <PdfGenerator />;
         }
     }
 
@@ -37,33 +42,19 @@ const UserLayout: React.FC<LayoutProps> = () => {
                 <h2 className="text-lg font-bold mb-4">Dashboard</h2>
                 <nav>
                     <ul>
-                        <li className="mb-2">
-                            <a href="/">
+                        {sections.map((section) => (
+                            <li key={section.id} className="mb-2">
                                 <button
-                                    onClick={() => setActiveSection('Home')}
-                                    className="block py-2 px-3 hover:bg-gray-700 rounded"
+                                    onClick={() => setActiveSection(section.id)}
+                                    className={`block w-full py-2 px-3 text-left rounded ${activeSection === section.id
+                                            ? "bg-blue-600 text-white"
+                                            : ""
+                                        }`}
                                 >
-                                    Home
+                                    {section.label}
                                 </button>
-                            </a>
-                        </li>
-                        <li className="mb-2">
-                            <button
-                                onClick={() => setActiveSection('pdf')}
-                                className="block py-2 px-3 hover:bg-gray-700 rounded"
-                            >
-                                Generate Pdf
-                            </button>
-                        </li>
-
-                        <li className="mb-2">
-                            <button
-                                onClick={() => setActiveSection('post')}
-                                className="block py-2 px-3 hover:bg-gray-700 rounded"
-                            >
-                                Post Management
-                            </button>
-                        </li>
+                            </li>
+                        ))}
                     </ul>
                 </nav>
             </div>
