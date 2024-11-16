@@ -121,18 +121,20 @@ const Info = () => {
                     <p className="mt-3"><strong className='text-purple-500'>University:</strong> {userData?.data?.university}</p>
                     <div className="mt-12">
                         <h3 className="text-xl font-semibold">Followers</h3>
-                        <div className='mt-3'>
+                        <div className=' grid grid-cols-3 gap-y-14'>
                             {
-                                userData?.data?.followers?.map((follower: TFollow) => (<div key={follower._id}>
-                                    <div className='flex justify-between border h-16 border-white'>
-                                        <Avatar className='mt-3 ml-8' src={follower.profilePhoto} alt="" />
-                                        <h1 className='mt-4 text-pink-500 ml-8 mr-8 font-bold'>{follower.username}</h1>
+                                userData?.data?.followers?.map((follower: TFollow) => (<div className='' key={follower._id}>
+                                    <div className='gap-6 h-16'>
+                                        <div>
+                                            <img className='mt-3 h-24 w-24' src={follower.profilePhoto} alt="" />
+                                            <h1 className=' text-sm mt-1 text-pink-500  '>{follower.username}</h1>
+                                        </div>
                                     </div>
                                 </div>))
                             }
                         </div>
                     </div>
-                    <div className="mt-12">
+                    <div className="mt-16">
                         <h3 className="text-xl font-semibold">Following</h3>
                         <div className='mt-3'>
                             {
@@ -155,9 +157,9 @@ const Info = () => {
                                         <Avatar className='mt-3 ml-8' src={friend.senderProfilePhoto} alt="" />
                                         <h1 className='mt-4 mr-8 text-pink-500 ml-8 font-bold'>{friend.senderName}</h1>
                                         {friend.status === "accepted"
-                                         ?
+                                            ?
                                             (<button className='rounded-sm bg-purple-800 w-20 h-6 text-white mt-5 mr-5'>Accepted</button>)
-                                             :
+                                            :
                                             (<button onClick={() => handleAccepFriendRequest(friend.sender)} color='warning' className='rounded-sm bg-pink-700 w-16 h-6 text-white mt-5 mr-5'>Accept</button>)}
                                     </div>
                                 </div>))

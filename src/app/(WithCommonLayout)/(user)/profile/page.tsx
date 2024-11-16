@@ -69,11 +69,11 @@ const UserProfile = () => {
 
     return (
         <div className="p-4 lg:ml-80 md:ml-40 lg:mr-80">
-            <div className='lg:flex mt-2 justify-between'>
+            <div className='lg:flex  mt-2 justify-between'>
                 <Info />
                 <PetMarkDownEditor />
             </div>
-            <div className='mt-4 lg:ml-28'>
+            <div className='mt-4 '>
                 {
                     filterData?.length === 0 ? <h1 className='text-center font-bold'>No post you have</h1> : <div className='lg:flex lg:justify-between'>
                         {
@@ -122,6 +122,7 @@ const UserProfile = () => {
                 }
             </div>
         </div>
+
     );
 };
 
