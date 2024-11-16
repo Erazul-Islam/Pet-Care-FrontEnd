@@ -3,14 +3,20 @@
 /* eslint-disable prettier/prettier */
 
 
+import Layout from '@/src/components/dashboard/Layout';
 import React from 'react';
 
-const DemoDashboard = () => {
+const DemoDashboard: React.FC = () => {
     return (
-        <div>
-            
-        </div>
+        <Layout>
+            <div>
+                
+            </div>
+        </Layout>
     );
 };
+
+
+
 
 export default DemoDashboard;

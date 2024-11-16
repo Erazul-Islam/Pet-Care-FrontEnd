@@ -65,8 +65,7 @@ interface TPost {
 
 const Adminpage = () => {
 
-    // const { data } = useGetProfile()
-    // console.log('all profile', data)
+    
 
     const { data: history } = useGetHistory()
     const [users, setUsers] = useState<TUserInfo[]>([])
