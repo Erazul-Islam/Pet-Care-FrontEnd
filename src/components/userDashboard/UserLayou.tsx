@@ -20,6 +20,7 @@ const UserLayout: React.FC<LayoutProps> = () => {
  
         { id: "pdf", label: "Generate Pdf" },
         { id: "post", label: "Post Management" },
+        { id: "Friends", label: "Friends" },
     ];
 
     const renderSection = () => {
@@ -30,6 +31,8 @@ const UserLayout: React.FC<LayoutProps> = () => {
                 return;
             case 'post':
                 return <UserPostManagement />;
+            case 'friend' :
+                return <div>Friend</div>
             case 'Home':
             default:
                 return <PdfGenerator />;
@@ -47,7 +50,7 @@ const UserLayout: React.FC<LayoutProps> = () => {
                                 <button
                                     onClick={() => setActiveSection(section.id)}
                                     className={`block w-full py-2 px-3 text-left rounded ${activeSection === section.id
-                                            ? "bg-blue-600 text-white"
+                                            ? "bg-pink-600 text-white"
                                             : ""
                                         }`}
                                 >

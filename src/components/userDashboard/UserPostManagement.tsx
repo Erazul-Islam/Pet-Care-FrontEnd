@@ -23,9 +23,6 @@ const UserPostManagement = () => {
 
     const { user } = useUser()
     const { data, } = useGetPost()
-
-
-    const filterData = data?.data?.filter((one: any) => one?.userEmail === user?.email)
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
@@ -91,7 +88,7 @@ const UserPostManagement = () => {
                     </div>
                 }
             </div>
-            <div className="flex justify-center mb-2">
+            <div className="flex  justify-center mb-2">
                 <button
                     onClick={() => handlePageChange(1)}
                     className="px-4 py-2 mx-1 text-sm text-white bg-pink-600 rounded-sm hover:bg-blue-600"
