@@ -24,9 +24,6 @@ import clsx from "clsx";
 
 import { siteConfig } from "@/src/config/site";
 import { ThemeSwitch } from "@/src/components/theme-switch";
-import {
-  GithubIcon,
-} from "@/src/components/icons";
 import { Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input, } from "@nextui-org/react";
 import { useUser } from "../context/user.provider";
 import { usePathname, useRouter } from "next/navigation";
@@ -59,9 +56,9 @@ export const Navbar = () => {
     <NextUINavbar maxWidth="full" position="sticky">
       <NavbarContent >
         <NavbarBrand as="li" className="gap-3 max-w-fit">
-          <NextLink className="flex justify-start items-center ml-0 gap-1" href="/">
+        {/* <NextLink className="flex justify-start items-center ml-0 gap-1" href="/">
             <img alt="" className="w-24 h-24" src="https://i.ibb.co.com/2gSg6jT/Brown-and-Yellow-Flat-Illustrative-Pet-Shop-Logo-removebg-preview.png" />
-          </NextLink>
+          </NextLink> */}
         </NavbarBrand>
         <Input
           classNames={{
