@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 /* eslint-disable prettier/prettier */
 
 "use client"
@@ -5,6 +6,8 @@
 
 import PaymentInfo from '@/src/app/(WithCommonLayout)/(dashboard)/adminDashboard/payment/page';
 import React, { ReactNode, useState } from 'react';
+import UserManagement from './adminUi/UserManagement';
+import PostsManagement from './adminUi/PostsManagement';
 
 interface LayoutProps {
     children: ReactNode
@@ -16,10 +19,12 @@ const Layout: React.FC<LayoutProps> = () => {
 
     const renderSection = () => {
         switch (activeSection) {
-            case 'PaymentInfo':
+            case 'Payment Info':
                 return <PaymentInfo />;
-            case 'Settings':
-                return <div>Settings Section</div>;
+            case 'user':
+                return <UserManagement />;
+            case 'post':
+                return <PostsManagement />;
             case 'Home':
             default:
                 return <div>Home Section</div>;
@@ -28,7 +33,7 @@ const Layout: React.FC<LayoutProps> = () => {
 
     return (
         <div className="flex min-h-screen">
-            <div className="w-64 bg-gray-800 text-white p-4">
+            <div className="w-64 border p-4">
                 <h2 className="text-lg font-bold mb-4">Dashboard</h2>
                 <nav>
                     <ul>
@@ -42,7 +47,7 @@ const Layout: React.FC<LayoutProps> = () => {
                         </li>
                         <li className="mb-2">
                             <button
-                                onClick={() => setActiveSection('PaymentInfo')}
+                                onClick={() => setActiveSection('Payment Info')}
                                 className="block py-2 px-3 hover:bg-gray-700 rounded"
                             >
                                 Payment Info
@@ -50,10 +55,18 @@ const Layout: React.FC<LayoutProps> = () => {
                         </li>
                         <li className="mb-2">
                             <button
-                                onClick={() => setActiveSection('Settings')}
+                                onClick={() => setActiveSection('user')}
                                 className="block py-2 px-3 hover:bg-gray-700 rounded"
                             >
-                                Settings
+                                User Management
+                            </button>
+                        </li>
+                        <li className="mb-2">
+                            <button
+                                onClick={() => setActiveSection('post')}
+                                className="block py-2 px-3 hover:bg-gray-700 rounded"
+                            >
+                                Post Management
                             </button>
                         </li>
                     </ul>
