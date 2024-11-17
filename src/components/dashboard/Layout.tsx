@@ -19,6 +19,12 @@ const Layout: React.FC<LayoutProps> = () => {
 
     const [activeSection, setActiveSection] = useState('Home');
 
+    const sections = [
+        { id: "payment", label: "Payment Info" },
+        { id: "user", label: "User Management" },
+        { id: "post", label: "post Management" },
+    ];
+
     const renderSection = () => {
         switch (activeSection) {
             case 'Payment Info':
@@ -38,40 +44,23 @@ const Layout: React.FC<LayoutProps> = () => {
             <div className="w-64 border p-4">
                 <h2 className="text-lg font-bold mb-4">Dashboard</h2>
                 <nav>
-                    <ul>
-                        <li className="mb-2">
-                            <button
-                                onClick={() => setActiveSection('Home')}
-                                className="block py-2 px-3 hover:bg-gray-700 rounded"
-                            >
-                                Home
-                            </button>
-                        </li>
-                        <li className="mb-2">
-                            <button
-                                onClick={() => setActiveSection('Payment Info')}
-                                className="block py-2 px-3 hover:bg-gray-700 rounded"
-                            >
-                                Payment Info
-                            </button>
-                        </li>
-                        <li className="mb-2">
-                            <button
-                                onClick={() => setActiveSection('user')}
-                                className="block py-2 px-3 hover:bg-gray-700 rounded"
-                            >
-                                User Management
-                            </button>
-                        </li>
-                        <li className="mb-2">
-                            <button
-                                onClick={() => setActiveSection('post')}
-                                className="block py-2 px-3 hover:bg-gray-700 rounded"
-                            >
-                                Post Management
-                            </button>
-                        </li>
-                    </ul>
+                    <nav>
+                        <ul>
+                            {sections.map((section) => (
+                                <li key={section.id} className="mb-2">
+                                    <button
+                                        onClick={() => setActiveSection(section.id)}
+                                        className={`block w-full py-2 px-3 text-left rounded ${activeSection === section.id
+                                            ? "bg-pink-600 text-white"
+                                            : ""
+                                            }`}
+                                    >
+                                        {section.label}
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
                 </nav>
             </div>
             <div className="flex-1 p-6">
