@@ -2,7 +2,7 @@
 /* eslint-disable import/order */
 /* eslint-disable prettier/prettier */
 import { useUser } from '@/src/context/user.provider';
-import { useGetProfile } from '@/src/hooks/auth.hook';
+import { useGetProfile, useGetUser } from '@/src/hooks/auth.hook';
 import { useFriendRequest } from '@/src/hooks/friend.request.hook';
 import React from 'react';
 import { toast } from 'sonner';
@@ -19,6 +19,7 @@ import { BsFillCameraReelsFill } from "react-icons/bs";
 import { FaMemory } from "react-icons/fa6";
 import { FaPeopleRoof } from "react-icons/fa6";
 import { SiEventstore } from "react-icons/si";
+import Link from 'next/link';
 
 const People = () => {
 
@@ -32,9 +33,7 @@ const People = () => {
     const senderId = user?._id
 
     const { mutate: sendFriendRequest } = useFriendRequest()
-
-    // const requestSent = people.includes(senderId)
-    // console.log(requestSent)
+    const { data: authUser } = useGetUser()
 
     const handleAddFriend = async (receiverId: string) => {
 
@@ -60,13 +59,15 @@ const People = () => {
     return (
         <div className='lg:ml-8 mt-4'>
             <div>
-                <div className='flex gap-4'>
-                    <CgProfile size="30" color="" />
-                    <h1 className='font-semibold mt-1'>Erazul Islam Taosif</h1>
-                </div>
+                <Link href={'/profile'}>
+                    <div className='flex gap-4'>
+                        <CgProfile size="30" color="" />
+                        <h1 className='font-semibold mt-1'>Erazul Islam Taosif</h1>
+                    </div>
+                </Link>
                 <div className='flex mt-6 gap-4'>
                     <FaUserFriends size='30' />
-                    <h1 className='font-semibold mt-1'>Friends ( 100 )</h1>
+                    <h1 className='font-semibold mt-1'>Friends ({authUser?.data?.friend?.length})</h1>
                 </div>
                 <div className='flex mt-6 gap-4'>
                     <FaPeopleRoof size='30' />
@@ -108,10 +109,12 @@ const People = () => {
                     <FaMemory size='30' />
                     <h1 className='font-semibold mt-1'>Memory</h1>
                 </div>
-                <div className='flex mt-6 gap-4'>
-                    <SiEventstore size='30' />
-                    <h1 className='font-semibold mt-1'>Events</h1>
-                </div>
+                <Link href={'/event'}>
+                    <div className='flex mt-6 gap-4'>
+                        <SiEventstore size='30' />
+                        <h1 className='font-semibold mt-1'>Events</h1>
+                    </div>
+                </Link>
             </div>
         </div>
     );
