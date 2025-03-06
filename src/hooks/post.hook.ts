@@ -8,16 +8,6 @@ import { TPost,  } from "../types"
 import { downVotePost, upvotePost } from "../services/upvote"
 
 
-// const QUERY_KEYS = {
-//     GET_POST: "GET_POST",
-//     PUBLISH_POST: "PUBLISH_POST",
-//     UNPUBLISH_POST: "UNPUBLISH_POST",
-// } as const;
-
-// export type QueryKeys = typeof QUERY_KEYS[keyof typeof QUERY_KEYS];
-
-
-
 export const useCreatePost = () => {
 
     const queryClient = useQueryClient()

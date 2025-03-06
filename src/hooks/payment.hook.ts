@@ -19,7 +19,6 @@ export const useCreatePayment = () => {
         },
         onError: (error) => {
             toast.error(error.message)
-            // console.log(error)
         }
     })
 }

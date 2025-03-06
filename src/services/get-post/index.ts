@@ -12,7 +12,7 @@ export const getAllPost = async (page = 1, limit = 5) => {
         return data
     }
     catch (err) {
-        throw new Error("yaap")
+        throw new Error("Cannot get all the post")
     }
 }
 export const getScrollAllPost = async (page = 1, limit = 5) => {
@@ -22,7 +22,7 @@ export const getScrollAllPost = async (page = 1, limit = 5) => {
         return res.data.data
     }
     catch (err) {
-        throw new Error("yaap")
+        throw new Error("Scrollbar")
     }
 }
 

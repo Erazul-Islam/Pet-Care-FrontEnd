@@ -6,7 +6,6 @@ const registerValidationSchema = z.object({
     email: z.string().email("Please enter a valid email address!"),
     profilePhoto: z.string().min(1, "Profile photo is required").url("Profile photo must be a valid URL."),
     address: z.string().min(1, "Address is required"),
-    // role:z.string().min(1),
     mobileNumber: z
         .string()
         .regex(/^\d{11}$/, "Please enter a valid mobile number!"),

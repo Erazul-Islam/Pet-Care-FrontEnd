@@ -12,9 +12,6 @@ import { TPost } from "@/src/types"
 export const createPetPost = async (data : TPost) => {
     const response = await axiosInstance.post('/pet/pet-post',data)
 
-    console.log(response)
-    console.log(response.data)
-
     return response.data
 }
 
