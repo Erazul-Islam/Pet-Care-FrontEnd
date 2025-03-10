@@ -4,18 +4,16 @@
 "use client"
 
 import GetPost from "../components/posts/get.post";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import {  useForm } from "react-hook-form";
 import { useSearchPosts } from "../hooks/search.hook";
 import { useEffect, useState } from "react";
 import { ISearchResult } from "../types";
 import useDebounce from "../hooks/debounce.hook";
-import { Input } from "@nextui-org/input";
-import { Spinner } from "@nextui-org/react";
 import People from "../components/friend/people";
 import Group from "../components/Group/Group";
 export default function Home() {
 
-  const { register, handleSubmit, watch } = useForm()
+  const {  watch } = useForm()
   const { mutate: handleSearchPost, data, isPending, isSuccess } = useSearchPosts()
   const [searchResults, setSearchResults] = useState<ISearchResult[] | []>([])
 
@@ -27,14 +25,8 @@ export default function Home() {
     }
   }, [searchTerm])
 
-  // const router = useRouter()
 
-  console.log("searchResult", searchResults)
-  console.log("searchTerm", searchTerm)
-
-  const onSubmit: SubmitHandler<FieldValues> = (_data: any) => {
-
-  };
+;
 
   useEffect(() => {
     if (!searchTerm) {
