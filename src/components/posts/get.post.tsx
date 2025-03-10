@@ -23,6 +23,8 @@ import { useFollowUser, useUnfollowUser } from '@/src/hooks/follow.hook';
 import { useDownVotePost, useUpvotePost } from '@/src/hooks/post.hook';
 import { useGetUser } from '@/src/hooks/auth.hook';
 import { TComment } from '@/src/types';
+import PetPostSort from './post.sort';
+import EditCommentModal from './edit-comment-modal';
 
 
 const GetPost = () => {
@@ -215,32 +217,7 @@ const GetPost = () => {
     return (
         <div>
             <section className="flex flex-col items-center ">
-                {/* <PetMarkDownEditor /> */}
-                <div className='flex mt-4 gap-20'>
-                    <div className="flex  w-full max-w-screen-md mb-1">
-                        <select
-                            className="border bg-purple-600 rounded-md px-3 py-2"
-                            id="sort"
-                            value={sortBy}
-                            onChange={handleSortChange}
-                        >
-                            <option value="newest">Newest</option>
-                            <option value="mostUpvoted">Most Upvoted</option>
-                        </select>
-                    </div>
-                    <div className="flex  w-full max-w-screen-md mb-1">
-                        <select
-                            className="border bg-purple-600 rounded-md px-3 py-2"
-                            id="filter"
-                            value={filterByCategory}
-                            onChange={(e) => setFilterByCategory(e.target.value as 'All' | 'Story' | 'TIP')}
-                        >
-                            <option value="All">All</option>
-                            <option value="Story">Story</option>
-                            <option value="TIP">TIP</option>
-                        </select>
-                    </div>
-                </div>
+                <PetPostSort sortBy={sortBy} handleSortChange={handleSortChange} filterByCategory={filterByCategory} setFilterByCategory={setFilterByCategory} />
                 <motion.div className='grid grid-cols-1 gap-4'>
                     {
                         isSuccess && sortedPosts?.map((post, index) => {
@@ -403,33 +380,7 @@ const GetPost = () => {
                         })
                     }
                 </motion.div>
-                {modalVisible && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center  bg-opacity-50">
-                        <div className="bg-pink-600 rounded-lg shadow-lg p-6 w-11/12 max-w-md">
-                            <h4 className="text-lg font-semibold mb-4">Edit Comment</h4>
-                            <input
-                                className="border rounded-md p-2 w-full"
-                                placeholder="Update your comment..."
-                                value={updatedCommentText}
-                                onChange={(e) => setUpdatedCommentText(e.target.value)}
-                            />
-                            <div className="flex justify-end mt-4">
-                                <button
-                                    className="bg-yellow-500 text-white px-4 py-2 rounded-md mr-2"
-                                    onClick={() => setModalVisible(false)}
-                                >
-                                    Close
-                                </button>
-                                <button
-                                    className="bg-purple-700 text-white px-4 py-2 rounded-md"
-                                    onClick={handleUpdateComment}
-                                >
-                                    Update Comment
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                )}
+                <EditCommentModal modalVisible={modalVisible} setModalVisible={setModalVisible} handleUpdateComment={handleUpdateComment} updatedCommentText={updatedCommentText} setUpdatedCommentText={setUpdatedCommentText} />
             </section>
         </div >
     );
