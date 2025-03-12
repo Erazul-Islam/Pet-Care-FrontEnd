@@ -35,7 +35,7 @@ const Payment = () => {
         }
 
         try {
-            // Trigger the payment creation via the mutate function
+            
             const response = await mutateAsync(100);
 
             const clientSecret = response?.data?.secret.client_secret;
@@ -44,7 +44,7 @@ const Payment = () => {
                 throw new Error('Failed to retrieve client secret.');
             }
 
-            // Confirm the payment using Stripe's confirmCardPayment
+            
             const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
                 payment_method: {
                     card: cardElement,
@@ -55,7 +55,6 @@ const Payment = () => {
                 throw new Error(error.message);
             }
 
-            // If payment is successful, close the modal
             if (paymentIntent.status === 'succeeded') {
                 console.log('Payment successful!');
                 setIsOpen(false);
@@ -70,15 +69,13 @@ const Payment = () => {
 
     return (
         <>
-            {/* Button to Open Modal */}
+           
             <button
                 className="px-4 py-2 bg-purple-600 text-white rounded-lg"
                 onClick={toggleModal}
             >
                 pay
             </button>
-
-            {/* Modal */}
             {isOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
                     <div className="bg-sky-900 rounded-lg shadow-lg w-11/12 max-w-md">
