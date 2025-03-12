@@ -61,16 +61,16 @@ const People = () => {
             <div>
                 <Link href={'/profile'}>
                     <div className='flex gap-4'>
-                        <CgProfile size="30" color="" />
+                        <CgProfile size="30" color="purple" />
                         <h1 className='font-semibold mt-1'>Erazul Islam Taosif</h1>
                     </div>
                 </Link>
                 <div className='flex mt-6 gap-4'>
-                    <FaUserFriends size='30' />
+                    <FaUserFriends size='30' color='green' />
                     <h1 className='font-semibold mt-1'>Friends ({authUser?.data?.friend?.length})</h1>
                 </div>
                 <div className='flex mt-6 gap-4'>
-                    <FaPeopleRoof size='30' />
+                    <FaPeopleRoof size='30' color='yellow' />
                     <h1 className='font-semibold mt-1'>People you may know</h1>
                 </div>
                 <div className='flex mt-6 gap-4'>

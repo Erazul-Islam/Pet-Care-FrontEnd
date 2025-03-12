@@ -30,6 +30,7 @@ import { TComment } from "@/src/types";
 import PetPostSort from "./post.sort";
 import EditCommentModal from "./edit-comment-modal";
 import CommentSection from "./comment";
+import { MdWorkspacePremium } from "react-icons/md";
 
 const GetPost = () => {
   const { data: posts, isSuccess, refetch, isFetching } = useGetPost();
@@ -279,17 +280,13 @@ const GetPost = () => {
                         </div>
                         <div>
                           {post?.isPremium === "YES" ? (
-                            <img
-                              alt="Premium"
-                              className="w-12 h-12"
-                              src="https://i.ibb.co/jM3xrDW/premium-quality.png"
-                            />
+                            <MdWorkspacePremium style={{width:50,height:50,color:'purple'}} />
                           ) : (
                             ""
                           )}
                         </div>
                       </div>
-                      <div className="lg:flex flex">
+                      <div className="lg:flex">
                         {isFollowing ? (
                           <motion.button
                             className="bg-teal-700 ml-3 text-white px-4 py-1 rounded-sm text-sm"
