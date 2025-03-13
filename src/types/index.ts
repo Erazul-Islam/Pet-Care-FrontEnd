@@ -74,16 +74,12 @@ export type TqueryKeys =
   | ["GET_POST"]
   | ["PUBLISH_POST"]
 
-// export interface TUser {
-//   _id: string,
-//   name: string,
-//   email: string,
-//   password: string,
-//   mobileNumber: string,
-//   profilePhoto: string,
-//   address: string,
-//   role: 'ADMIN' | 'USER'
-// };
+export type TFollower = {
+  id : string,
+  email : string,
+  username : string,
+  profilePhoto : string
+}
 
 export type TComment = {
   _id : string
