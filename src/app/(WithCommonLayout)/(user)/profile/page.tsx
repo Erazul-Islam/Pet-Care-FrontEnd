@@ -5,7 +5,7 @@
 
 "use client"
 
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Button, Spinner } from '@nextui-org/react';
 import PetMarkDownEditor from './components/pet-post';

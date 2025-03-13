@@ -3,7 +3,7 @@
 
 "use client"
 
-import { useGetPost } from '@/src/hooks/get.post.hook';
+import { useGetPaginatedPost } from '@/src/hooks/get.post.hook';
 import { usePublish, useUnpublish } from '@/src/hooks/post.hook';
 import { Button } from '@nextui-org/button';
 import React, { useState } from 'react';
@@ -32,14 +32,16 @@ const PostsManagement = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 1
-
-
-
-
     const { mutateAsync: unpublish } = useUnpublish()
     const { mutateAsync: publish } = usePublish()
 
-    const { data: posts, refetch } = useGetPost()
+    const { data: posts, refetch } = useGetPaginatedPost(currentPage,itemsPerPage)
+
+    const totalPosts = posts?.pagination?.totalPosts || 1
+    
+    const pageSize = posts?.pagination?.pageSize || 1
+
+ 
 
     const handleunPublish = (postId: string) => {
         setPublishingPostId(postId)
@@ -55,22 +57,19 @@ const PostsManagement = () => {
         setPublishingPostId(null);
     }
 
-    const indexOfLastUser = currentPage * itemsPerPage;
-    const indexOfFirstUser = indexOfLastUser - itemsPerPage;
-    const currentPosts = posts?.data?.slice(indexOfFirstUser, indexOfLastUser)
+    const totalPages = Math.ceil(totalPosts/pageSize)
 
     const handlePageChange = (pageNumber: number) => {
         setCurrentPage(pageNumber);
+        refetch()
     };
-
-    const totalPages = Math.ceil(posts?.data?.length / itemsPerPage);
 
     return (
         <div>
             <div className=''>
            
                 {
-                    currentPosts?.map((post: TPost) => (
+                    posts?.data?.map((post: TPost) => (
 
                         <div className='lg:ml-72' key={post._id}>
                             <div
@@ -117,13 +116,6 @@ const PostsManagement = () => {
             </div>
             <div className="flex justify-center mt-6">
                 <button
-                    onClick={() => handlePageChange(1)}
-                    className="px-4 py-2 mx-1 text-sm text-white bg-blue-500 rounded-sm hover:bg-blue-600"
-                    disabled={currentPage === 1}
-                >
-                    First
-                </button>
-                <button
                     onClick={() => handlePageChange(currentPage - 1)}
                     className="px-4 py-2 mx-1 text-sm text-white bg-blue-500 rounded-sm hover:bg-blue-600"
                     disabled={currentPage === 1}
@@ -139,13 +131,6 @@ const PostsManagement = () => {
                     disabled={currentPage === totalPages}
                 >
                     Next
-                </button>
-                <button
-                    onClick={() => handlePageChange(totalPages)}
-                    className="px-4 py-2 mx-1 text-sm text-white bg-blue-500 rounded-sm hover:bg-blue-600"
-                    disabled={currentPage === totalPages}
-                >
-                    Last
                 </button>
             </div>
         </div>

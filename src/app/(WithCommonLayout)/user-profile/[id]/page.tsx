@@ -5,9 +5,10 @@ import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { useParams } from "next/navigation";
 import React from "react";
 
+import UserProfileSkeleton from "../component/skeleton";
+
 import { useGetSignleProfile } from "@/src/hooks/auth.hook";
 import { TFollower } from "@/src/types";
-import UserProfileSkeleton from "../component/skeleton";
 
 const Page = () => {
   const params = useParams();
