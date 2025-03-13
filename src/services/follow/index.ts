@@ -6,8 +6,6 @@ export const followUser = async (targetUserId : string)  => {
     try {
         const response = await clientAxiosInstance.post(`/auth/follow/${targetUserId}`);
 
-        console.log(response.data);
-
         return response.data;
     } catch (error: any) {
 

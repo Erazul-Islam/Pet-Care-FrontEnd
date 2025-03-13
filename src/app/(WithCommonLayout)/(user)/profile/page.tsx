@@ -5,15 +5,13 @@
 
 "use client"
 
-import { useUser } from '@/src/context/user.provider'
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-import { Button, Spinner, } from '@nextui-org/react';
+import { Button, Spinner } from '@nextui-org/react';
 import PetMarkDownEditor from './components/pet-post';
-import { useDeletePost, useGetPost } from '@/src/hooks/get.post.hook';
+import { useDeletePost, useGetMyPosts } from '@/src/hooks/get.post.hook';
 import Info from './components/info';
 import DOMPurify from 'dompurify';
-import { TPost } from '@/src/types';
 
 
 interface TUserPost {
@@ -29,43 +27,16 @@ interface TUserPost {
 
 const UserProfile = () => {
 
-
-    const { user, } = useUser()
-
-    const { data, refetch } = useGetPost()
-
-    const filterData = data?.data?.filter((one: TPost) => one?.userEmail === user?.email)
-
+    const {data:myPosts,refetch,isLoading} = useGetMyPosts()
     const { mutate: deletePost, } = useDeletePost()
-    const [posts, setPosts] = useState([]);
-    const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-        if (data?.data) {
-            const filteredPosts = data?.data.filter((one: any) => one?.userEmail === user?.email);
-
-            setPosts(filteredPosts);
-        }
-    }, [data, user?.email]);
 
     const handleDeletePost = (postId: string) => {
-        setLoading(true);
         deletePost(postId, {
             onSuccess: () => {
-                setPosts((prevPosts) => prevPosts?.filter((post: TUserPost) => post._id !== postId));
                 refetch();
             },
-            onError: () => {
-            },
-            onSettled: () => {
-                setLoading(false);
-            }
         });
     };
-
-    if (!data) {
-        return <div> <Spinner /> </div>;
-    }
 
     return (
         <div className="p-4 lg:ml-80 md:ml-40 lg:mr-80">
@@ -75,9 +46,9 @@ const UserProfile = () => {
             </div>
             <div className='mt-4 '>
                 {
-                    filterData?.length === 0 ? <h1 className='text-center font-bold'>No post you have</h1> : <div className='lg:flex lg:justify-between'>
+                    myPosts?.data?.length === 0 ? <h1 className='text-center font-bold'>No post you have</h1> : <div className='lg:flex lg:justify-between'>
                         {
-                            filterData?.map((one: TUserPost) => <div key={one._id}>
+                            myPosts?.data?.map((one: TUserPost) => <div key={one._id}>
                                 <div
                                     className="bg-white mt-6 shadow-md rounded-lg p-4 max-w-md w-full"
                                 >
@@ -109,10 +80,9 @@ const UserProfile = () => {
                                     <Button
                                         className='rounded-sm text-white'
                                         color='warning'
-                                        disabled={loading}
                                         onClick={() => handleDeletePost(one._id)}
                                     >
-                                        {loading ? <Spinner size="sm" /> : 'Delete'}
+                                        {isLoading ? <Spinner size="sm" /> : 'Delete'}
                                     </Button>
                                 </div>
 

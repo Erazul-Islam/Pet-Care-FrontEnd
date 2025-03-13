@@ -3,8 +3,6 @@
 
 import axiosInstance from "@/src/lib/axiosInstance"
 
-
-
 export const getAllPost = async (page = 1, limit = 5) => {
     try {
         const { data } = await axiosInstance.get(`/pet/pet-post?page=${page}&limit=${limit}`)
@@ -15,14 +13,15 @@ export const getAllPost = async (page = 1, limit = 5) => {
         throw new Error("Cannot get all the post")
     }
 }
-export const getScrollAllPost = async (page = 1, limit = 5) => {
-    try {
-        const  res  = await axiosInstance.get(`/pet/pet-post?page=${page}&limit=${limit}`)
 
-        return res.data.data
+export const getMyPosts = async () => {
+    try {
+        const { data } = await axiosInstance.get(`/pet/my-posts`)
+
+        return data
     }
     catch (err) {
-        throw new Error("Scrollbar")
+        throw new Error("Cannot get my posts")
     }
 }
 
