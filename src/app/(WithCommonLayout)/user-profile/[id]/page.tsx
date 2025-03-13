@@ -8,6 +8,7 @@ import React from "react";
 import { useGetSignleProfile } from "@/src/hooks/auth.hook";
 import Image from "next/image";
 import { TFollower } from "@/src/types";
+import UserProfileSkeleton from "../component/skeleton";
 
 const Page = () => {
   const params = useParams();
@@ -20,57 +21,61 @@ const Page = () => {
 
   return (
     <Card className=" lg:w-[300px] rounded-md ml-10 mr-6">
-      <CardHeader className="text-center justify-center items-center">
-        {info?.name}
-      </CardHeader>
-      <CardBody>
-        <Image
-          src={info?.profilePhoto}
-          width={300}
-          height={300}
-          alt="Profile Photo"
-        />
-        {/* Follower */}
+      {isLoading ? (
+        <UserProfileSkeleton />
+      ) : (
         <div>
-          {followers?.length > 0 ? (
+          <CardHeader className="text-center justify-center items-center">
+            {info?.name}
+          </CardHeader>
+          <CardBody>
+            <img
+              src={info?.profilePhoto}
+              alt="Profile"
+            />
+            {/* Follower */}
             <div>
-              {" "}
-              <p> Followers </p>
-              {followers?.map((follower: TFollower) => (
-                <div key={follower.id}>
-                  <div>
-                    <p>{follower.username}</p>
-                    <Image
-                      src={follower?.profilePhoto}
-                      width={100}
-                      height={100}
-                      alt="Follwer profile photo"
-                    />
-                  </div>
-                </div>
-              ))}{" "}
-            </div>
-          ) : (
-            "No follower"
-          )}
-        </div>
-        {/* Following */}
-        <div>
-          {following?.length > 0 ? (
-            <div>
-              <p>Following</p>
-              {following?.map((following: TFollower) => (
-                <div key={following?.id}>
+              {followers?.length > 0 ? (
+                <div>
                   {" "}
-                  <p>{following?.username}</p>{" "}
+                  <p> Followers </p>
+                  {followers?.map((follower: TFollower) => (
+                    <div key={follower.id}>
+                      <div>
+                        <p>{follower.username}</p>
+                        {/* <Image
+                          src={follower?.profilePhoto}
+                          width={100}
+                          height={100}
+                          alt="Follwer profile photo"
+                        /> */}
+                      </div>
+                    </div>
+                  ))}{" "}
                 </div>
-              ))}
+              ) : (
+                "No follower"
+              )}
             </div>
-          ) : (
-            "No following"
-          )}
+            {/* Following */}
+            <div>
+              {following?.length > 0 ? (
+                <div>
+                  <p>Following</p>
+                  {following?.map((following: TFollower) => (
+                    <div key={following?.id}>
+                      {" "}
+                      <p>{following?.username}</p>{" "}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                "No following"
+              )}
+            </div>
+          </CardBody>
         </div>
-      </CardBody>
+      )}
     </Card>
   );
 };
