@@ -3,7 +3,22 @@ import { Avatar } from "@nextui-org/react";
 import React from "react";
 
 import { useUser } from "@/src/context/user.provider";
-import { TComment, TPost } from "@/src/types";
+import { TComment } from "@/src/types";
+
+export type TPost = {
+  _id : string
+  userName: string,
+  userId: string,
+  userProfilePhoto: string,
+  userEmail: string,
+  caption: string,
+  isPremium : string,
+  isPublished : boolean,
+  description: string,
+  photo: string,
+  category: string,
+  comments : TComment[]
+}
 
 interface CommentSectionProps {
   commentText : Record<string,string>

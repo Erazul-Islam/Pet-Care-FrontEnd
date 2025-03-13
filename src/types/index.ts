@@ -57,7 +57,6 @@ export interface ISearchResult {
 }
 
 export type TPost = {
-  _id : string
   userName: string,
   userId: string,
   userProfilePhoto: string,

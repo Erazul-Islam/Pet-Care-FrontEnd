@@ -1,8 +1,29 @@
 /* eslint-disable prettier/prettier */
 import { Modal, ModalContent, ModalHeader } from "@nextui-org/modal";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
-const EditProfileModal = ({
+interface FormData {
+    name: string;
+    address: string;
+    intro: string;
+    college: string;
+    profilePhoto: string;
+    mobileNumber: string;
+    from: string;
+    lives: string;
+    university: string;
+  }
+
+
+interface editProfileProps {
+    modalVisible : boolean,
+    formData : FormData,
+    handleChange : (e : React.ChangeEvent<HTMLInputElement>) => void,
+    setModalVisible : Dispatch<SetStateAction<boolean>>,
+    handleSubmit : (e: React.FormEvent) => void
+}
+
+const EditProfileModal : React.FC<editProfileProps> = ({
   modalVisible,
   formData,
   handleChange,
