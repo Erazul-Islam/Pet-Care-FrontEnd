@@ -23,7 +23,7 @@ import { useAddComment, useDeleteComment, useEditComment } from '@/src/hooks/com
 import { useUser } from '@/src/context/user.provider';
 import { useFollowUser, useUnfollowUser } from '@/src/hooks/follow.hook';
 import { useDownVotePost, useUpvotePost } from '@/src/hooks/post.hook';
-import PetMarkDownEditor from '@/src/app/(WithCommonLayout)/(user)/profile/_components/pet-post';
+import PetMarkDownEditor from '@/src/app/(WithCommonLayout)/(user)/profile/components/pet-post';
 import { useGetUser } from '@/src/hooks/auth.hook';
 import { TComment } from '@/src/types';
 import { useInView } from 'react-intersection-observer';

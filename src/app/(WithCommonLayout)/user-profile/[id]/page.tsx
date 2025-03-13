@@ -6,7 +6,6 @@ import { useParams } from "next/navigation";
 import React from "react";
 
 import { useGetSignleProfile } from "@/src/hooks/auth.hook";
-import Image from "next/image";
 import { TFollower } from "@/src/types";
 import UserProfileSkeleton from "../component/skeleton";
 

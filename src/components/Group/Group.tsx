@@ -14,25 +14,6 @@ const Group = () => {
         <div>
             <div className='lg:ml-32'>
                 <div>
-                    <div className='flex justify-between'>
-                        <h1 className='ml-3'>Friend Requests</h1>
-                        <h1 className='text-pink-500'>See All</h1>
-                    </div>
-                    <div className='ml-3 mt-4'>
-                        <div className='flex gap-4'>
-                            <img className='rounded-full w-10 h-10' src="https://i.ibb.co.com/NmcQz8p/Fiverr-fotor-20241106161818.png" alt="" />
-                            <h1 className='mt-2'>Erazul islam Taosif</h1>
-                        </div>
-                        <div className='mt-4 ml-14'>
-                            <button className='bg-pink-500 rounded-sm h-8 w-20'>Confirm</button>
-                            <button className='bg-red-700 ml-4 rounded-sm h-8 w-20 '>Delete</button>
-                        </div>
-                    </div>
-                    <div className='mt-4'>
-                        <Divider />
-                    </div>
-                </div>
-                <div>
                     <div className='ml-3 mt-4'>
                         Birthdays
                     </div>
@@ -45,7 +26,7 @@ const Group = () => {
                     <Divider />
                 </div>
                 <div className='ml-3 mt-4'>
-                    Friends
+                    Suggestion
                 </div>
                 <div className='mt-4'>
                     {

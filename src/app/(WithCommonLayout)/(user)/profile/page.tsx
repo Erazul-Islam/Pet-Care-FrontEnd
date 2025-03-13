@@ -9,9 +9,9 @@ import { useUser } from '@/src/context/user.provider'
 import React, { useEffect, useState } from 'react';
 
 import { Button, Spinner, } from '@nextui-org/react';
-import PetMarkDownEditor from './_components/pet-post';
+import PetMarkDownEditor from './components/pet-post';
 import { useDeletePost, useGetPost } from '@/src/hooks/get.post.hook';
-import Info from './_components/info';
+import Info from './components/info';
 import DOMPurify from 'dompurify';
 import { TPost } from '@/src/types';
 
@@ -73,7 +73,7 @@ const UserProfile = () => {
                 <Info />
                 <PetMarkDownEditor />
             </div>
-            {/* <div className='mt-4 '>
+            <div className='mt-4 '>
                 {
                     filterData?.length === 0 ? <h1 className='text-center font-bold'>No post you have</h1> : <div className='lg:flex lg:justify-between'>
                         {
@@ -120,7 +120,7 @@ const UserProfile = () => {
                         }
                     </div>
                 }
-            </div> */}
+            </div>
         </div>
 
     );
