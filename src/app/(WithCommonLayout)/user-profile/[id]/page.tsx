@@ -32,25 +32,43 @@ const Page = () => {
         />
         {/* Follower */}
         <div>
-          <p> Followers </p>
-          {followers?.map((follower: TFollower) => (
-            <div key={follower.id}>
-              <div>
-                <p>{follower.username}</p>
-                <Image
-                  src={follower?.profilePhoto}
-                  width={100}
-                  height={100}
-                  alt="Follwer profile photo"
-                />
-              </div>
+          {followers?.length > 0 ? (
+            <div>
+              {" "}
+              <p> Followers </p>
+              {followers?.map((follower: TFollower) => (
+                <div key={follower.id}>
+                  <div>
+                    <p>{follower.username}</p>
+                    <Image
+                      src={follower?.profilePhoto}
+                      width={100}
+                      height={100}
+                      alt="Follwer profile photo"
+                    />
+                  </div>
+                </div>
+              ))}{" "}
             </div>
-          ))}
+          ) : (
+            "No follower"
+          )}
         </div>
         {/* Following */}
         <div>
-            <p>Following</p>
-            {following?.map((following : TFollower) => <div key={following?.id}> <p>{following?.username}</p>  </div> )}
+          {following?.length > 0 ? (
+            <div>
+              <p>Following</p>
+              {following?.map((following: TFollower) => (
+                <div key={following?.id}>
+                  {" "}
+                  <p>{following?.username}</p>{" "}
+                </div>
+              ))}
+            </div>
+          ) : (
+            "No following"
+          )}
         </div>
       </CardBody>
     </Card>
