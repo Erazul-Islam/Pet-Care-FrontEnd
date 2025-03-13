@@ -4,7 +4,7 @@ import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 // import { toast } from "react-toastify";
 
-import { deleteUser, editUserInfo, forgetPassword, getAllprofile, loginUser, registerUser, resetPassword, userData, userRoleupdate } from "../services/AuthServices";
+import { deleteUser, editUserInfo, forgetPassword, getAllprofile, getSignleProfile, loginUser, registerUser, resetPassword, userData, userRoleupdate } from "../services/AuthServices";
 import { changePasswordService } from "../services/change_password";
 import { TUser } from "../types";
 
@@ -27,6 +27,13 @@ export const useGetProfile = () => {
         queryFn: async () => await getAllprofile(),
     });
 };
+
+export const useGetSignleProfile = (id:string) => {
+    return useQuery({
+        queryKey : ["GET_SINGLE_USER"],
+        queryFn : async () => getSignleProfile(id) 
+    })
+}
 
 export const useDeleteUser = () => {
     const queryClient = useQueryClient()

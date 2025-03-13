@@ -37,6 +37,12 @@ export const getAllprofile = async () => {
     return data
 }
 
+export const getSignleProfile = async (id : string) => {
+    const {data} = await axiosInstance.get(`/auth/users/${id}`)
+
+    return data
+}
+
 export const deleteUser = async (userId: string) => {
 
     const response = await axiosInstance.delete(`/auth/${userId}`)

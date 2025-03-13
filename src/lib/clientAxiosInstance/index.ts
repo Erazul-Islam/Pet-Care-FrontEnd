@@ -2,7 +2,7 @@
 // src/lib/axiosInstance/clientAxiosInstance.ts
 
 import axios from "axios";
-import { getCookie } from "cookies-next"; // You can use any cookie library
+import { getCookie } from "cookies-next"; 
 
 import envConfig from "@/src/config/envConfig";
 
