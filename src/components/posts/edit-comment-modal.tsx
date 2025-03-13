@@ -2,7 +2,15 @@
 import { Modal, ModalContent } from "@nextui-org/modal";
 import React from "react";
 
-const EditCommentModal = ({
+interface editCommandModalProps {
+  modalVisible : boolean,
+  setModalVisible : (visible:boolean) => void,
+  setUpdatedCommentText : (text: string) => void,
+  updatedCommentText : string,
+  handleUpdateComment : () => void
+}
+
+const EditCommentModal : React.FC<editCommandModalProps> = ({
   modalVisible,
   setModalVisible,
   setUpdatedCommentText,

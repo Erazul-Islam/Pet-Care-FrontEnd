@@ -8,13 +8,17 @@
 
 import React, { useMemo, useState } from "react";
 import { toast } from "sonner";
-import { Avatar, Spinner } from "@nextui-org/react";
+import { Spinner } from "@nextui-org/react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { motion } from "framer-motion";
 import DOMPurify from "dompurify";
+import { MdWorkspacePremium } from "react-icons/md";
 
 import Payment from "./payment";
+import PetPostSort from "./post.sort";
+import EditCommentModal from "./edit-comment-modal";
+import CommentSection from "./comment";
 
 import { useGetPost } from "@/src/hooks/get.post.hook";
 import {
@@ -26,11 +30,7 @@ import { useUser } from "@/src/context/user.provider";
 import { useFollowUser, useUnfollowUser } from "@/src/hooks/follow.hook";
 import { useDownVotePost, useUpvotePost } from "@/src/hooks/post.hook";
 import { useGetUser } from "@/src/hooks/auth.hook";
-import { TComment } from "@/src/types";
-import PetPostSort from "./post.sort";
-import EditCommentModal from "./edit-comment-modal";
-import CommentSection from "./comment";
-import { MdWorkspacePremium } from "react-icons/md";
+
 
 const GetPost = () => {
   const { data: posts, isSuccess, refetch, isFetching } = useGetPost();
@@ -53,7 +53,7 @@ const GetPost = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [currentCommentId, setCurrentCommentId] = useState<string | null>(null);
   const [currentPostId, setCurrentPostId] = useState<string | null>(null);
-  const [updatedCommentText, setUpdatedCommentText] = useState("");
+  const [updatedCommentText, setUpdatedCommentText] = useState<string>("");
   const [sortBy, setSortBy] = useState<"newest" | "mostUpvoted">("newest");
   const [filterByCategory, setFilterByCategory] = useState<
     "All" | "Story" | "TIP"

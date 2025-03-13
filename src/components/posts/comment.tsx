@@ -3,9 +3,18 @@ import { Avatar } from "@nextui-org/react";
 import React from "react";
 
 import { useUser } from "@/src/context/user.provider";
-import { TComment } from "@/src/types";
+import { TComment, TPost } from "@/src/types";
 
-const CommentSection = ({
+interface CommentSectionProps {
+  commentText : Record<string,string>
+  setCommentText :  React.Dispatch<React.SetStateAction<Record<string, string>>>
+  handleDeleteComment : (postId: string, commentId: string) => void,
+  post : TPost,
+  handleAddComment : (postId: string) => void
+  openEditModal : (postId: string, commentId: string, commentText: string) => void
+}
+
+const CommentSection : React.FC<CommentSectionProps> = ({
   commentText,
   handleDeleteComment,
   setCommentText,
