@@ -31,12 +31,12 @@ const Sidebar = () => {
       initial={{ width: "16rem" }}
       animate={{ width: isOpen ? "16rem" : "4rem" }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="bg-[#0F1E33] text-white p-4 relative"
+      className="bg-[#0F1E33] text-white p-4 h-screen rounded-md relative"
     >
       {/* Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`absolute top-4 text-white ${isOpen ? "right-[8px]" : ""} focus:outline-none  rounded-full`}
+        className={`absolute top-4 p-1 text-white ${isOpen ? "right-[8px]" : ""} focus:outline-none  rounded-full`}
       >
         <motion.div
           key={isOpen ? "open" : "close"}

@@ -11,7 +11,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { DeleteIcon } from "../../icons";
-import { Tooltip } from "@nextui-org/react";
+import { Spinner, Tooltip } from "@nextui-org/react";
 
 interface TUserInfo {
   _id: string;
@@ -81,7 +81,7 @@ const UserManagement = () => {
   }, [users]);
 
   if (loading) {
-    return <Loading />;
+    return <Spinner className="items-center justify-center flex" />;
   }
 
   return (

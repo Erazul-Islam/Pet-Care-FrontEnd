@@ -9,7 +9,15 @@ import { Button } from "@nextui-org/button";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import DOMPurify from "dompurify";
-import { Spinner } from "@nextui-org/react";
+import {
+  Spinner,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+} from "@nextui-org/react";
 import { MdWorkspacePremium } from "react-icons/md";
 
 interface TPost {
@@ -30,14 +38,16 @@ const PostsManagement = () => {
   const [publishingPostId, setPublishingPostId] = useState<string | null>(null);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 1;
+  const itemsPerPage = 5;
   const { mutateAsync: unpublish } = useUnpublish();
   const { mutateAsync: publish } = usePublish();
 
-  const { data: posts, refetch ,isLoading ,isFetching } = useGetPaginatedPost(
-    currentPage,
-    itemsPerPage
-  );
+  const {
+    data: posts,
+    refetch,
+    isLoading,
+    isFetching,
+  } = useGetPaginatedPost(currentPage, itemsPerPage);
 
   const totalPosts = posts?.pagination?.totalPosts || 1;
 
@@ -59,8 +69,10 @@ const PostsManagement = () => {
 
   const totalPages = Math.ceil(totalPosts / pageSize);
 
-  if(isLoading && isFetching){
-    return <Spinner className="items-center flex justify-center min-h-screen" />
+  if (isLoading && isFetching) {
+    return (
+      <Spinner className="items-center flex justify-center min-h-screen" />
+    );
   }
 
   const handlePageChange = (pageNumber: number) => {
@@ -70,7 +82,7 @@ const PostsManagement = () => {
 
   return (
     <div className="">
-      <div className="flex justify-center items-center">
+      {/* <div className="flex justify-center items-center">
         {posts?.data?.map((post: TPost) => (
           <div className="" key={post._id}>
             <div className=" shadow-md cursor-pointer border border-purple-200 rounded-lg p-4 max-w-screen-md">
@@ -140,11 +152,58 @@ const PostsManagement = () => {
             </div>
           </div>
         ))}
-      </div>
-      <div className="flex justify-center mt-6">
+      </div> */}
+
+      <Table
+        aria-label="Posts Table"
+        style={{ height: "auto", minWidth: "100%" }}
+      >
+        <TableHeader>
+          <TableColumn>Image</TableColumn>
+          <TableColumn>Posted By</TableColumn>
+          <TableColumn>Date</TableColumn>
+          <TableColumn>Post Title</TableColumn>
+          <TableColumn>Total Upvotes</TableColumn>
+          <TableColumn>Total Downvotes</TableColumn>
+          <TableColumn>Actions</TableColumn>
+        </TableHeader>
+        <TableBody>
+          {posts?.data?.map((post : TPost, ) => (
+            <TableRow key={post._id}>
+              <TableCell>
+                <img src={post.photo} alt={post.userName} className="w-12 h-12 rounded-full" />
+              </TableCell>
+              <TableCell>{post.userName}</TableCell>
+              <TableCell> {new Date(post.createdAt).toLocaleString()}</TableCell>
+              <TableCell>random</TableCell>
+              <TableCell>{post.totalUpvotes}</TableCell>
+              <TableCell>{post.totalDownvotes}</TableCell>
+              <TableCell>{post.isPublished === true ? (
+                <Button
+                  className="rounded-sm text-white"
+                  color="warning"
+                  onClick={() => handleunPublish(post._id)}
+                >
+                  {publishingPostId === post._id ? <Spinner /> : "Unpublish"}
+                </Button>
+              ) : (
+                <Button
+                  className="rounded-sm text-white"
+                  color="warning"
+                  onClick={() => handlePublish(post._id)}
+                >
+                  {publishingPostId === post._id ? <Spinner /> : "Publish"}
+                </Button>
+              )}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+
+      <div className="flex justify-between mt-6">
         <button
           onClick={() => handlePageChange(currentPage - 1)}
-          className="px-4 py-2 mx-1 text-sm text-white bg-blue-500 rounded-sm hover:bg-blue-600"
+          className="px-4 py-2 mx-1 text-sm text-white bg-blue-500 rounded-sm"
           disabled={currentPage === 1}
         >
           Previous
@@ -154,7 +213,7 @@ const PostsManagement = () => {
         </span>
         <button
           onClick={() => handlePageChange(currentPage + 1)}
-          className="px-4 py-2 mx-1 text-sm text-white bg-blue-500 rounded-sm hover:bg-blue-600"
+          className="px-4 py-2 mx-1 text-sm text-white bg-blue-500 rounded-sm"
           disabled={currentPage === totalPages}
         >
           Next
