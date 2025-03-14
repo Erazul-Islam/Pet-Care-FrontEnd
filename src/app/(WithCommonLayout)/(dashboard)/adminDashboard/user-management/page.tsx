@@ -1,12 +1,12 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 
-const UserManagement = () => {
+import UserManagement from '@/src/components/dashboard/adminUi/UserManagement';
+
+const UserManagementPage = () => {
     return (
-        <div>
-            user management
-        </div>
+        <UserManagement/>
     );
 };
 
-export default UserManagement;
+export default UserManagementPage;

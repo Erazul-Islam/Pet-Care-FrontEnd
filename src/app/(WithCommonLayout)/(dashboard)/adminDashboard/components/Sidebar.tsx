@@ -1,54 +1,86 @@
 /* eslint-disable prettier/prettier */
-"use client"
+"use client";
 
 import { useState } from "react";
 import Link from "next/link";
-import { Home, Settings, BarChart2, Menu, X } from "lucide-react";
-import { motion } from "framer-motion";
-import { useRouter } from "next/router";
+import { Home, Menu, X, User } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
+import { BsSignpostSplitFill } from "react-icons/bs";
 
 const menuItems = [
-  { name: "Dashboard", path: "/adminDashboard", icon: <Home size={20} /> },
+  { name: "Overview", path: "/adminDashboard", icon: <Home size={20} /> },
   {
-    name: "Analytics",
+    name: "Users",
     path: "/adminDashboard/user-management",
-    icon: <BarChart2 size={20} />,
+    icon: <User size={20} />,
   },
   {
-    name: "Settings",
+    name: "Posts",
     path: "/adminDashboard/post-management",
-    icon: <Settings size={20} />,
+    icon: <BsSignpostSplitFill size={20} />,
   },
 ];
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   return (
-    <motion.aside 
-      className={`bg-gray-900 text-white ${isOpen ? "w-64" : "w-16"} transition-all duration-300 min-h-screen p-4`}
+    <motion.aside
+      initial={{ width: "16rem" }}
+      animate={{ width: isOpen ? "16rem" : "4rem" }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+      className="bg-[#0F1E33] text-white min-h-screen p-4 relative"
     >
       {/* Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="text-white focus:outline-none p-2 mb-4"
+        className={`absolute top-4 text-white ${isOpen ? "right-[8px]" : ""} focus:outline-none  rounded-full`}
       >
-        {isOpen ? <X size={24} /> : <Menu size={24} />}
+        <motion.div
+          key={isOpen ? "open" : "close"}
+          initial={{ rotate: 0 }}
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          {isOpen ? <X size={24} /> : <Menu size={24} />}
+        </motion.div>
       </button>
 
       {/* Menu Items */}
-      <nav className="space-y-4">
+      <nav className="space-y-4 mt-14">
         {menuItems.map((item) => (
-          <Link
-            href={item.path}
+          <motion.div
             key={item.name}
-            className={`flex items-center gap-3 p-2 rounded-lg ${pathname === item.path ? "bg-pink-700" : "hover:bg-gray-700"} `}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
           >
-            {item.icon}
-            {isOpen && <span>{item.name}</span>}
-          </Link>
+            <Link
+              href={item.path}
+              className={`flex items-center gap-3 p-2 rounded-md transition-colors duration-200 ${
+                pathname === item.path
+                  ? "bg-[#92FE9D] text-[#000000]"
+                  : "hover:bg-gray-800 text-[#898989]"
+              }`}
+            >
+              {item.icon}
+              <AnimatePresence>
+                {isOpen && (
+                  <motion.span
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -10 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {item.name}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </Link>
+          </motion.div>
         ))}
       </nav>
     </motion.aside>

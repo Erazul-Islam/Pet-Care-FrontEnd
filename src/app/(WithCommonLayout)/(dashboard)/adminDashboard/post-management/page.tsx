@@ -1,12 +1,12 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 
-const PostsManagement = () => {
+import PostsManagement from '@/src/components/dashboard/adminUi/PostsManagement';
+
+const PostsManagementPage = () => {
     return (
-        <div>
-            PostsManagement
-        </div>
+        <PostsManagement/>
     );
 };
 
-export default PostsManagement;
+export default PostsManagementPage;
