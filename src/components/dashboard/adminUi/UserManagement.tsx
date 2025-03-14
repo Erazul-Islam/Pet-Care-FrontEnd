@@ -7,7 +7,6 @@ import Loading from "@/src/app/loading";
 import { useDeleteUser, useUpdateUserRole } from "@/src/hooks/auth.hook";
 import { useGetPost } from "@/src/hooks/get.post.hook";
 
-import { Button } from "@nextui-org/button";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -32,15 +31,11 @@ interface ApiResponse<T> {
 
 const UserManagement = () => {
   const [users, setUsers] = useState<TUserInfo[]>([]);
+  console.log(users.length)
   const [loading, setLoading] = useState(false);
+  console.log("loading",loading)
 
-  if (!users) {
-    setLoading(true);
-  }
-
-  if (loading) {
-    <Loading />;
-  }
+  
 
   const { mutate } = useDeleteUser();
   const { mutateAsync } = useUpdateUserRole();
@@ -76,6 +71,18 @@ const UserManagement = () => {
         console.log(err);
       });
   }, []);
+
+  useEffect(() => {
+    if (users.length < 1) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, [users]);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div>
@@ -133,7 +140,7 @@ const UserManagement = () => {
                 </td>
                 <td className="py-3 px-10">
                   <Tooltip color="danger" content="Delete User">
-                    <button type="button" className="bg-none text-2xl">
+                    <button onClick={() => handleDelete(user._id)} type="button" className="bg-none text-2xl">
                       <DeleteIcon color="red" />
                     </button>
                   </Tooltip>
