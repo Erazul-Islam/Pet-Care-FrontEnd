@@ -5,7 +5,7 @@
 "use client";
 
 import React, { ReactNode, useState } from "react";
-import UserManagement from "./adminUi/UserManagement";
+// import UserManagement from "./adminUi/UserManagement";
 import PostsManagement from "./adminUi/PostsManagement";
 import PaymentManagement from "./adminUi/PaymentManagement";
 
@@ -27,7 +27,7 @@ const Layout: React.FC<LayoutProps> = () => {
       case "Payment Info":
         return <PaymentManagement />;
       case "user":
-        return <UserManagement />;
+        // return <UserManagement />;
       case "post":
         return <PostsManagement />;
       case "Home":

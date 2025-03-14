@@ -31,7 +31,7 @@ const Sidebar = () => {
       initial={{ width: "16rem" }}
       animate={{ width: isOpen ? "16rem" : "4rem" }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="bg-[#0F1E33] text-white min-h-screen p-4 relative"
+      className="bg-[#0F1E33] text-white p-4 relative"
     >
       {/* Toggle Button */}
       <button
