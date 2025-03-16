@@ -11,7 +11,7 @@ const AdminDashboard = ({ children }: { children: ReactNode }) => {
       <Sidebar />
 
       {/* Main content */}
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 pl-8">{children}</main>
     </div>
   );
 };

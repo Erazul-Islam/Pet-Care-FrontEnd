@@ -9,13 +9,11 @@
 "use client";
 
 import React from "react";
+import AdminOverView from "./components/overview/Admin-overview";
 
 const Adminpage = () => {
   return (
-    <div>
-      <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-      <p>Welcome to the admin panel.</p>
-    </div>
+    <AdminOverView/>
   );
 };
 
