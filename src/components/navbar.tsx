@@ -121,11 +121,11 @@ export const Navbar = () => {
               <p className="font-semibold">Signed in as</p>
               <p className="font-semibold text-red-600">{user?.email}</p>
             </DropdownItem>
-            <DropdownItem onClick={() => handleNavigation('/profile')} >profile</DropdownItem>
-            <DropdownItem onClick={() => handleNavigation('/contact')} >Contact</DropdownItem>
-            <DropdownItem onClick={() => handleNavigation('/about')} >About</DropdownItem>
+            <DropdownItem key={'profile'} onClick={() => handleNavigation('/profile')} >profile</DropdownItem>
+            <DropdownItem key={'contact'} onClick={() => handleNavigation('/contact')} >Contact</DropdownItem>
+            <DropdownItem key={'about'} onClick={() => handleNavigation('/about')} >About</DropdownItem>
             {
-              user?.role === "ADMIN" ? <DropdownItem onClick={() => handleNavigation('/adminDashboard')}>Dashboard</DropdownItem> : <DropdownItem onClick={() => handleNavigation('/userDashboard')}>Dashboard</DropdownItem>
+              user?.role === "ADMIN" ? <DropdownItem key={'adminDashboard'} onClick={() => handleNavigation('/adminDashboard')}>Dashboard</DropdownItem> : <DropdownItem key={'userDashboard'} onClick={() => handleNavigation('/userDashboard')}>Dashboard</DropdownItem>
             }
             <DropdownItem key="change">
               {user ? <Link href="/changePassword"><p className=" text-white">Change Password</p></Link> : ''}

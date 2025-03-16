@@ -4,7 +4,7 @@ import { useGetProfile, } from '@/src/hooks/auth.hook';
 import { Divider } from '@nextui-org/react';
 import Link from 'next/link';
 import React from 'react';
-import { FaGift } from "react-icons/fa6";
+import {Gift} from 'lucide-react'
 
 const Group = () => {
 
@@ -18,7 +18,7 @@ const Group = () => {
                         Birthdays
                     </div>
                     <div className='flex ml-3 mt-4 gap-4'>
-                        <FaGift size={30} />
+                        <Gift size={30} />
                         <h1>Sourav Ahmeds birthday is today</h1>
                     </div>
                 </div>

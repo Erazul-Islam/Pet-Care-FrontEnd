@@ -94,7 +94,7 @@ const PostsManagement = () => {
           </thead>
           <tbody>
           {posts?.data?.map((post : TPost, ) => (
-            <tr key={post._id}>
+            <tr className="hover:bg-[#26264F]" key={post._id}>
               <td className="py-3 px-8">
                 <img src={post.photo} alt={post.userName} className="w-12 h-12 rounded-full" />
               </td>

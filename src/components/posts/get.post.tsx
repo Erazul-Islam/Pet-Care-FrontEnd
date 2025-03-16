@@ -8,15 +8,14 @@
 
 import React, { useMemo, useState } from "react";
 import { toast } from "sonner";
-import { Spinner } from "@nextui-org/react";
+import { Select, SelectItem, Spinner } from "@nextui-org/react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { motion } from "framer-motion";
 import DOMPurify from "dompurify";
-import { MdWorkspacePremium } from "react-icons/md";
+import {Projector} from 'lucide-react'
 
 import Payment from "./payment";
-import PetPostSort from "./post.sort";
 import EditCommentModal from "./edit-comment-modal";
 import CommentSection from "./comment";
 
@@ -30,7 +29,6 @@ import { useUser } from "@/src/context/user.provider";
 import { useFollowUser, useUnfollowUser } from "@/src/hooks/follow.hook";
 import { useDownVotePost, useUpvotePost } from "@/src/hooks/post.hook";
 import { useGetUser } from "@/src/hooks/auth.hook";
-
 
 const GetPost = () => {
   const { data: posts, isSuccess, refetch, isFetching } = useGetPost();
@@ -232,12 +230,40 @@ const GetPost = () => {
   return (
     <div>
       <section className="flex flex-col items-center ">
-        <PetPostSort
-          sortBy={sortBy}
-          handleSortChange={handleSortChange}
-          filterByCategory={filterByCategory}
-          setFilterByCategory={setFilterByCategory}
-        />
+        <div className="flex mt-4 mb-5 gap-20">
+          <Select
+            style={{ borderRadius: "6px", width: 200 }}
+            value={sortBy}
+            onChange={handleSortChange}
+            placeholder="Select "
+          >
+            <SelectItem key={"newest"} value="newest">
+              Newest
+            </SelectItem>
+            <SelectItem key={"mostUpvoted"} value="mostUpvoted">
+              Most Upvoted
+            </SelectItem>
+          </Select>
+
+          <Select
+            placeholder="Select by category"
+            style={{ borderRadius: "6px", width: 200 }}
+            value={filterByCategory}
+            onChange={(e) =>
+              setFilterByCategory(e?.target?.value as "All" | "Story" | "TIP")
+            }
+          >
+            <SelectItem key="All" value="All">
+              All
+            </SelectItem>
+            <SelectItem key="Story" value="Story">
+              Story
+            </SelectItem>
+            <SelectItem key="TIP" value="TIP">
+              TIP
+            </SelectItem>
+          </Select>
+        </div>
         <motion.div className="grid grid-cols-1 gap-4">
           {isSuccess &&
             sortedPosts?.map((post, index) => {
@@ -280,7 +306,9 @@ const GetPost = () => {
                         </div>
                         <div>
                           {post?.isPremium === "YES" ? (
-                            <MdWorkspacePremium style={{width:50,height:50,color:'purple'}} />
+                            <Projector
+                              style={{ width: 50, height: 50, color: "purple" }}
+                            />
                           ) : (
                             ""
                           )}

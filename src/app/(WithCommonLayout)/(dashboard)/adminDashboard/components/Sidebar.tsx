@@ -3,10 +3,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Home, Menu, X, User } from "lucide-react";
+import { Home, Menu, X, User,TableOfContents } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
-import { BsSignpostSplitFill } from "react-icons/bs";
+
 
 const menuItems = [
   { name: "Overview", path: "/adminDashboard", icon: <Home size={20} /> },
@@ -18,7 +18,7 @@ const menuItems = [
   {
     name: "Posts",
     path: "/adminDashboard/post-management",
-    icon: <BsSignpostSplitFill size={20} />,
+    icon: <TableOfContents size={20} /> ,
   },
 ];
 

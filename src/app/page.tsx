@@ -9,7 +9,6 @@ import { useSearchPosts } from "../hooks/search.hook";
 import { useEffect, useState } from "react";
 import { ISearchResult } from "../types";
 import useDebounce from "../hooks/debounce.hook";
-import People from "../components/friend/people";
 import Group from "../components/Group/Group";
 export default function Home() {
 
@@ -42,7 +41,8 @@ export default function Home() {
     <section className=" flex flex-col md:flex-row">
       <div className="md:w-1/4 p-4">
         <div className="sticky top-0">
-          <People />
+          {/* <People /> */}
+          Taosif
         </div>
       </div>
       <div className="pb-0 md:ml-16">
