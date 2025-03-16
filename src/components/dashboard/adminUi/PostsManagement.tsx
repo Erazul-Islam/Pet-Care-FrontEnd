@@ -9,13 +9,8 @@ import { Button } from "@nextui-org/button";
 import React, { useState } from "react";
 import {
   Spinner,
-  Table,
-  TableBody,
-  TableCell,
-  TableColumn,
-  TableHeader,
-  TableRow,
 } from "@nextui-org/react";
+import {ChevronRight , ChevronLeft} from 'lucide-react'
 
 interface TPost {
   _id: string;
@@ -80,7 +75,7 @@ const PostsManagement = () => {
   return (
     <div className="">
 
-      <table className="min-w-full bg-[#1D1E42] rounded-lg shadow-md">
+      <table className="min-w-full">
       <thead>
             <tr className="text-left text-sm font-bold text-[#ffff]">
               <th className="py-6 px-6">User Photo</th>
@@ -94,7 +89,7 @@ const PostsManagement = () => {
           </thead>
           <tbody>
           {posts?.data?.map((post : TPost, ) => (
-            <tr className="hover:bg-[#26264F]" key={post._id}>
+            <tr className="hover:bg-[#0A1330]" key={post._id}>
               <td className="py-3 px-8">
                 <img src={post.photo} alt={post.userName} className="w-12 h-12 rounded-full" />
               </td>
@@ -106,7 +101,7 @@ const PostsManagement = () => {
               <td>{post.isPublished === true ? (
                 <Button
                   className="rounded-sm text-white"
-                  color="warning"
+                  style={{backgroundColor:'#CB3CFF'}}
                   onClick={() => handleunPublish(post._id)}
                 >
                   {publishingPostId === post._id ? <Spinner /> : "Unpublish"}
@@ -114,7 +109,7 @@ const PostsManagement = () => {
               ) : (
                 <Button
                   className="rounded-sm text-white"
-                  color="warning"
+                  style={{backgroundColor:'#CB3CFF'}}
                   onClick={() => handlePublish(post._id)}
                 >
                   {publishingPostId === post._id ? <Spinner /> : "Publish"}
@@ -125,23 +120,23 @@ const PostsManagement = () => {
         </tbody>
       </table>
 
-      <div className="flex justify-between mt-6">
+      <div className="flex justify-between md:ml-8 md:mr-12 mt-6">
         <button
           onClick={() => handlePageChange(currentPage - 1)}
-          className="px-4 py-2 mx-1 text-sm text-white bg-blue-500 rounded-sm"
+          className="px-4 py-2 mx-1 text-sm rounded-sm"
           disabled={currentPage === 1}
         >
-          Previous
+          <ChevronLeft/>
         </button>
         <span className="px-4 py-2 text-sm ">
           Page {currentPage} of {totalPages}
         </span>
         <button
           onClick={() => handlePageChange(currentPage + 1)}
-          className="px-4 py-2 mx-1 text-sm text-white bg-blue-500 rounded-sm"
+          className="px-4 py-2 mx-1 text-sm rounded-sm"
           disabled={currentPage === totalPages}
         >
-          Next
+          <ChevronRight/>
         </button>
       </div>
     </div>

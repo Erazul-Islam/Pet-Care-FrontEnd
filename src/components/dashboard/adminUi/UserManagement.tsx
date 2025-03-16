@@ -87,7 +87,7 @@ const UserManagement = () => {
   return (
     <div>
       <div className="">
-        <table className="min-w-full bg-[#1D1E42] rounded-lg shadow-md">
+        <table className="min-w-full bg-[#081028]">
           <thead>
             <tr className="text-left text-sm font-bold text-[#ffff]">
               <th className="py-3 px-6">Image</th>
@@ -102,7 +102,7 @@ const UserManagement = () => {
             {users.map((user) => (
               <tr
                 key={user._id}
-                className="text-sm text-gray-700  hover:bg-[#26264F]"
+                className="text-sm text-gray-700  hover:bg-[#0A1330]"
               >
                 <td className="py-3 px-6">
                   <img

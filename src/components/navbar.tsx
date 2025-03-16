@@ -54,25 +54,7 @@ export const Navbar = () => {
 
 
   return (
-    <NextUINavbar maxWidth="full" position="sticky">
-      <NavbarContent >
-        <NavbarBrand as="li" className="gap-3 max-w-fit">
-        </NavbarBrand>
-        <Input
-          classNames={{
-            base: "max-w-full sm:max-w-[10rem] h-10",
-            mainWrapper: "h-full",
-            input: "text-small",
-            inputWrapper: "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
-          }}
-          placeholder="Type to search..."
-          size="sm"
-          type="search"
-        />
-      </NavbarContent>
-      <NavbarContent>
-
-      </NavbarContent>
+    <NextUINavbar style={{backgroundColor :"#081028"}} maxWidth="full" position="sticky">
       <NavbarContent>
         < motion.ul className="hidden lg:flex gap-12 justify-center items-center ml-2">
           {siteConfig.navItems.map((item) => (
@@ -91,14 +73,14 @@ export const Navbar = () => {
           ))}
         </motion.ul>
       </NavbarContent>
-      <NavbarContent
+      {/* <NavbarContent
         className="hidden sm:flex basis-1/5 sm:basis-full"
         justify="end"
       >
         <NavbarItem className="hidden sm:flex gap-2">
           <ThemeSwitch />
         </NavbarItem>
-      </NavbarContent>
+      </NavbarContent> */}
       
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
         <ThemeSwitch />

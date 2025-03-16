@@ -31,7 +31,7 @@ const Sidebar = () => {
       initial={{ width: "16rem" }}
       animate={{ width: isOpen ? "16rem" : "4rem" }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="bg-[#0F1E33] text-white p-4 h-screen rounded-md relative"
+      className="bg-[#081028] text-white p-4 h-screen border-r-2 border-t-2 relative"
     >
       {/* Toggle Button */}
       <button
@@ -62,8 +62,8 @@ const Sidebar = () => {
               href={item.path}
               className={`flex items-center gap-3 p-2 rounded-md transition-colors duration-200 ${
                 pathname === item.path
-                  ? "bg-[#92FE9D] text-[#000000]"
-                  : "hover:bg-gray-800 text-[#898989]"
+                  ? "bg-[#0A1330] border-l-2 border-l-[#CB3CFF] text-[#CB3CFF]"
+                  : "hover:bg-[#0A1330] text-[#898989]"
               }`}
             >
               {item.icon}

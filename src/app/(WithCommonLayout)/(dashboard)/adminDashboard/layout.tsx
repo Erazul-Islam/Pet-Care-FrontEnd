@@ -6,12 +6,12 @@ import Sidebar from "./components/Sidebar";
 const AdminDashboard = ({ children }: { children: ReactNode }) => {
 
   return (
-    <div className="flex">
+    <div className="flex bg-[#081028]">
       {/* Sidebar */}
       <Sidebar />
 
       {/* Main content */}
-      <main className="flex-1 lg:pl-8 lg:pr-8">{children}</main>
+      <main className="flex-1">{children}</main>
     </div>
   );
 };
