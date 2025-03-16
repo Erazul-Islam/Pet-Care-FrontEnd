@@ -58,7 +58,7 @@ const Stat = () => {
         <div className="flex items-center justify-between">
           {" "}
           <div className="flex text-[#AEB9E1] gap-2">
-            <Eye /> Subscriptions
+            <Star /> Subscriptions
           </div>
           <Ellipsis className="cursor-pointer" />
         </div>

@@ -1,20 +1,26 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React from "react";
 
-import Stat from './Stat';
+import RevenueAndExpenseChart from "../overview/Revenue-And-Expense-Chart";
 
-import { useUser } from '@/src/context/user.provider';
+import Stat from "./Stat";
+
+import { useUser } from "@/src/context/user.provider";
+import BarChartRevenueAndExpense from "./BarChart-Revenue-Expense";
 
 const AdminOverView = () => {
+  const { user } = useUser();
 
-    const {user} = useUser()
-
-    return (
-        <div className='lg:mr-12'>
-            <h1 className='font-semibold text-2xl'>Welcome back, {user?.name}</h1>
-            <Stat/>
-        </div>
-    );
+  return (
+    <div className="lg:mr-12">
+      <h1 className="font-semibold text-2xl">Welcome back, {user?.name}</h1>
+      <Stat />
+      <div className="flex bg-[#0B1739] gap-8 border rounded-md mt-7 p-4 border-gray-600">
+        <RevenueAndExpenseChart />
+        <BarChartRevenueAndExpense />
+      </div>
+    </div>
+  );
 };
 
 export default AdminOverView;
