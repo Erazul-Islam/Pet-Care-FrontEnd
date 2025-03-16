@@ -4,7 +4,7 @@ import { Eye, Ellipsis,MoveUpRight,UserRound,MoveDownRight,Plus,Star } from "luc
 
 const Stat = () => {
   return (
-    <div className="mt-4 lg:flex lg:justify-between">
+    <div className="mt-4 md:ml-0 ml-8 lg:flex lg:justify-between">
             {/* page view */}
       <div className="w-[350px] h-[120px] p-5 border border-gray-600 rounded-md bg-[#0B1739]">
         <div className="flex items-center justify-between">

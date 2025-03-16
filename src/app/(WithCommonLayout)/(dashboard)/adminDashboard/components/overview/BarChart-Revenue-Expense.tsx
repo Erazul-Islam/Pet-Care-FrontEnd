@@ -56,7 +56,6 @@ const BarChartRevenueAndExpense = () => {
     plugins: {
       legend: {
         display: false,
-        position: "top",
         labels: {
           usePointStyle: true,
           pointStyle: "circle",
