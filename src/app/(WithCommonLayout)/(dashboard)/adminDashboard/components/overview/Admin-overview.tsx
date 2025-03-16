@@ -4,9 +4,12 @@ import React from "react";
 import RevenueAndExpenseChart from "../overview/Revenue-And-Expense-Chart";
 
 import Stat from "./Stat";
+import BarChartRevenueAndExpense from "./BarChart-Revenue-Expense";
+import LineChart from "./Line-Chart";
 
 import { useUser } from "@/src/context/user.provider";
-import BarChartRevenueAndExpense from "./BarChart-Revenue-Expense";
+
+
 
 const AdminOverView = () => {
   const { user } = useUser();
@@ -17,7 +20,10 @@ const AdminOverView = () => {
       <Stat />
       <div className="flex bg-[#0B1739] gap-8 border rounded-md mt-7 p-4 border-gray-600">
         <RevenueAndExpenseChart />
-        <BarChartRevenueAndExpense />
+        <div>
+          <BarChartRevenueAndExpense />
+          <LineChart/>
+        </div>
       </div>
     </div>
   );
