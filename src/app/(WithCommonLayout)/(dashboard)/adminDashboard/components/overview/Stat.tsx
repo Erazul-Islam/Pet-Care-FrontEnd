@@ -22,7 +22,7 @@ const Stat = () => {
         </div>
       </div>
             {/* Monthly user */}
-      <div className="w-[350px] h-[120px] p-5 border border-gray-600 rounded-md bg-[#0B1739]">
+      <div className="w-[350px] md:mt-0 mt-6 h-[120px] p-5 border border-gray-600 rounded-md bg-[#0B1739]">
         <div className="flex items-center justify-between">
           {" "}
           <div className="flex text-[#AEB9E1] gap-2">
@@ -38,7 +38,7 @@ const Stat = () => {
         </div>
       </div>
             {/* New sign up */}
-      <div className="w-[350px] h-[120px] p-5 border border-gray-600 rounded-md bg-[#0B1739]">
+      <div className="w-[350px] h-[120px]  md:mt-0 mt-6 p-5 border border-gray-600 rounded-md bg-[#0B1739]">
         <div className="flex items-center justify-between">
           {" "}
           <div className="flex text-[#AEB9E1]  gap-2">
@@ -54,7 +54,7 @@ const Stat = () => {
         </div>
       </div>
             {/* Subscriptions */}
-      <div className="w-[350px] h-[120px] p-5 border border-gray-600 rounded-md bg-[#0B1739]">
+      <div className="w-[350px] h-[120px]  md:mt-0 mt-6 p-5 border border-gray-600 rounded-md bg-[#0B1739]">
         <div className="flex items-center justify-between">
           {" "}
           <div className="flex text-[#AEB9E1] gap-2">

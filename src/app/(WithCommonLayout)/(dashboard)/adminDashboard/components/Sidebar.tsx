@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Home, Menu, X, User,TableOfContents } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -24,7 +24,24 @@ const menuItems = [
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
   const pathname = usePathname();
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setIsOpen(false);
+        setIsSmallScreen(true);
+      } else {
+        setIsOpen(true);
+        setIsSmallScreen(false);
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <motion.aside
@@ -34,19 +51,21 @@ const Sidebar = () => {
       className="bg-[#081028] text-white p-4 h-screen border-r-2 border-t-2 relative"
     >
       {/* Toggle Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={`absolute top-4 p-1 text-white ${isOpen ? "right-[8px]" : ""} focus:outline-none  rounded-full`}
-      >
-        <motion.div
-          key={isOpen ? "open" : "close"}
-          initial={{ rotate: 0 }}
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.4 }}
+      {!isSmallScreen && (
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="absolute top-4 p-1 text-white right-4 focus:outline-none rounded-full"
         >
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
-        </motion.div>
-      </button>
+          <motion.div
+            key={isOpen ? "open" : "close"}
+            initial={{ rotate: 0 }}
+            animate={{ rotate: isOpen ? 180 : 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </motion.div>
+        </button>
+      )}
 
       {/* Menu Items */}
       <nav className="space-y-4 mt-14">

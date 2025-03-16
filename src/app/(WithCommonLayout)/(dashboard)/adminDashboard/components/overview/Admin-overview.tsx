@@ -18,7 +18,7 @@ const AdminOverView = () => {
     <div className="lg:mr-12">
       <h1 className="font-semibold text-2xl">Welcome back, {user?.name}</h1>
       <Stat />
-      <div className="flex bg-[#0B1739] gap-8 border rounded-md mt-7 p-4 border-gray-600">
+      <div className="md:flex bg-[#0B1739] gap-8 border rounded-md mt-7 p-4 border-gray-600">
         <RevenueAndExpenseChart />
         <div>
           <BarChartRevenueAndExpense />

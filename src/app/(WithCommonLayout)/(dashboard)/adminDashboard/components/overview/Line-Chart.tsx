@@ -68,7 +68,7 @@ const LineChart = () => {
   };
 
   return (
-    <div className="pl-4">
+    <div className="md:pl-4 md:w-[600px] w-[350px]">
       <div className="text-center">
         <h1 className="text-xl pl-6 text-[#AEB9E1]">Total Session</h1>
       </div>

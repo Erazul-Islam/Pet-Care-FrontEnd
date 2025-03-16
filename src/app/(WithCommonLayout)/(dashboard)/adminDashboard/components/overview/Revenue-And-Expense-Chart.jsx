@@ -102,11 +102,11 @@ const RevenueAndExpenseChart = () => {
   };
 
   return (
-    <div className="lg:w-[900px] h-full">
-      <h1 className="text-xl pl-6 text-[#AEB9E1]">Total Revenue</h1>
-      <div className="text-3xl pl-6 p-4 flex items-center">
+    <div className="md:w-[900px] w-[350px] md:h-full">
+      <h1 className="md:text-xl md:pl-6 text-[#AEB9E1]">Total Revenue</h1>
+      <div className="md:text-3xl md:pl-6 md:p-4 flex items-center">
         $280k{" "}
-        <div className="  flex items-center ml-2 bg-[#14CA74] p-1 h-6 rounded-sm text-[12px]">
+        <div className="  flex items-center ml-2 bg-[#14CA74] p-1 md:h-6 rounded-sm md:text-[12px]">
           12.4% <MoveUpRight size={18} />
         </div>{" "}
       </div>
