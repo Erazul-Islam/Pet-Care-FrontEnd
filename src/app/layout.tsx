@@ -8,6 +8,7 @@ import { Providers } from "../lib/Providers";
 import { siteConfig } from "@/src/config/site";
 import { fontSans } from "@/src/config/fonts";
 import { Navbar } from "@/src/components/navbar";
+import Head from "next/head";
 
 export const metadata: Metadata = {
   title: {
@@ -34,19 +35,16 @@ export default function RootLayout({
 }) {
   return (
     <html suppressHydrationWarning lang="en">
-      <head />
       <body
         className={clsx(
           "min-h-screen font-sans antialiased",
-          fontSans.variable,
+          fontSans.variable
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
           <div className="relative flex flex-col h-screen">
             <Navbar />
-            <main className="bg-[#081028]">
-              {children}
-            </main>
+            <main className="bg-[#081028]">{children}</main>
           </div>
         </Providers>
       </body>

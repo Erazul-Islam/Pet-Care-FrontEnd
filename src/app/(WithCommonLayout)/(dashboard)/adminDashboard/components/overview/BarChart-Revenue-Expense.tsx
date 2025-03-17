@@ -82,7 +82,7 @@ const BarChartRevenueAndExpense = () => {
   };
 
   return (
-    <div className="md:w-[600px] w-[350px]">
+    <div className="md:w-[600px]">
       <div className="flex justify-between">
         <h1 className="md:text-xl md:pl-6 text-[#AEB9E1]">Total Profit</h1>
         <div className="md:text-3xl flex items-center">
