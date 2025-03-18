@@ -42,7 +42,6 @@ export default function Home() {
       <div className="md:w-1/4 p-4">
         <div className="sticky top-0">
           {/* <People /> */}
-          Taosif
         </div>
       </div>
       <div className="pb-0 md:ml-16">

@@ -9,6 +9,7 @@ import {Gift} from 'lucide-react'
 const Group = () => {
 
     const { data } = useGetProfile() || {};
+    console.log("con",data)
     const people = Array.isArray(data?.data) ? data?.data : [];
     return (
         <div>

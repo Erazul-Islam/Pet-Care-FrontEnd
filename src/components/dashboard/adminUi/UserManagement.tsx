@@ -33,7 +33,6 @@ const UserManagement = () => {
   const [users, setUsers] = useState<TUserInfo[]>([]);
   console.log(users.length)
   const [loading, setLoading] = useState(false);
-  console.log("loading",loading)
 
   
 
