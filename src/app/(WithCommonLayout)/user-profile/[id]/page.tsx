@@ -15,7 +15,6 @@ const Page = () => {
   const id = params.id;
   const { data, isLoading } = useGetSignleProfile(id as string);
   const info = data?.data;
-  console.log(info);
   const followers = info?.followers;
   const following = info?.following;
 

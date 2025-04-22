@@ -232,7 +232,8 @@ const GetPost = () => {
       <section className="flex flex-col items-center ">
         <div className="flex mt-4 mb-5 gap-20">
           <Select
-            style={{ borderRadius: "6px", width: 200 }}
+            style={{ borderRadius: "6px",width: 200,backgroundColor:'#081028', }}
+            className="border rounded-md"
             value={sortBy}
             onChange={handleSortChange}
             placeholder="Select "
@@ -247,13 +248,14 @@ const GetPost = () => {
 
           <Select
             placeholder="Select by category"
-            style={{ borderRadius: "6px", width: 200 }}
+            style={{ borderRadius: "6px",width: 200,backgroundColor:'#081028', }}
+            className="border rounded-md"
             value={filterByCategory}
             onChange={(e) =>
               setFilterByCategory(e?.target?.value as "All" | "Story" | "TIP")
             }
           >
-            <SelectItem key="All" value="All">
+            <SelectItem  key="All" value="All">
               All
             </SelectItem>
             <SelectItem key="Story" value="Story">
