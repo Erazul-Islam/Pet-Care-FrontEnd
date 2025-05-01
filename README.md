@@ -77,7 +77,7 @@ _Feature_
 
     1. clone the backend repo
     2. npm i
-    3. Put his env variable
+    3. Put your env variable
     4. npm run start:dev
 
     5.After cloning Client side
