@@ -42,3 +42,5 @@ export async function middleware(request: NextRequest) {
 export const config = {
     matcher: ['/profile', '/userDashboard', "/adminDashboard", '/login', '/register']
 }
+
+// This is a next js middleware
