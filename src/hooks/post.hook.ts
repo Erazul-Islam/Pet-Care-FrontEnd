@@ -4,7 +4,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 
 import { createPetPost, publishPost, unpublishPost } from "../services/pet-post"
-import { TPost,  } from "../types"
 import { downVotePost, upvotePost } from "../services/upvote"
 
 
@@ -14,7 +13,7 @@ export const useCreatePost = () => {
 
     return useMutation ({
         mutationKey: ["CREATE_POST"],
-        mutationFn: async (postData : TPost) => await createPetPost(postData),
+        mutationFn: async (formData : FormData) => await createPetPost(formData),
         onSuccess : () => {
             toast.success("post created successfully")
             queryClient.invalidateQueries()

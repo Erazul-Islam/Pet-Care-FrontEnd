@@ -1,49 +1,28 @@
 "use client";
 
 import React, { useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
 
 import { useCreatePost } from "@/src/hooks/post.hook";
-import { TPost } from "@/src/types";
 import "react-quill/dist/quill.snow.css";
-import { useGetUser } from "@/src/hooks/auth.hook";
 
 import dynamic from "next/dynamic";
+import { toast } from "sonner";
 
 import { useUser } from "@/src/context/user.provider";
-
-import { toast } from "sonner";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const PetMarkDownEditor = () => {
-  const { data } = useGetUser();
   const { user } = useUser();
 
   const { mutate: createPost } = useCreatePost();
-  const queryClient = useQueryClient();
   const [caption, setCaption] = useState("");
   const [description, setDescription] = useState("");
-  const [photo, setPhoto] = useState("");
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [category, setCategory] = useState("TIP");
   const [isPremium, setPremium] = useState("YES");
-  const [isPublished, setIsPublished] = useState(true);
 
   const handlePost = () => {
-    const payload: TPost = {
-      userEmail: data?.data?.email,
-      userName: data?.data?.name,
-      userId: data?.data?._id,
-      userProfilePhoto: data?.data?.profilePhoto,
-      caption,
-      description,
-      photo,
-      category,
-      isPremium,
-      isPublished,
-      comments: [],
-    };
-
     if (!user) {
       toast.error("Please log in firs");
 
@@ -58,21 +37,20 @@ const PetMarkDownEditor = () => {
       toast.error("Please put down a description");
     }
 
-    if (!photo) {
+    if (!photoFile) {
       toast.error("Please provide photo url");
     }
 
-    createPost(payload, {
-      onSuccess: () => {
-        queryClient.invalidateQueries();
-        setCaption("");
-        setDescription("");
-        setPhoto("");
-        setCategory("TIP");
-        setPremium("YES"), setIsPublished(true);
-      },
-    });
-    console.log(payload);
+    console.log("photoFile", photoFile);
+
+    const formData = new FormData();
+    formData.append("caption", caption);
+    formData.append("description", description);
+    formData.append("category", category);
+    formData.append("isPremium", isPremium);
+    formData.append("photo", photoFile);
+
+    createPost(formData);
   };
 
   return (
@@ -96,9 +74,11 @@ const PetMarkDownEditor = () => {
             <input
               className="w-full bg-transparent text-white p-2 border border-gray-300"
               placeholder="Add a photo URL..."
-              type="text"
-              value={photo}
-              onChange={(e) => setPhoto(e.target.value)}
+              type="file"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                setPhotoFile(file || null);
+              }}
             />
             <select
               className="w-full bg-transparent text-white p-2 border border-gray-300  mt-6"
