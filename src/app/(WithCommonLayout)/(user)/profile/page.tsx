@@ -41,7 +41,7 @@ const UserProfile = () => {
         {myPosts?.data?.length === 0 ? (
           <h1 className="text-center font-bold">No post you have</h1>
         ) : (
-          <div className="lg:flex lg:justify-between">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {myPosts?.data?.map((one: TUserPost) => (
               <div key={one._id}>
                 <div className=" mt-6 shadow-md rounded-lg p-4 max-w-md w-full">

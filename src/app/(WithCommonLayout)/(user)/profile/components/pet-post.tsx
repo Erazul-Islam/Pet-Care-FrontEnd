@@ -7,6 +7,7 @@ import { useCreatePost } from "@/src/hooks/post.hook";
 import "react-quill/dist/quill.snow.css";
 import dynamic from "next/dynamic";
 import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 import { useUser } from "@/src/context/user.provider";
 
@@ -15,7 +16,7 @@ const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 const PetMarkDownEditor = () => {
   const { user } = useUser();
 
-  const { mutate: createPost } = useCreatePost();
+  const { mutate: createPost, isPending } = useCreatePost();
   const [caption, setCaption] = useState("");
   const [description, setDescription] = useState("");
   const [photoFile, setPhotoFile] = useState<File | null>(null);
@@ -51,7 +52,13 @@ const PetMarkDownEditor = () => {
     formData.append("isPremium", isPremium);
     formData.append("photo", photoFile);
 
-    createPost(formData);
+    createPost(formData, {
+      onSuccess: () => {
+        setCaption("");
+        setDescription("");
+        setPhotoFile(null);
+      },
+    });
   };
 
   return (
@@ -104,7 +111,11 @@ const PetMarkDownEditor = () => {
               className="bg-purple-700 text-white rounded-sm py-2 px-4 mt-4 hover:bg-blue-600"
               onClick={handlePost}
             >
-              Post
+              {isPending ? (
+                <Loader2 className="animate-spin flex justify-center items-center" />
+              ) : (
+                "Post"
+              )}
             </button>
           </div>
         </div>
