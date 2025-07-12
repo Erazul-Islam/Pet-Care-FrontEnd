@@ -1,47 +1,45 @@
-/* eslint-disable import/order */
-/* eslint-disable padding-line-between-statements */
-/* eslint-disable prettier/prettier */
 "use client";
 
-import React, { useState } from "react";
-import { FieldValues, SubmitHandler } from "react-hook-form";
+import React from "react";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@nextui-org/button";
 import { Link } from "@nextui-org/link";
+import { Spinner } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 
 import TSForm from "@/src/components/form/Form";
 import TSInput from "@/src/components/form/Input";
 import { useUserRegistration } from "@/src/hooks/auth.hook";
 import registerValidationSchema from "@/src/schema/register.schema";
-import { Spinner } from "@nextui-org/react";
-import { useRouter } from "next/navigation";
 
 const SignupUser = () => {
   const { mutate: handleUserRegistration, isPending } = useUserRegistration();
 
-  const [loading, setLoading] = useState(false)
-
-  const router = useRouter()
+  const router = useRouter();
+  const { register } = useForm();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    const userData = {
-      ...data,
-      role: "USER"
-    };
-    setLoading(true)
-    handleUserRegistration(userData, {
-      onSettled: () => setLoading(false)
-    });
-    router.push('/login')
-  };
-  if (isPending) {
+    console.log(data)
+    const formData = new FormData();
 
-  }
+    formData.append("name", data?.name);
+    formData.append("email", data?.email);
+    formData.append("password", data?.password);
+
+    const file = data.profilePhoto?.[0];
+    console.log("file", file);
+    console.log("photo", data.profilePhoto);
+    formData.append("profilePhoto", file);
+
+    handleUserRegistration(formData);
+    router.push("/login");
+  };
 
   return (
-    <div className="flex h-[calc(100vh-100px)] flex-col items-center justify-center">
+    <div className="flex flex-col h-screen items-center justify-center">
       <h3 className="my-2 text-xl text-pink-500 font-bold">Please Sign up</h3>
-      <div className="w-[35%]">
+      <div>
         <TSForm
           resolver={zodResolver(registerValidationSchema)}
           onSubmit={onSubmit}
@@ -53,14 +51,14 @@ const SignupUser = () => {
             <TSInput label="Email" name="email" size="sm" />
           </div>
           <div className="py-3">
-            <TSInput label="Mobile Number" name="mobileNumber" size="sm" />
+            <input
+              type="file"
+              accept="image/*"
+              {...register("profilePhoto")}
+              className="block w-full text-sm bg-transparent border border-gray-700 rounded-md p-2"
+            />
           </div>
-          <div className="py-3">
-            <TSInput label="Address" name="address" size="sm" />
-          </div>
-          <div className="py-3">
-            <TSInput label="profilePhotoUrl" name="profilePhoto" size="sm" />
-          </div>
+
           <div className="py-3">
             <TSInput
               label="Password"
@@ -74,7 +72,7 @@ const SignupUser = () => {
             size="lg"
             type="submit"
           >
-            {loading ? <Spinner /> : 'Registration'}
+            {isPending ? <Spinner /> : "Registration"}
           </Button>
         </TSForm>
         <div className="text-center">

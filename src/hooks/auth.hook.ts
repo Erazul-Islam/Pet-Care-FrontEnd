@@ -9,9 +9,9 @@ import { changePasswordService } from "../services/change_password";
 import { TUser } from "../types";
 
 export const useUserRegistration = () => {
-    return useMutation<any, Error, FieldValues>({
+    return useMutation({
         mutationKey: ["USER_SIGNUP"],
-        mutationFn: async (userData) => await registerUser(userData),
+        mutationFn: async (formData : FormData) => await registerUser(formData),
         onSuccess: () => {
             toast.success("User regisration successfully");
         },

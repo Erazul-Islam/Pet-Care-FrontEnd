@@ -8,10 +8,14 @@ import { jwtDecode } from "jwt-decode";
 import axiosInstance from "@/src/lib/axiosInstance";
 import { TUser } from "@/src/types";
 
-export const registerUser = async (userData: FieldValues) => {
+export const registerUser = async (formData : FormData) => {
     try {
         // eslint-disable-next-line prettier/prettier
-        const data = (await axiosInstance.post("/auth/register", userData)).data;
+        const data = (await axiosInstance.post("/auth/register", formData,{
+            headers : {
+                'Content-Type' : 'multipart/form-data'
+            }
+        })).data;
 
         if (data.success) {
             cookies().set("accessToken", data?.data?.accessToken);
