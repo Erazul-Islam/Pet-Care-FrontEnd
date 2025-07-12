@@ -52,10 +52,10 @@ const LoginPage = () => {
     return (
         <>
             {isPending}
-            <div className="flex h-[calc(100vh-200px)] w-full flex-col items-center justify-center">
+            <div className="flex h-[calc(100vh-200px)] w-full flex-col items-center min-h-screen justify-center">
                 <h3 className="my-2 text-2xl text-pink-700 font-bold">Please log in</h3>
                 <p className="mb-4"></p>
-                <div className="w-[35%]">
+                <div>
                     <TSForm
                         resolver={zodResolver(loginValidationSchema)}
                         onSubmit={onSubmit}

@@ -43,7 +43,7 @@ const CommentSection : React.FC<CommentSectionProps> = ({
     <div>
       <div className="mt-4">
         <input
-          className="w-full border rounded-md px-3 py-2 focus:outline-none"
+          className="w-full border bg-transparent rounded-md px-3 py-2 focus:outline-none"
           placeholder="Write a comment..."
           value={commentText[post._id] || ""}
           onChange={(e) =>

@@ -3,7 +3,6 @@
 
 "use client";
 
-import Loading from "@/src/app/loading";
 import { useDeleteUser, useUpdateUserRole } from "@/src/hooks/auth.hook";
 import { useGetPost } from "@/src/hooks/get.post.hook";
 

@@ -8,7 +8,6 @@ import { Providers } from "../lib/Providers";
 import { siteConfig } from "@/src/config/site";
 import { fontSans } from "@/src/config/fonts";
 import { Navbar } from "@/src/components/navbar";
-import Head from "next/head";
 
 export const metadata: Metadata = {
   title: {

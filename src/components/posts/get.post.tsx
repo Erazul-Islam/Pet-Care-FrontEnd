@@ -1,9 +1,3 @@
-/* eslint-disable prettier/prettier */
-// /* eslint-disable prettier/prettier */
-// // /* eslint-disable prettier/prettier */
-// // /* eslint-disable import/order */
-// // /* eslint-disable padding-line-between-statements */
-/* eslint-disable prettier/prettier */
 "use client";
 
 import React, { useMemo, useState } from "react";
@@ -13,7 +7,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { motion } from "framer-motion";
 import DOMPurify from "dompurify";
-import {Projector} from 'lucide-react'
+import { Projector } from "lucide-react";
 
 import Payment from "./payment";
 import EditCommentModal from "./edit-comment-modal";
@@ -36,7 +30,7 @@ const GetPost = () => {
 
   const { user } = useUser();
   const stripePromise = loadStripe(
-    "pk_test_51OEWQiI8i8m69lNjPL8a3QNQtS31dfaIR6lr00gHoVxSTvtZpjdNVv186ZG7pYGfTwqchyWoClqvbBLGmdzA4Oxr00lZCJmnc7"
+    "pk_test_51OEWQiI8i8m69lNjPL8a3QNQtS31dfaIR6lr00gHoVxSTvtZpjdNVv186ZG7pYGfTwqchyWoClqvbBLGmdzA4Oxr00lZCJmnc7",
   );
 
   const addComment = useAddComment();
@@ -71,7 +65,7 @@ const GetPost = () => {
     if (sortBy === "newest") {
       sorted.sort(
         (a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
       );
     } else if (sortBy === "mostUpvoted") {
       sorted.sort((a, b) => b.totalUpvotes - a.totalUpvotes);
@@ -124,7 +118,7 @@ const GetPost = () => {
   const openEditModal = (
     postId: string,
     commentId: string,
-    currentText: string
+    currentText: string,
   ) => {
     setCurrentPostId(postId);
     setCurrentCommentId(commentId);
@@ -153,7 +147,7 @@ const GetPost = () => {
 
   const handleFollow = (postId: string) => {
     const targetPost = posts?.data.find(
-      (post: { _id: string }) => post._id === postId
+      (post: { _id: string }) => post._id === postId,
     );
 
     if (!user) {
@@ -230,13 +224,17 @@ const GetPost = () => {
   return (
     <div>
       <section className="flex flex-col items-center ">
-        <div className="flex mt-4 mb-5 gap-20">
+        <div className="flex md:flex-row flex-col my-5 gap-4">
           <Select
-            style={{ borderRadius: "6px",width: 200,backgroundColor:'#081028', }}
+            style={{
+              borderRadius: "6px",
+              width: 200,
+              backgroundColor: "#081028",
+            }}
             className="border rounded-md"
             value={sortBy}
             onChange={handleSortChange}
-            placeholder="Select "
+            placeholder="Sort by latest "
           >
             <SelectItem key={"newest"} value="newest">
               Newest
@@ -248,14 +246,18 @@ const GetPost = () => {
 
           <Select
             placeholder="Select by category"
-            style={{ borderRadius: "6px",width: 200,backgroundColor:'#081028', }}
+            style={{
+              borderRadius: "6px",
+              width: 200,
+              backgroundColor: "#081028",
+            }}
             className="border rounded-md"
             value={filterByCategory}
             onChange={(e) =>
               setFilterByCategory(e?.target?.value as "All" | "Story" | "TIP")
             }
           >
-            <SelectItem  key="All" value="All">
+            <SelectItem key="All" value="All">
               All
             </SelectItem>
             <SelectItem key="Story" value="Story">
@@ -266,12 +268,12 @@ const GetPost = () => {
             </SelectItem>
           </Select>
         </div>
-        <motion.div className="grid grid-cols-1 gap-4">
+        <motion.div className="grid px-4 grid-cols-1 gap-4">
           {isSuccess &&
             sortedPosts?.map((post, index) => {
               const isFollowing = userData?.data?.following?.some(
                 (followingUserId: { id: any }) =>
-                  followingUserId.id === post.userId
+                  followingUserId.id === post.userId,
               );
               const isUserPremium = userData?.data?.isPremium;
               const isPostPremium = post.isPremium === "YES";
@@ -287,8 +289,8 @@ const GetPost = () => {
               return (
                 <div key={index}>
                   <div className="shadow-md  border border-purple-200 rounded-lg p-4 max-w-screen-md">
-                    <div className="flex justify-between items-center mb-4">
-                      <div className="flex items-center space-x-3">
+                    <div className="flex md:flex-row flex-col gap-4 justify-between items-center mb-4">
+                      <div className="flex md:flex-row flex-col gap-4 md:gap-0 items-center space-x-3">
                         <img
                           alt="User avatar"
                           className="w-10 h-10 rounded-full"
@@ -316,7 +318,7 @@ const GetPost = () => {
                           )}
                         </div>
                       </div>
-                      <div className="lg:flex">
+                      <div className="flex">
                         {isFollowing ? (
                           <motion.button
                             className="bg-teal-700 ml-3 text-white px-4 py-1 rounded-sm text-sm"
