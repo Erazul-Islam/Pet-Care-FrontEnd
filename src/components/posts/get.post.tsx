@@ -7,7 +7,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { motion } from "framer-motion";
 import DOMPurify from "dompurify";
-import { Projector } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 
 import Payment from "./payment";
 import EditCommentModal from "./edit-comment-modal";
@@ -309,13 +309,7 @@ const GetPost = () => {
                           </p>
                         </div>
                         <div>
-                          {post?.isPremium === "YES" ? (
-                            <Projector
-                              style={{ width: 50, height: 50, color: "purple" }}
-                            />
-                          ) : (
-                            ""
-                          )}
+                          {post?.isPremium === "YES" ? <ShieldCheck /> : ""}
                         </div>
                       </div>
                       <div className="flex">

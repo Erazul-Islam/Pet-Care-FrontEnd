@@ -19,7 +19,7 @@ const Page = () => {
   const following = info?.following;
 
   return (
-    <Card className=" lg:w-[300px] rounded-md ml-10 mr-6">
+    <Card className="">
       {isLoading ? (
         <UserProfileSkeleton />
       ) : (

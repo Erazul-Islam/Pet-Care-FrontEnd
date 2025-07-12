@@ -31,7 +31,7 @@ const EditProfileModal : React.FC<editProfileProps> = ({
   handleSubmit,
 }) => {
   return (
-    <Modal className="lg:w-[400px] p-5" isOpen={modalVisible} onOpenChange={() => setModalVisible(false)}>
+    <Modal className="p-4" isOpen={modalVisible} onOpenChange={() => setModalVisible(false)}>
       <ModalContent>
         <ModalHeader className="items-center justify-center flex">Edit your info</ModalHeader>
         <form onSubmit={handleSubmit}>

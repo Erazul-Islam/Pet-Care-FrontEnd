@@ -73,7 +73,6 @@ const Info = () => {
   const userId = userData?.data?._id;
 
   const handleAccepFriendRequest = async (senderId: string) => {
-    console.log(senderId);
 
     if (!userId || !senderId) {
       return;
