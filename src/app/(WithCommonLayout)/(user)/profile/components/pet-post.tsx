@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 
 import { useCreatePost } from "@/src/hooks/post.hook";
-import "react-quill/dist/quill.snow.css";
 
+import "react-quill/dist/quill.snow.css";
 import dynamic from "next/dynamic";
 import { toast } from "sonner";
 
@@ -31,17 +31,18 @@ const PetMarkDownEditor = () => {
 
     if (!caption) {
       toast.error("Please put down a caption");
+      return;
     }
 
     if (!description) {
       toast.error("Please put down a description");
+      return;
     }
 
     if (!photoFile) {
       toast.error("Please provide photo url");
+      return;
     }
-
-    console.log("photoFile", photoFile);
 
     const formData = new FormData();
     formData.append("caption", caption);
